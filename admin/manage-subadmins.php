@@ -20,7 +20,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title> | Manage Subadmins</title>
+        <title> | Manage Operators</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -62,7 +62,6 @@ if (strlen($_SESSION['login']) == 0) {
                                 <div class="page-title-box">
                                     <h4 class="page-title">Manage Sub-admins</h4>
                                     <ol class="breadcrumb p-0 m-0">
-
                                         <li>
                                             <a href="#">Sub-admins </a>
                                         </li>
@@ -104,7 +103,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <th>First Name</th>
 
                                                     <th>Last Name</th>
-                                                    
+
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -119,7 +118,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <td><?php echo htmlentities($row['AdminUserName']); ?></td>
                                                         <td><?php echo htmlentities($row['fname']); ?></td>
                                                         <td><?php echo htmlentities($row['lname']); ?></td>
-                                                    
+
                                                         <td><a href="edit-subadmin.php?said=<?php echo htmlentities($row['id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
                                                             &nbsp;<a href="manage-subadmins.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
                                                     </tr>

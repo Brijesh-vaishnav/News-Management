@@ -7,21 +7,21 @@ if (strlen($_SESSION['login']) == 0) {
 } else {
     if ($_GET['disid']) {
         $id = intval($_GET['disid']);
-        $query = mysqli_query($con, "update tblcomments set status='0' where id='$id'");
-        $msg = "Comment unapprove ";
+        $query = mysqli_query($con, "update tblposts set status='0' where id='$id'");
+        $msg = "Post unapprove ";
     }
     // Code for restore
     if ($_GET['appid']) {
         $id = intval($_GET['appid']);
-        $query = mysqli_query($con, "update tblcomments set status='1' where id='$id'");
-        $msg = "Comment approved";
+        $query = mysqli_query($con, "update tblposts set status='1' where id='$id'");
+        $msg = "Post approved";
     }
 
     // Code for deletion
     if ($_GET['action'] == 'del' && $_GET['rid']) {
         $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  tblcomments  where id='$id'");
-        $delmsg = "Comment deleted forever";
+        $query = mysqli_query($con, "delete from  tblposts  where id='$id'");
+        $delmsg = "Post deleted forever";
     }
 
 ?>
@@ -70,16 +70,16 @@ if (strlen($_SESSION['login']) == 0) {
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Manage Unapproved Comments</h4>
+                                    <h4 class="page-title">Manage Unapproved Posts</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
                                             <a href="#">Admin</a>
                                         </li>
                                         <li>
-                                            <a href="#">Comments </a>
+                                            <a href="#">Posts </a>
                                         </li>
                                         <li class="active">
-                                            Unapprove Comments
+                                            Unapproved Posts
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -119,57 +119,50 @@ if (strlen($_SESSION['login']) == 0) {
                                     <div class="demo-box m-t-20">
 
                                         <div class="table-responsive">
-                                            <table class="table m-0 table-colored-bordered table-bordered-primary">
+                                            <table class="table table-colored table-centered table-inverse m-0">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th> Name</th>
-                                                        <th>Email Id</th>
-                                                        <th width="300">Comment</th>
-                                                        <th>Status</th>
-                                                        <th>Post / News</th>
-                                                        <th>Posting Date</th>
+
+                                                        <th>Title</th>
+                                                        <th>Category</th>
+                                                        <th>Subcategory</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+
                                                     <?php
-                                                    $query = mysqli_query($con, "Select tblcomments.id,  tblcomments.name,tblcomments.email,tblcomments.postingDate,tblcomments.comment,tblposts.id as postid,tblposts.PostTitle from  tblcomments join tblposts on tblposts.id=tblcomments.postId where tblcomments.status=0");
-                                                    $cnt = 1;
-                                                    while ($row = mysqli_fetch_array($query)) {
+                                                    $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 && tblposts.status=0 ");
+                                                    $rowcount = mysqli_num_rows($query);
+                                                    if ($rowcount == 0) {
                                                     ?>
-
                                                         <tr>
-                                                            <th scope="row"><?php echo htmlentities($cnt); ?></th>
-                                                            <td><?php echo htmlentities($row['name']); ?></td>
-                                                            <td><?php echo htmlentities($row['email']); ?></td>
-                                                            <td><?php echo htmlentities($row['comment']); ?></td>
-                                                            <td><?php $st = $row['status'];
-                                                                if ($st == '0') :
-                                                                    echo "Wating for approval";
-                                                                else :
-                                                                    echo "Approved";
-                                                                endif;
-                                                                ?></td>
 
-
-                                                            <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><?php echo htmlentities($row['PostTitle']); ?></a> </td>
-                                                            <td><?php echo htmlentities($row['postingDate']); ?></td>
-                                                            <td>
-                                                                <?php if ($st == '0') : ?>
-                                                                    <a href="unapprove-comment.php?disid=<?php echo htmlentities($row['id']); ?>" title="Disapprove this comment"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
-                                                                <?php else : ?>
-                                                                    <a href="unapprove-comment.php?appid=<?php echo htmlentities($row['id']); ?>" title="Approve this comment"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
-                                                                <?php endif; ?>
-
-                                                                &nbsp;<a href="unapprove-comment.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a>
+                                                            <td colspan="4" align="center">
+                                                                <h3 style="color:red">No record found</h3>
                                                             </td>
-                                                        </tr>
-                                                    <?php
-                                                        $cnt++;
-                                                    } ?>
-                                                </tbody>
+                                                        <tr>
+                                                            <?php
+                                                        } else {
+                                                            while ($row = mysqli_fetch_array($query)) {
+                                                            ?>
+                                                        <tr>
+                                                            <td><b><?php echo htmlentities($row['title']); ?></b></td>
+                                                            <td><?php echo htmlentities($row['category']) ?></td>
+                                                            <td><?php echo htmlentities($row['subcategory']) ?></td>
 
+                                                            <td>
+                                                            <?php if ($st == '0') : ?>
+                                                                    <a href="unapprove-posts.php?disid=<?php echo htmlentities($row['id']); ?>" title="Disapprove this Post"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
+                                                                <?php else : ?>
+                                                                    <a href="unapproved-posts.php?appid=<?php echo htmlentities($row['postid']); ?>" title="Approve this Post["><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
+                                                                <?php endif; ?>
+                                                                &nbsp;<a href="manage-posts.php?pid=<?php echo htmlentities($row['postid']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
+                                                        </tr>
+                                                <?php }
+                                                        } ?>
+
+                                                </tbody>
                                             </table>
                                         </div>
 

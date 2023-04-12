@@ -31,7 +31,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title>Newsportal | Add Employee</title>
+        <title>Newsportal | Add Operator</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -106,15 +106,15 @@ if (strlen($_SESSION['login']) == 0) {
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Add Employee </b></h4>
+                                    <h4 class="m-t-0 header-title"><b>Add Operator </b></h4>
                                     <hr />
 
                                     <div class="row">
                                         <div class="col-md-6">
                                             <form class="form-horizontal" name="addsuadmin" method="post">
                                                 <div class="form-group">
-                                                    <label for="exampleInputusername">Username (used for login)</label>
-                                                    <input type="text" placeholder="Enter  Username" name="sadminusername" id="sadminusername" class="form-control"  onBlur="checkAvailability()" required autocomplete="off">
+                                                    <label for="exampleInputusername">Email (used for login)</label>
+                                                    <input type="text" placeholder="Enter  Email" name="sadminusername" id="sadminusername" class="form-control"  onBlur="checkAvailability()" required autocomplete="off">
                                                     <span id="user-availability-status" style="font-size:14px;"></span>
                                                 </div>
 
