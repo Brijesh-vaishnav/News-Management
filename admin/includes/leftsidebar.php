@@ -23,8 +23,27 @@
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Users </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
-                                      
-                                        <li><a href="manage-subadmins.php">Manage Users</a></li>
+                                    <li><a href="normal-users.php">Normal Users</a></li>
+                                        <li><a href="subscribed-users.php">Subscribed Users</a></li>
+                                        
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            <?php if ($_SESSION['utype'] == '1') : ?>
+                                <li class="has_sub">
+                                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertisers </span> <span class="menu-arrow"></span></a>
+                                    <ul class="list-unstyled">
+
+                                        <li><a href="manage-advertisers.php">Manage Advertisers</a></li>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            <?php if ($_SESSION['utype'] == '1') : ?>
+                                <li class="has_sub">
+                                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertisements </span> <span class="menu-arrow"></span></a>
+                                    <ul class="list-unstyled">
+                                        <li><a href="unapprove-comment.php">Waiting for Approval </a></li>
+                                        <li><a href="manage-comments.php">Approved Advertises</a></li>
                                     </ul>
                                 </li>
                             <?php endif; ?>
@@ -52,8 +71,10 @@
                                     <li><a href="add-post.php">Add Posts</a></li>
                                     <li><a href="manage-posts.php">Manage Posts</a></li>
                                     <li><a href="trash-posts.php">Trash Posts</a></li>
-                       
+                                    <?php if ($_SESSION['utype'] == '1') : ?>
                                     <li><a href="unapproved-posts.php">Waiting for Approoval</a></li>
+                            <?php endif; ?>
+
                                 </ul>
                             </li>
 

@@ -1,36 +1,31 @@
-<?php 
+<?php
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{
-if(isset($_POST['update']))
-{
-$posttitle=$_POST['posttitle'];
-$catid=$_POST['category'];
-$subcatid=$_POST['subcategory'];
-$postdetails=$_POST['postdescription'];
-$lastuptdby=$_SESSION['login'];
-$arr = explode(" ",$posttitle);
-$url=implode("-",$arr);
-$status=1;
-$postid=intval($_GET['pid']);
-$query=mysqli_query($con,"update tblposts set PostTitle='$posttitle',CategoryId='$catid',SubCategoryId='$subcatid',PostDetails='$postdetails',PostUrl='$url',Is_Active='$status',lastUpdatedBy='$lastuptdby' where id='$postid'");
-if($query)
-{
-$msg="Post updated ";
-}
-else{
-$error="Something went wrong . Please try again.";    
-} 
-
-}
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+} else {
+    if (isset($_POST['update'])) {
+        $posttitle = $_POST['posttitle'];
+        $catid = $_POST['category'];
+        $subcatid = $_POST['subcategory'];
+        $postdetails = $_POST['postdescription'];
+        $lastuptdby = $_SESSION['login'];
+        $arr = explode(" ", $posttitle);
+        $url = implode("-", $arr);
+        $status = 1;
+        $postid = intval($_GET['pid']);
+        $query = mysqli_query($con, "update tblposts set PostTitle='$posttitle',CategoryId='$catid',SubCategoryId='$subcatid',PostDetails='$postdetails',PostUrl='$url',Is_Active='$status',lastUpdatedBy='$lastuptdby' where id='$postid'");
+        if ($query) {
+            $msg = "Post updated ";
+        } else {
+            $error = "Something went wrong . Please try again.";
+        }
+    }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,20 +55,20 @@ $error="Something went wrong . Please try again.";
         <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
+        <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
- <script>
-function getSubCat(val) {
-  $.ajax({
-  type: "POST",
-  url: "get_subcategory.php",
-  data:'catid='+val,
-  success: function(data){
-    $("#subcategory").html(data);
-  }
-  });
-  }
-  </script>
+        <script>
+            function getSubCat(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_subcategory.php",
+                    data: 'catid=' + val,
+                    success: function(data) {
+                        $("#subcategory").html(data);
+                    }
+                });
+            }
+        </script>
     </head>
 
 
@@ -83,9 +78,9 @@ function getSubCat(val) {
         <div id="wrapper">
 
             <!-- Top Bar Start -->
-           <?php include('includes/topheader.php');?>
+            <?php include('includes/topheader.php'); ?>
             <!-- ========== Left Sidebar Start ========== -->
-             <?php include('includes/leftsidebar.php');?>
+            <?php include('includes/leftsidebar.php'); ?>
             <!-- Left Sidebar End -->
 
 
@@ -100,8 +95,8 @@ function getSubCat(val) {
 
 
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
+                            <div class="col-xs-12">
+                                <div class="page-title-box">
                                     <h4 class="page-title">Edit Post </h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
@@ -116,100 +111,139 @@ function getSubCat(val) {
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
-							</div>
-						</div>
-                        <!-- end row -->
-
-<div class="row">
-<div class="col-sm-6">  
-<!---Success Message--->  
-<?php if($msg){ ?>
-<div class="alert alert-success" role="alert">
-<strong>Well done!</strong> <?php echo htmlentities($msg);?>
-</div>
-<?php } ?>
-
-<!---Error Message--->
-<?php if($error){ ?>
-<div class="alert alert-danger" role="alert">
-<strong>Oh snap!</strong> <?php echo htmlentities($error);?></div>
-<?php } ?>
-
-
-</div>
-</div>
-
-<?php
-$postid=intval($_GET['pid']);
-$query=mysqli_query($con,"select tblposts.id as postid,tblposts.PostImage,tblposts.PostTitle as title,tblposts.PostDetails,tblcategory.CategoryName as category,tblcategory.id as catid,tblsubcategory.SubCategoryId as subcatid,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$postid' and tblposts.Is_Active=1 ");
-while($row=mysqli_fetch_array($query))
-{
-?>
-                        <div class="row">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="p-6">
-                                    <div class="">
-                                        <form name="addpost" method="post">
- <div class="form-group m-b-20">
-<label for="exampleInputEmail1">Post Title</label>
-<input type="text" class="form-control" id="posttitle" value="<?php echo htmlentities($row['title']);?>" name="posttitle" placeholder="Enter title" required>
-</div>
-
-
-
-<div class="form-group m-b-20">
-<label for="exampleInputEmail1">Category</label>
-<select class="form-control" name="category" id="category" onChange="getSubCat(this.value);" required>
-<option value="<?php echo htmlentities($row['catid']);?>"><?php echo htmlentities($row['category']);?></option>
-<?php
-// Feching active categories
-$ret=mysqli_query($con,"select id,CategoryName from  tblcategory where Is_Active=1");
-while($result=mysqli_fetch_array($ret))
-{    
-?>
-<option value="<?php echo htmlentities($result['id']);?>"><?php echo htmlentities($result['CategoryName']);?></option>
-<?php } ?>
-
-</select> 
-</div>
-    
-<div class="form-group m-b-20">
-<label for="exampleInputEmail1">Sub Category</label>
-<select class="form-control" name="subcategory" id="subcategory" required>
-<option value="<?php echo htmlentities($row['subcatid']);?>"><?php echo htmlentities($row['subcategory']);?></option>
-</select> 
-</div>
-         
-
-     <div class="row">
-<div class="col-sm-12">
- <div class="card-box">
-<h4 class="m-b-30 m-t-0 header-title"><b>Post Details</b></h4>
-<textarea class="summernote" name="postdescription" required><?php echo htmlentities($row['PostDetails']);?></textarea>
-</div>
-</div>
-</div>
-
- <div class="row">
-<div class="col-sm-12">
- <div class="card-box">
-<h4 class="m-b-30 m-t-0 header-title"><b>Post Image</b></h4>
-<img src="postimages/<?php echo htmlentities($row['PostImage']);?>" width="300"/>
-<br />
-<a href="change-image.php?pid=<?php echo htmlentities($row['postid']);?>">Update Image</a>
-</div>
-</div>
-</div>
-
-<?php } ?>
-
-<button type="submit" name="update" class="btn btn-success waves-effect waves-light">Update </button>
-
-                                    </div>
-                                </div> <!-- end p-20 -->
-                            </div> <!-- end col -->
+                            </div>
                         </div>
                         <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!---Success Message--->
+                                <?php if ($msg) { ?>
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                                    </div>
+                                <?php } ?>
+
+                                <!---Error Message--->
+                                <?php if ($error) { ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
+                                    </div>
+                                <?php } ?>
+
+
+                            </div>
+                        </div>
+
+                        <?php
+                        $postid = intval($_GET['pid']);
+                        $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostImage,tblposts.PostTitle as title,tblposts.PostDetails,tblcategory.CategoryName as category,tblcategory.id as catid,tblsubcategory.SubCategoryId as subcatid,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$postid' and tblposts.Is_Active=1 ");
+                        while ($row = mysqli_fetch_array($query)) {
+                        ?>
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="p-6">
+                                        <div class="">
+                                            <form name="addpost" method="post">
+                                                <div class="form-group m-b-20">
+                                                    <label for="exampleInputEmail1">Post Title</label>
+                                                    <input type="text" class="form-control" id="posttitle" value="<?php echo htmlentities($row['title']); ?>" name="posttitle" placeholder="Enter title" required>
+                                                </div>
+
+
+
+                                                <div class="form-group m-b-20">
+                                                    <label for="exampleInputEmail1">Category</label>
+                                                    <select class="form-control" name="category" id="category" onChange="getSubCat(this.value);" required>
+                                                        <option value="<?php echo htmlentities($row['catid']); ?>"><?php echo htmlentities($row['category']); ?></option>
+                                                        <?php
+                                                        // Feching active categories
+                                                        $ret = mysqli_query($con, "select id,CategoryName from  tblcategory where Is_Active=1");
+                                                        while ($result = mysqli_fetch_array($ret)) {
+                                                        ?>
+                                                            <option value="<?php echo htmlentities($result['id']); ?>"><?php echo htmlentities($result['CategoryName']); ?></option>
+                                                        <?php } ?>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group m-b-20">
+                                                    <label for="exampleInputEmail1">Sub Category</label>
+                                                    <select class="form-control" name="subcategory" id="subcategory" required>
+                                                        <option value="<?php echo htmlentities($row['subcatid']); ?>"><?php echo htmlentities($row['subcategory']); ?></option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="card-box">
+                                                            <h4 class="m-b-30 m-t-0 header-title"><b>Post Details</b></h4>
+                                                            <textarea class="summernote" name="postdescription" required><?php echo htmlentities($row['PostDetails']); ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="card-box">
+                                                            <h4 class="m-b-30 m-t-0 header-title"><b>Post Image</b></h4>
+                                                            <img src="postimages/<?php echo htmlentities($row['PostImage']); ?>" width="300" />
+                                                            <br />
+                                                            <a href="change-image.php?pid=<?php echo htmlentities($row['postid']); ?>">Update Image</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <?php } ?>
+                                            <div class="row m-b-30">
+                                                <div class="col-sm-12">
+                                                    <div class="card-box">
+                                                        <?php echo $row["state"] ?>
+                                                        <h4 class="m-b-30 m-t-0 header-title"><b>Update State</b></h4>
+                                                        <select name="state">
+                                                            <option value="">Select state</option>
+                                                            
+                                                            <option value="0" <?php if($_row["state"]==0) echo "selected" ?>>Andhra Pradesh</option>
+                                                            <option value="1" <?php if($_row["state"]==1) echo "selected" ?>>Arunachal Pradesh</option>
+                                                            <option value="2" <?php if($_row["state"]==2) echo "selected" ?>>Assam</option>
+                                                            <option value="3" <?php if($_row["state"]==3) echo "selected" ?> >Bihar</option>
+                                                            <option value="4" <?php if($_row["state"]==4) echo "selected" ?>>Chhattisgarh</option>
+                                                            <option value="5" <?php if($_row["state"]==5) echo "selected" ?>>Goa</option>
+                                                            <option value="6" <?php if($_row["state"]=='6') echo "selected" ?>>Gujarat</option>
+                                                            <option value="7" <?php if($_row["state"]==7) echo "selected" ?>>Haryana</option>
+                                                            <option value="8" <?php if($_row["state"]==8) echo "selected" ?>>Himachal Pradesh</option>
+                                                            <option value="9" <?php if($_row["state"]==9) echo "selected" ?>>Jharkhand</option>
+                                                            <option value="10" <?php if($_row["state"]==10) echo "selected" ?>>Karnataka</option>
+                                                            <option value="11" <?php if($_row["state"]==0) echo "selected" ?>>Kerala</option>
+                                                            <option value="12" <?php if($_row["state"]==0) echo "selected" ?>>Madhya Pradesh</option>
+                                                            <option value="13" <?php if($_row["state"]==0) echo "selected" ?>>Maharashtra</option>
+                                                            <option value="14" <?php if($_row["state"]==0) echo "selected" ?>>Manipur</option>
+                                                            <option value="15" <?php if($_row["state"]==0) echo "selected" ?>>Meghalaya</option>
+                                                            <option value="16" <?php if($_row["state"]==0) echo "selected" ?>>Mizoram</option>
+                                                            <option value="17" <?php if($_row["state"]==0) echo "selected" ?>>Nagaland</option>
+                                                            <option value="18" <?php if($_row["state"]==0) echo "selected" ?>>Odisha</option>
+                                                            <option value="19" <?php if($_row["state"]==0) echo "selected" ?>>Punjab</option>
+                                                            <option value="20" <?php if($_row["state"]==0) echo "selected" ?>>Rajasthan</option>
+                                                            <option value="21" <?php if($_row["state"]==0) echo "selected" ?>>Sikkim</option>
+                                                            <option value="22" <?php if($_row["state"]==0) echo "selected" ?>>Tamil Nadu</option>
+                                                            <option value="23" <?php if($_row["state"]==0) echo "selected" ?>>Telangana</option>
+                                                            <option value="24" <?php if($_row["state"]==0) echo "selected" ?>>Tripura</option>
+                                                            <option value="25" <?php if($_row["state"]==0) echo "selected" ?>>Uttar Pradesh</option>
+                                                            <option value="26" <?php if($_row["state"]==0) echo "selected" ?>>Uttarakhand</option>
+                                                            <option value="27" <?php if($_row["state"]==0) echo "selected" ?>>West Bengal</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" name="update" class="btn btn-success waves-effect waves-light">Update </button>
+
+                                        </div>
+                                    </div> <!-- end p-20 -->
+                                </div> <!-- end col -->
+                            </div>
+                            <!-- end row -->
 
 
 
@@ -217,7 +251,7 @@ while($result=mysqli_fetch_array($ret))
 
                 </div> <!-- content -->
 
-           <?php include('includes/footer.php');?>
+                <?php include('includes/footer.php'); ?>
 
             </div>
 
@@ -262,14 +296,13 @@ while($result=mysqli_fetch_array($ret))
         <script src="assets/js/jquery.app.js"></script>
 
         <script>
-
-            jQuery(document).ready(function(){
+            jQuery(document).ready(function() {
 
                 $('.summernote').summernote({
-                    height: 240,                 // set editor height
-                    minHeight: null,             // set minimum height of editor
-                    maxHeight: null,             // set maximum height of editor
-                    focus: false                 // set focus to editable area after initializing summernote
+                    height: 240, // set editor height
+                    minHeight: null, // set minimum height of editor
+                    maxHeight: null, // set maximum height of editor
+                    focus: false // set focus to editable area after initializing summernote
                 });
                 // Select2
                 $(".select2").select2();
@@ -279,7 +312,7 @@ while($result=mysqli_fetch_array($ret))
                 });
             });
         </script>
-  <script src="../plugins/switchery/switchery.min.js"></script>
+        <script src="../plugins/switchery/switchery.min.js"></script>
 
         <!--Summernote js-->
         <script src="../plugins/summernote/summernote.min.js"></script>
@@ -287,5 +320,6 @@ while($result=mysqli_fetch_array($ret))
 
 
     </body>
-</html>
+
+    </html>
 <?php } ?>
