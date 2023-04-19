@@ -13,7 +13,7 @@ if (strlen($_SESSION['login']) == 0) {
         $subcatid = $_POST['subcategory'];
         $postdetails = $_POST['postdescription'];
         $postedby = $_SESSION['login'];
-        $post_state=$_POST["state"];
+        $post_state = $_POST["state"];
         $arr = explode(" ", $posttitle);
         $url = implode("-", $arr);
         $imgfile = $_FILES["postimage"]["name"];
@@ -31,9 +31,9 @@ if (strlen($_SESSION['login']) == 0) {
             move_uploaded_file($_FILES["postimage"]["tmp_name"], "postimages/" . $imgnewfile);
 
             $is_active = 1;
-            $status=0;
-            if($_SESSION["login"]=="admin") 
-                $status=1;
+            $status = 0;
+            if ($_SESSION["login"] == "admin")
+                $status = 1;
             $query = mysqli_query($con, "insert into tblposts(PostTitle,CategoryId,SubCategoryId,PostDetails,PostUrl,Is_Active,PostImage,postedBy,state,status) values('$posttitle','$catid','$subcatid','$postdetails','$url','$is_active','$imgnewfile','$postedby',' $post_state','$status')");
             if ($query) {
                 $msg = "Post successfully added ";

@@ -56,10 +56,13 @@ while($row=mysqli_fetch_array($query))
         </div>
       </div>
       <!-- /.row -->
+       Do you want Be an Advertiser ?
+    <a href="./admin/registerAdvertiser.php">Click here</a>
 <?php } ?>
     
     </div>
     <!-- /.container -->
+
 
     <!-- Footer -->
  <?php include('includes/footer.php');?>
@@ -69,5 +72,6 @@ while($row=mysqli_fetch_array($query))
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
+
 
 </html>

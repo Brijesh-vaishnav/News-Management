@@ -16,7 +16,7 @@ if (strlen($_SESSION['login']) == 0) {
         $lname=$_POST['lname'];
         $query = mysqli_query($con, "insert into tbladmin(AdminUserName,AdminPassword,userType,fname,lname ) values('$username','$password','$usertype','$fname','$lname')") ;
         if ($query) {
-            echo "<script>alert('Sub-admin details added successfully.');</script>";
+            echo "<script>alert('Operator details added successfully.');</script>";
             echo "<script type='text/javascript'> document.location = 'add-subadmins; </script>";
         } else {
             echo "<script>alert('Something went wrong. Please try again.');</script>";
@@ -126,7 +126,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                                 
                                                 <div class="form-group">
-                                                    <label for="lname"> First Name</label>
+                                                    <label for="lname"> Last Name</label>
                                                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name" required>
                                                 </div>
 
@@ -148,15 +148,6 @@ if (strlen($_SESSION['login']) == 0) {
 
 
                                     </div>
-
-
-
-
-
-
-
-
-
 
 
                                 </div>

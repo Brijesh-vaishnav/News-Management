@@ -27,7 +27,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title>Newsportal |Edit Subadmin</title>
+        <title>Newsportal |Edit Operator</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
