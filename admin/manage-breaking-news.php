@@ -6,9 +6,9 @@ if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
 
-    if ($_GET['action'] = 'del') {
-        $postid = intval($_GET['pid']);
-        $query = mysqli_query($con, "update tblposts set Is_Active=0 where id='$postid'");
+    if ($_GET['action'] == 'del') {
+        $news_id = intval($_GET['pid']);
+        $query = mysqli_query($con, "delete from  breaking_news where  news_id='$news_id'");
         if ($query) {
             $msg = "Post deleted ";
         } else {
@@ -29,7 +29,7 @@ if (strlen($_SESSION['login']) == 0) {
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
         <!-- App title -->
-        <title>Newsportal | Manage Posts</title>
+        <title>Newsportal | Manage breaking news</title>
 
         <!--Morris Chart CSS -->
         <link rel="stylesheet" href="../plugins/morris/morris.css">
@@ -115,15 +115,14 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <tr>
 
                                                     <th>Title</th>
-                                                    <th>Category</th>
-                                                    <th>Subcategory</th>
+                                                   
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                                 <?php
-                                                $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 ");
+                                                $query = mysqli_query($con, "select * from breaking_news ");
                                                 $rowcount = mysqli_num_rows($query);
                                                 if ($rowcount == 0) {
                                                 ?>
@@ -138,17 +137,14 @@ if (strlen($_SESSION['login']) == 0) {
                                                         while ($row = mysqli_fetch_array($query)) {
                                                         ?>
                                                     <tr>
-                                                        <td><b><?php echo htmlentities($row['title']); ?></b></td>
-                                                        <td><?php echo htmlentities($row['category']) ?></td>
-                                                        <td><?php echo htmlentities($row['subcategory']) ?></td>
+                                                        <td><b><?php echo htmlentities($row['news_title']); ?></b></td>
+                                                     
 
-                                                        <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i>
-                                                    
-                                                    </a>
+                                                        <td><a href="edit-breaking-news.php?pid=<?php echo htmlentities($row['news_id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
                                                             &nbsp;
-                                                           <?php if($_SESSION["utype"]=='1') :?> 
-                                                            <a href="manage-posts.php?pid=<?php echo htmlentities($row['postid']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
-                                                            <?php endif;?>
+                                                            <?php if ($_SESSION['utype'] == '1') : ?>
+                                                            <a href="manage-breaking-news.php?pid=<?php echo htmlentities($row['news_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
+                                                            <?php endif; ?>
                                                     </tr>
                                             <?php }
                                                     } ?>

@@ -1,4 +1,13 @@
-            <div class="left side-menu">
+<?php
+ 
+    if($_SESSION["type"]!="Admin" && $_SESSION["type"]!="Operator")
+    {
+
+        echo "<script>document.location='./login.php'</script>";
+    }
+   
+?>     
+          <div class="left side-menu">
                 <div class="sidebar-inner slimscrollleft">
 
                     <!--- Sidemenu -->
@@ -42,8 +51,9 @@
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertisements </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
-                                        <li><a href="unapprove-comment.php">Waiting for Approval </a></li>
-                                        <li><a href="manage-comments.php">Approved Advertises</a></li>
+                                        <li><a href="unapproved-advertisements.php">Waiting for Approval </a></li>
+                                        <li><a href="manage-advertises-admin.php">Approved Advertises</a></li>
+                                        <!-- manage-advertises.php -->
                                     </ul>
                                 </li>
                             <?php endif; ?>
@@ -74,11 +84,20 @@
                                     <?php if ($_SESSION['utype'] == '1') : ?>
                                     <li><a href="unapproved-posts.php">Waiting for Approoval</a></li>
                             <?php endif; ?>
-
                                 </ul>
                             </li>
 
-
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Breaking news </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="add-breaking-news.php">Add Breaking News</a></li>
+                                    <li><a href="manage-breaking-news.php">Manage Breaking News</a></li>
+                                    <?php if ($_SESSION['utype'] == '1') : ?>
+                                    <li><a href="unapproved-breaking-news.php">Waiting for Approoval</a></li>
+                            <?php endif; ?>
+                                </ul>
+                            </li>
+                            <?php if ($_SESSION['utype'] == '1') : ?>
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Pages </span> <span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled">
@@ -86,6 +105,8 @@
                                     <li><a href="contactus.php">Contact us</a></li>
                                 </ul>
                             </li>
+                         
+
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Comments </span> <span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled">
@@ -93,7 +114,8 @@
                                     <li><a href="manage-comments.php">Approved Comments</a></li>
                                 </ul>
                             </li>
-
+                            <?php endif; ?>
+                            
                         </ul>
                     </div>
                     <!-- Sidebar -->

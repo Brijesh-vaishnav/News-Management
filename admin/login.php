@@ -7,37 +7,65 @@ if (isset($_POST['login'])) {
 
     // Getting username/ email and password
     $loginas = $_POST["loginas"];
-    echo "<script>alert('$loginas');</script>";
+    $flag=false;
+    // echo "<script>alert('$loginas');</script>";
     $uname = $_POST['username'];
     $password = ($_POST['password']);
-    if ($loginas == "Admin" or $loginas == "operator") {
+    if ($loginas == "Admin" or $loginas == "Operator") {
 
 
+        $password = md5($_POST['password']);
 
         // Fetch data from database on the basis of username/email and password
         $sql = mysqli_query($con, "SELECT AdminUserName,AdminPassword,userType FROM tbladmin WHERE (AdminUserName='$uname' && AdminPassword='$password')");
         $num = mysqli_fetch_array($sql);
+
         if ($num > 0) {
 
             $_SESSION['login'] = $_POST['username'];
             $_SESSION['utype'] = $num['userType'];
+            $_SESSION['type'] = $loginas;
+
             echo "<script type='text/javascript'> document.location = 'dashboard.php'; </script>";
         } else {
             echo "<script>alert('Invalid Details');</script>";
         }
-    } else if ($loginas = "advertiser") {
-        $sql = mysqli_query($con, "SELECT * FROM advertiser WHERE (mail='$uname' && password='$password')");
+    } else if ($loginas == "Advertiser") {
+        $sql = mysqli_query($con, "SELECT * FROM advertiser WHERE (mail='$uname' && password='$password')") or die(mysqli_error($con));
+        //  echo "<script>alert('$loginas');</script>";
+        
         $num = mysqli_fetch_array($sql);
-        if ($num > 0) {
+        echo print_r($num);  
+    
+        if (($num) > 0) {
 
             $_SESSION['login'] = $_POST['username'];
-            $_SESSION['utype'] = $num['userType'];
          
-                  
+            $_SESSION['type'] = $loginas;
+            
             echo "<script type='text/javascript'> document.location = 'advertiser_dashboard.php'; </script>";
         } else {
             echo "<script>alert('Invalid Details');</script>";
         }
+    }
+    else{
+        $sql = mysqli_query($con, "SELECT * FROM user WHERE (email='$uname' && password='$password')");
+    //  echo "<script>alert('$loginas');</script>";
+        
+        $num = mysqli_fetch_array($sql);
+        if ($num > 0) {
+
+            $_SESSION['login'] = $_POST['username'];
+        
+            $_SESSION['type'] = $loginas;
+                  
+            echo "<script type='text/javascript'> document.location = '../index.php'; </script>";
+        } else {
+            echo "<script>alert('Invalid Details');</script>";
+        }
+    
+          
+
     }
 }
 ?>
@@ -110,7 +138,7 @@ if (isset($_POST['login'])) {
                                             <select name="loginas" style="height:50px;width:100%;background:transparent">
                                                 <option value="user">User</option>
                                                 <option value="Advertiser">Advertiser</option>
-                                                <option value="operator">Operator</option>
+                                                <option value="Operator">Operator</option>
                                                 <option value="Admin">Admin</option>
                                             </select>
                                         </div>

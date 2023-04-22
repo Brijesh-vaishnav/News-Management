@@ -2,15 +2,16 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
+if($_SESSION["type"]!="Admin")
+{
+    echo "<script>document.location='./login.php'</script>";
 } else {
 
-    if ($_GET['action'] = 'del') {
+    if ($_GET['action'] == 'del') {
         $postid = intval($_GET['pid']);
-        $query = mysqli_query($con, "update tblposts set Is_Active=0 where id='$postid'");
+        $query = mysqli_query($con, "delete from advertisement  where advertise_id='$postid'");
         if ($query) {
-            $msg = "Post deleted ";
+            $delmsg = "Advertise deleted ";
         } else {
             $error = "Something went wrong . Please try again.";
         }
@@ -19,8 +20,24 @@ if (strlen($_SESSION['login']) == 0) {
 
     <!DOCTYPE html>
     <html lang="en">
-
+     
     <head>
+        <style>
+            table{
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+           table th{
+              
+                width:300px;
+                height:50px;
+                text-align: center;
+              
+               
+            }
+        </style>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
@@ -78,21 +95,20 @@ if (strlen($_SESSION['login']) == 0) {
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
+                       
+                  
 
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Manage Posts </h4>
+                                    <h4 class="page-title">Manage Advertises </h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
-                                            <a href="#">Admin</a>
+                                            <a href="#">Advertiser</a>
                                         </li>
-                                        <li>
-                                            <a href="#">Posts</a>
-                                        </li>
+                                        
                                         <li class="active">
-                                            Manage Post
+                                            Manage Advertises
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -101,7 +117,11 @@ if (strlen($_SESSION['login']) == 0) {
                         </div>
                         <!-- end row -->
 
-
+                        <?php if ($delmsg) { ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Oh snap!</strong> <?php echo htmlentities($delmsg); ?>
+                                    </div>
+                                <?php } ?>
 
 
                         <div class="row">
@@ -109,52 +129,61 @@ if (strlen($_SESSION['login']) == 0) {
                                 <div class="card-box">
 
 
-                                    <div class="table-responsive">
-                                        <table class="table table-colored table-centered table-inverse m-0">
-                                            <thead>
-                                                <tr>
-
-                                                    <th>Title</th>
-                                                    <th>Category</th>
-                                                    <th>Subcategory</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <div>
+                                        
 
                                                 <?php
-                                                $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 ");
+                                            
+                                                $query = mysqli_query($con, "select * from advertisement where status=1");
                                                 $rowcount = mysqli_num_rows($query);
                                                 if ($rowcount == 0) {
                                                 ?>
-                                                    <tr>
+                                                 
 
-                                                        <td colspan="4" align="center">
                                                             <h3 style="color:red">No record found</h3>
-                                                        </td>
-                                                    <tr>
+                                                              
                                                         <?php
                                                     } else {
                                                         while ($row = mysqli_fetch_array($query)) {
+                                                            $image=$row['advertise_img'];
+                                                            $mail=$row["advertiser_mail"];
                                                         ?>
-                                                    <tr>
-                                                        <td><b><?php echo htmlentities($row['title']); ?></b></td>
-                                                        <td><?php echo htmlentities($row['category']) ?></td>
-                                                        <td><?php echo htmlentities($row['subcategory']) ?></td>
+                                                        
+                                                       <div style="display:flex;gap:10px;position:relative" >
+                                                       <a href="manage-posts.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
+                                                       <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
+                                                        <div style="display:flex;flex-direction: column;justify-content: space-around;">
+                                                            <div>
+                                                            <?php
+                                                                 $findAdvertiserQuery = mysqli_query($con, "select * from advertiser where mail='$mail' ");
+                                                                 $advertiser=mysqli_fetch_assoc($findAdvertiserQuery);
+                                                            ?>
+                                                                <b>Advertiser Email : </b> <?php echo $mail; ?>
+                                                            </div>
+                                                            <div>
 
-                                                        <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i>
-                                                    
-                                                    </a>
-                                                            &nbsp;
-                                                           <?php if($_SESSION["utype"]=='1') :?> 
-                                                            <a href="manage-posts.php?pid=<?php echo htmlentities($row['postid']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
-                                                            <?php endif;?>
-                                                    </tr>
+                                                                <b>Advertiser Name: </b>  <?php echo $advertiser["fname"]." ".$advertiser["lname"] ?>
+                                                            </div>
+                                                            <div>
+
+                                                                <b>Advertise valid till: </b> 5:32  
+                                                            </div>
+                                                            <div>
+
+                                                                <b>Payment: </b> 
+                                                                <?php if($row["paymentstatus"] == 0):  ?>
+                                                                    <span style="color:red"> Pending  </span>
+                                                                  <?php   else:    ?>          
+                                                                    <span style="color:green"> Approved  </span>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                       </div>
+
                                             <?php }
                                                     } ?>
 
-                                            </tbody>
-                                        </table>
+                                      
                                     </div>
                                 </div>
                             </div>

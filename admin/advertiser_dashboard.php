@@ -1,10 +1,13 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:login.php');
+
+
+if (($_SESSION['type']) != "Advertiser") {
+    echo "document.location='./login.php';</script>";
+    
 } else {
+ 
 ?>
     <!DOCTYPE html>
     <html lang="en">

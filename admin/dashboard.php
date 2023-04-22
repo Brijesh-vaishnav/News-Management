@@ -1,10 +1,13 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:login.php');
-} else {
+
+// echo ($_SESSION["type"]!="Admin" && $_SESSION["type"]!="Operator");die();
+    if($_SESSION["type"]!="Admin" && $_SESSION["type"]!="Operator")
+    {
+        echo "<script>document.location='./login.php'</script>";
+    }
+ else {
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -55,13 +58,13 @@ if (strlen($_SESSION['login']) == 0) {
                 </div>
 
                 <!-- Button mobile view to collapse sidebar menu -->
-                <?php include('includes/topheader.php'); ?>
+    
             </div>
             <!-- Top Bar End -->
 
 
             <!-- ========== Left Sidebar Start ========== -->
-            <?php include('includes/leftsidebar.php'); ?>
+             <?php include('includes/leftsidebar.php'); ?> 
             <!-- Left Sidebar End -->
 
 
@@ -133,7 +136,7 @@ if (strlen($_SESSION['login']) == 0) {
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Braking News</p>
-                                            <?php $query = mysqli_query($con, "select * from tblposts where Is_Active=1");
+                                            <?php $query = mysqli_query($con, "select * from breaking_news");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
@@ -179,6 +182,85 @@ if (strlen($_SESSION['login']) == 0) {
                                         </div>
                                     </div>
                                 </div>
+                            </a>
+                            <a href="manage-advertisers.php">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card-box widget-box-one">
+                                        <i class="mdi mdi-layers widget-one-icon"></i>
+                                        <div class="wigdet-one-content">
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Advertisers</p>
+                                            <?php $query = mysqli_query($con, "select * from advertiser");
+                                            $countposts = mysqli_num_rows($query);
+                                            ?>
+                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="row">
+                        <a href="manage-advertises-admin.php">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card-box widget-box-one">
+                                        <i class="mdi mdi-layers widget-one-icon"></i>
+                                        <div class="wigdet-one-content">
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Advertisements</p>
+                                            <?php $query = mysqli_query($con, "select * from advertisement");
+                                            $countposts = mysqli_num_rows($query);
+                                            ?>
+                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="normal-users.php">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card-box widget-box-one">
+                                        <i class="mdi mdi-layers widget-one-icon"></i>
+                                        <div class="wigdet-one-content">
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Unsubscribed Users</p>
+                                            <?php $query = mysqli_query($con, "select * from user where is_subscriber=0");
+                                            $countposts = mysqli_num_rows($query);
+                                            ?>
+                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="subscribed-users.php">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card-box widget-box-one">
+                                        <i class="mdi mdi-layers widget-one-icon"></i>
+                                        <div class="wigdet-one-content">
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Subscribed Users</p>
+                                            <?php $query = mysqli_query($con, "select * from user where is_subscriber=1");
+                                            $countposts = mysqli_num_rows($query);
+                                            ?>
+                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="row">
+                        <a href="manage-comments.php">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card-box widget-box-one">
+                                        <i class="mdi mdi-layers widget-one-icon"></i>
+                                        <div class="wigdet-one-content">
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Comments </p>
+                                            <?php $query = mysqli_query($con, "select * from tblcomments where status=1");
+                                            $countposts = mysqli_num_rows($query);
+                                            ?>
+                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                        </div>
+                                    </div>
+                                </div><!-- end col -->
                             </a>
                         </div>
                         

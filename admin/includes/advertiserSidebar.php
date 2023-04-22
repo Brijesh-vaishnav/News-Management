@@ -1,3 +1,7 @@
+<?php
+    if($_SESSION["type"]!="Advertiser")
+        echo "<script>document.location='./login.php'</script>"
+?>
 <div class="left side-menu">
                 <div class="sidebar-inner slimscrollleft">
 

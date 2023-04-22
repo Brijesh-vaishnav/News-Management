@@ -9,7 +9,17 @@ include('includes/config.php');
 <html lang="en">
 
 <head>
+  <Style>
+    html,
+    body {
+      height: 100%;
+    }
 
+    .dropdown-menu {
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+  </Style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -147,6 +157,7 @@ include('includes/config.php');
 
 
   </head>
+
 </body>
 
 </html>
