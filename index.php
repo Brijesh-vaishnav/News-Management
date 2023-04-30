@@ -1,6 +1,8 @@
 <?php
-session_start();
+
 include('includes/config.php');
+
+
 
 ?>
 
@@ -68,28 +70,35 @@ include('includes/config.php');
         $state_id = "";
         if (isset($_GET["state_id"]))
           $state_id = $_GET["state_id"];
-        if ($state_id == "")
-          $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1  order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
-        else
-          $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 AND state='$state_id' order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
-        $row = mysqli_fetch_array($query)
+
+     
         ?>
 
         <div class="card mb-4">
-          <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
+          <?php 
+            $query=mysqli_query($con,"select * from breaking_news");
+            $breaking_news=mysqli_fetch_assoc($query);
+            // echo print_r($breaking_news) ;
+          ?>
+          <img class="card-img-top" src="admin/breakingnews/<?php echo htmlentities($breaking_news['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']);  ?>">
           <div class="card-body">
-            <h2 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h2>
+            <h2 class="card-title"><?php echo htmlentities($breaking_news['news_title']); ?></h2>
 
-            <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="btn btn-primary">Read More &rarr;</a>
+            <a href="news-details.php?nid=<?php echo htmlentities($breaking_news['news_id']) ?>&&news=breaking_news" class="btn btn-primary">Read More &rarr;</a>
           </div>
           <div class="card-footer text-muted">
-            Posted on <?php echo htmlentities($row['postingdate']); ?>
+            Posted on <?php echo htmlentities($breaking_news['news_date']); ?>
 
           </div>
         </div>
 
         <div class="flex" style="display:flex;flex-wrap:wrap;gap:10px">
           <?php
+          if ($state_id == "")
+            $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1  order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
+          else
+            $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 AND state='$state_id' order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
+            $row = mysqli_fetch_array($query);
           while ($row = mysqli_fetch_array($query)) { ?>
             <div class="card mb-4" style="width:48%;display:flex;align-content:space-between ;position:relative">
               <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">

@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include('includes/config.php');
 //Genrating CSRF Token
 if (empty($_SESSION['token'])) {
@@ -29,6 +29,7 @@ if (isset($_POST['submit'])) {
 $postid = intval($_GET['nid']);
 
 $sql = "SELECT viewCounter FROM tblposts WHERE id = '$postid'";
+
 $result = $con->query($sql);
 
 if ($result->num_rows > 0) {
@@ -84,38 +85,61 @@ if ($result->num_rows > 0) {
         <?php
         $pid = intval($_GET['nid']);
         $currenturl = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];;
+        $query="";
+        $flag=false;
+        if(!isset($_GET["news"]))
         $query = mysqli_query($con, "select tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url,tblposts.postedBy,tblposts.lastUpdatedBy,tblposts.UpdationDate from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$pid'");
+        else{
+          $query=mysqli_query($con,"select * from breaking_news where news_id='$pid'");
+          $flag=true;
+        }
         while ($row = mysqli_fetch_array($query)) {
         ?>
 
           <div class="card mb-4">
 
             <div class="card-body">
+              <?php if(!$flag): ?>
               <h2 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h2>
+             <?php else: ?>
+              <h2 class="card-title"><?php echo htmlentities($row['news_title']); ?></h2>
+            <?php endif; ?>
               <!--category-->
+              <?php if(!$flag): ?>
               <a class="badge bg-secondary text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
               <!--Subcategory--->
               <a class="badge bg-secondary text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
-
+              <?php endif; ?>
 
               <p>
-
-                <b>Posted by </b> <?php echo htmlentities($row['postedBy']); ?> on </b><?php echo htmlentities($row['postingdate']); ?> |
+ 
+              <?php if(!$flag): ?>
+                 posted on </b><?php echo htmlentities($row['postingdate']); ?> |
+              <?php else : ?>
+                posted on </b><?php echo htmlentities($row['news_date']); ?> |
+                <?php endif; ?>
+                <?php if(!$flag): ?>
                 <?php if ($row['lastUpdatedBy'] != '') : ?>
                   <b>Last Updated by </b> <?php echo htmlentities($row['lastUpdatedBy']); ?> on </b><?php echo htmlentities($row['UpdationDate']); ?>
+                <?php endif; ?>
               </p>
             <?php endif; ?>
-            <p><strong>Share:</strong> <a href="http://www.facebook.com/share.php?u=<?php echo $currenturl; ?>" target="_blank">Facebook</a> |
-              <a href="https://twitter.com/share?url=<?php echo $currenturl; ?>" target="_blank">Twitter</a> |
-              <a href="https://web.whatsapp.com/send?text=<?php echo $currenturl; ?>" target="_blank">Whatsapp</a> |
-              <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $currenturl; ?>" target="_blank">Linkedin</a> <b>Visits:</b> <?php print $visits; ?>
+           
+        <b>Visits:</b> <?php print $visits; ?>
             </p>
             <hr />
-
+          <?php if(!$flag): ?>
             <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
+          <?php else: ?>
+            <img class="img-fluid rounded" src="admin/breakingnews/<?php echo htmlentities($row['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']); ?>">
+          <?php endif; ?>
 
             <p class="card-text"><?php
+                                $pt="";
+                                if(!$flag)
                                   $pt = $row['postdetails'];
+                                else 
+                                  $pt=$row["news_title"];
                                   echo (substr($pt, 0)); ?></p>
 
             </div>

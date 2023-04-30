@@ -60,13 +60,13 @@ if (strlen($_SESSION['login']) == 0) {
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Manage Normal Users</h4>
+                                    <h4 class="page-title">Manage Subscribed Users</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
-                                            <a href="#">Normal Users </a>
+                                            <a href="#">Subscribed Users </a>
                                         </li>
                                         <li class="active">
-                                            Manage Normal Users
+                                            Manage Subscribed Users
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -99,13 +99,22 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <?php
                                                 $query = mysqli_query($con, "Select * from  subscriber");
                                                 $cnt = 1;
+                                                
                                                 while ($row = mysqli_fetch_array($query)) {
-                                                ?>
+                                                ?> 
                                                     <tr>
                                                         <th scope="row"><?php echo htmlentities($cnt); ?></th>
-                                                        <td><?php echo htmlentities($row['email']); ?></td>
-                                                        <td><?php echo htmlentities($row['fname']); ?></td>
-                                                        <td><?php echo htmlentities($row['lname']); ?></td>
+                                                          <?php
+                                                            $login=$row["subscribed_user_email"];
+                                                            $query = mysqli_query($con, "Select * from  user where email='$login'");
+                                                            $cnt = 1;
+                                                            
+                                                            $user = mysqli_fetch_array($query);
+                                                       ?>
+                                                        <td><?php echo htmlentities($user['email']); ?></td>
+                                                        <td><?php echo htmlentities($user['fname']); ?></td>
+                                                        <td><?php echo htmlentities($user['lname']); ?></td>
+                                                    
                                                         <td><?php echo htmlentities($row['subscription_date']); ?></td>
                                                         <td><?php echo htmlentities($row['subscription_end_date']); ?></td>
                                                         <td>  &nbsp;<a href="subscribed-users.php?rid=<?php echo htmlentities($row['subscription_id']); ?>"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>

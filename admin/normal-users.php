@@ -106,7 +106,7 @@ if($_SESSION["type"]!="Admin")
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $query = mysqli_query($con, "Select * from  user where is_subscriber='0'");
+                                                $query = mysqli_query($con, "Select count(*) from user");
                                                 $cnt = 1;
                                                 while ($row = mysqli_fetch_array($query)) {
                                                 ?>

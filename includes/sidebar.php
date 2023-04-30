@@ -59,7 +59,22 @@
     </div>
   </div>
     <!-- Advertisements -->
+<?php
+$whoIsLoggedIn=null;
+$isSubscriber=null;
+if(isset($_SESSION["login"]))
+{
+  
+  $whoIsLoggedIn=$_SESSION["login"];
+  $queryForCheckWhetherIsSubscriber=mysqli_query($con,"select * from subscriber where subscribed_user_email='$whoIsLoggedIn'");
+  $isSubscriber=mysqli_fetch_assoc($queryForCheckWhetherIsSubscriber);
+}
+ 
 
+  
+  
+?>
+<?php  if($isSubscriber==null or empty($isSubscriber)): ?>
     <div class="advertisement">
     <?php 
     
@@ -71,7 +86,11 @@
     <img class="card-img-top" src="admin/advertiseImages/<?php echo $image ?>" alt="advertise image" />;
   </div>
 
+  <div class="subscribe">
+   Tired of advertising ?  <a href="./subscription-page.php" >Subscribe</a>
+  </div>
 
+<?php endif; ?>
   <!-- Side Widget -->
   <div class="card my-4">
     <h5 class="card-header">Popular News</h5>

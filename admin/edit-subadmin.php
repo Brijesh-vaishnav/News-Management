@@ -12,7 +12,7 @@ if (strlen($_SESSION['login']) == 0) {
         $lname=$_POST['lname'];
         $query = mysqli_query($con, "Update  tbladmin set AdminUserName='$email', fname='$fname',lname='$lname'  where userType=0 && id='$aid'");
         if ($query) {
-            echo "<script>alert('Sub-admin details updated.');</script>";
+            echo "<script>alert('Operator details updated.');</script>";
         } else {
             echo "<script>alert('Something went wrong . Please try again.');</script>";
         }

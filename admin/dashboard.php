@@ -34,40 +34,22 @@ include('includes/config.php');
 
     </head>
 
-
+    
     <body class="fixed-left">
+        <?php include('includes/leftsidebar.php'); ?> 
 
         <!-- Begin page -->
         <div id="wrapper">
 
             <!-- Top Bar Start -->
-            <div class="topbar">
-
-                <!-- LOGO -->
-                <div class="topbar-left">
-                    <a href="index.html" class="logo"><span>NP<span>Admin</span></span><i class="mdi mdi-layers"></i></a>
-                    <!-- Image logo -->
-                    <!--<a href="index.html" class="logo">-->
-                    <!--<span>-->
-                    <!--<img src="assets/images/logo.png" alt="" height="30">-->
-                    <!--</span>-->
-                    <!--<i>-->
-                    <!--<img src="assets/images/logo_sm.png" alt="" height="28">-->
-                    <!--</i>-->
-                    <!--</a>-->
-                </div>
-
-                <!-- Button mobile view to collapse sidebar menu -->
-    
-            </div>
+           <?php include('includes/topheader.php') ?>
             <!-- Top Bar End -->
 
 
             <!-- ========== Left Sidebar Start ========== -->
-             <?php include('includes/leftsidebar.php'); ?> 
             <!-- Left Sidebar End -->
 
-
+    
 
             <!-- ============================================================== -->
             <!-- Start right Content here -->
@@ -130,12 +112,12 @@ include('includes/config.php');
                                 </div><!-- end col -->
                             </a>
 
-                            <a href="manage-posts.php">
+                            <a href="manage-breaking-news.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Braking News</p>
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Breaking News</p>
                                             <?php $query = mysqli_query($con, "select * from breaking_news");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
@@ -183,6 +165,8 @@ include('includes/config.php');
                                     </div>
                                 </div>
                             </a>
+                            <?php if ($_SESSION['utype'] == '1') : ?>
+
                             <a href="manage-advertisers.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
@@ -198,7 +182,11 @@ include('includes/config.php');
                                     </div>
                                 </div>
                             </a>
+                            <?php endif; ?>
+
                         </div>
+                        <?php if ($_SESSION['utype'] == '1') : ?>
+
                         <div class="row">
                         <a href="manage-advertises-admin.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
@@ -221,7 +209,7 @@ include('includes/config.php');
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Unsubscribed Users</p>
-                                            <?php $query = mysqli_query($con, "select * from user where is_subscriber=0");
+                                            <?php $query = mysqli_query($con, "select count(*) from user");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
@@ -236,7 +224,7 @@ include('includes/config.php');
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Subscribed Users</p>
-                                            <?php $query = mysqli_query($con, "select * from user where is_subscriber=1");
+                                            <?php $query = mysqli_query($con, "select count(*) from subscriber ");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
@@ -246,6 +234,9 @@ include('includes/config.php');
                                 </div>
                             </a>
                         </div>
+                      
+
+
                         <div class="row">
                         <a href="manage-comments.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
@@ -264,7 +255,7 @@ include('includes/config.php');
                             </a>
                         </div>
                         
-
+                        <?php endif; ?>
                     </div> <!-- container -->
 
                 </div> <!-- content -->

@@ -40,9 +40,9 @@ if (strlen($_SESSION['login']) == "") {
 
 
             $total_price = $_POST["total_price"];
-
+            $hours=$_POST["validity"];
             $currentDateTime = date('Y-m-d H:i:s');
-            $validity = date('Y-m-d H:i:s', strtotime($currentDateTime . ' +8 hours'));
+            $validity = date('Y-m-d H:i:s', strtotime($currentDateTime .  "+$hours hours"));
             // echo "<script>alert('$validity')</script>";
 
             $query = mysqli_query($con, "insert into advertisement(advertiser_mail ,advertise_img,status,validity,paymentstatus,total_price) values('$postedby','$imgnewfile','$status','$validity','$paymentstatus','$total_price')") or die("Query failed: " . mysqli_error($conn)); ;
@@ -97,6 +97,7 @@ if (strlen($_SESSION['login']) == "") {
 
     <body class="fixed-left">
 
+        <?php include('includes/advertiserSidebar.php'); ?>
         <!-- Begin page -->
         <div id="wrapper">
 
@@ -106,7 +107,6 @@ if (strlen($_SESSION['login']) == "") {
 
 
             <!-- ========== Left Sidebar Start ========== -->
-            <?php include('includes/advertiserSidebar.php'); ?>
             <!-- Left Sidebar End -->
 
             <div class="content-page">

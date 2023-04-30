@@ -64,10 +64,10 @@ if($_SESSION["type"]!="Admin")
                                     <h4 class="page-title">Manage Advertisers</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
-                                            <a href="#">Normal Users </a>
+                                            <a href="#">Advertisers </a>
                                         </li>
                                         <li class="active">
-                                            Manage Normal Users
+                                            Manage Advertisers Users
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
