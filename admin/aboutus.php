@@ -10,7 +10,7 @@ if (strlen($_SESSION['login']) == 0) {
         $pagetitle = $_POST['pagetitle'];
         $pagedetails = $_POST['pagedescription'];
 
-        $query = mysqli_query($con, "update tblpages set PageTitle='$pagetitle',Description='$pagedetails' where PageName='$pagetype' ");
+        $query = mysqli_query($con, "update pages set PageTitle='$pagetitle',Description='$pagedetails' where PageName='$pagetype' ");
         if ($query) {
             $msg = "About us  page successfully updated ";
         } else {
@@ -118,7 +118,7 @@ if (strlen($_SESSION['login']) == 0) {
                         </div>
                         <?php
                         $pagetype = 'aboutus';
-                        $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
+                        $query = mysqli_query($con, "select PageTitle,Description from pages where PageName='$pagetype'");
                         while ($row = mysqli_fetch_array($query)) {
 
                         ?>

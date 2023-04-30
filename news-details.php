@@ -187,7 +187,7 @@ if ($result->num_rows > 0) {
 
         <?php
         $sts = 1;
-        $query = mysqli_query($con, "select name,comment,postingDate from  tblcomments where postId='$pid' and status='$sts'");
+        $query = mysqli_query($con, "select name,comment,postingDate from  commentwhere postId='$pid' and status='$sts'");
         while ($row = mysqli_fetch_array($query)) {
         ?>
           <div class="media mb-4">

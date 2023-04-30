@@ -31,7 +31,7 @@ include('includes/config.php');
 
 <?php 
 $pagetype='aboutus';
-$query=mysqli_query($con,"select PageTitle,Description from tblpages where PageName='$pagetype'");
+$query=mysqli_query($con,"select PageTitle,Description from pages where PageName='$pagetype'");
 while($row=mysqli_fetch_array($query))
 {
 

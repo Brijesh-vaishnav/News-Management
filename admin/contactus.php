@@ -13,7 +13,7 @@ $pagetype='contactus';
 $pagetitle=$_POST['pagetitle'];
 $pagedetails=$_POST['pagedescription'];
 
-$query=mysqli_query($con,"update tblpages set PageTitle='$pagetitle',Description='$pagedetails' where PageName='$pagetype' ");
+$query=mysqli_query($con,"update pages set PageTitle='$pagetitle',Description='$pagedetails' where PageName='$pagetype' ");
 if($query)
 {
 $msg="About us  page successfully updated ";
@@ -122,7 +122,7 @@ $error="Something went wrong . Please try again.";
 </div>
 <?php 
 $pagetype='contactus';
-$query=mysqli_query($con,"select PageTitle,Description from tblpages where PageName='$pagetype'");
+$query=mysqli_query($con,"select PageTitle,Description from pages where PageName='$pagetype'");
 while($row=mysqli_fetch_array($query))
 {
 
