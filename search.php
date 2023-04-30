@@ -60,13 +60,13 @@ $st;
         $offset = ($pageno-1) * $no_of_records_per_page;
 
 
-        $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
+        $total_pages_sql = "SELECT COUNT(*) FROM news";
         $result = mysqli_query($con,$total_pages_sql);
         $total_rows = mysqli_fetch_array($result)[0];
         $total_pages = ceil($total_rows / $no_of_records_per_page);
 
 
-$query=mysqli_query($con,"select tblposts.id as pid,tblposts.PostTitle as posttitle,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url,tblposts.PostImage from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.PostTitle like '%$st%' and tblposts.Is_Active=1 LIMIT $offset, $no_of_records_per_page");
+$query=mysqli_query($con,"select news.id as pid,news.news_title as news_title,category.CategoryName as category,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate,news.news_img from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.news_title like '%$st%' and news.Is_Active=1 LIMIT $offset, $no_of_records_per_page");
 
 $rowcount=mysqli_num_rows($query);
 if($rowcount==0)
@@ -80,9 +80,9 @@ while ($row=mysqli_fetch_array($query)) {
 ?>
 
           <div class="card mb-4">
-      <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']);?>" alt="<?php echo htmlentities($row['posttitle']);?>">
+      <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['news_img']);?>" alt="<?php echo htmlentities($row['news_title']);?>">
             <div class="card-body">
-              <h2 class="card-title"><?php echo htmlentities($row['posttitle']);?></h2>
+              <h2 class="card-title"><?php echo htmlentities($row['news_title']);?></h2>
          
               <a href="news-details.php?nid=<?php echo htmlentities($row['pid'])?>" class="btn btn-primary">Read More &rarr;</a>
             </div>

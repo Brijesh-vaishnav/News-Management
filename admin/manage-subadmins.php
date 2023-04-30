@@ -9,7 +9,7 @@ if (strlen($_SESSION['login']) == 0) {
     // Code for Forever deletionparmdel
     if ($_GET['action'] == 'del' && $_GET['rid']) {
         $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  tbladmin  where id='$id' && userType=0");
+        $query = mysqli_query($con, "delete from  employee  where id='$id' && emp_role_id 	=0");
         echo "<script>alert('Operator details deleted.');</script>";
         echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'; </script>";
     }
@@ -109,13 +109,13 @@ if (strlen($_SESSION['login']) == 0) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $query = mysqli_query($con, "Select * from  tbladmin where userType=0");
+                                                $query = mysqli_query($con, "Select * from  employee where emp_role_id 	=0");
                                                 $cnt = 1;
                                                 while ($row = mysqli_fetch_array($query)) {
                                                 ?>
                                                     <tr>
                                                         <th scope="row"><?php echo htmlentities($cnt); ?></th>
-                                                        <td><?php echo htmlentities($row['AdminUserName']); ?></td>
+                                                        <td><?php echo htmlentities($row['emp_mail']); ?></td>
                                                         <td><?php echo htmlentities($row['fname']); ?></td>
                                                         <td><?php echo htmlentities($row['lname']); ?></td>
 

@@ -28,14 +28,14 @@ if (isset($_POST['submit'])) {
 }
 $postid = intval($_GET['nid']);
 
-$sql = "SELECT viewCounter FROM tblposts WHERE id = '$postid'";
+$sql = "SELECT viewCounter FROM news WHERE id = '$postid'";
 
 $result = $con->query($sql);
 
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $visits = $row["viewCounter"];
-    $sql = "UPDATE tblposts SET viewCounter = $visits+1 WHERE id ='$postid'";
+    $sql = "UPDATE news SET viewCounter = $visits+1 WHERE id ='$postid'";
     $con->query($sql);
   }
 } else {
@@ -88,7 +88,7 @@ if ($result->num_rows > 0) {
         $query="";
         $flag=false;
         if(!isset($_GET["news"]))
-        $query = mysqli_query($con, "select tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url,tblposts.postedBy,tblposts.lastUpdatedBy,tblposts.UpdationDate from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$pid'");
+        $query = mysqli_query($con, "select news.news_title as news_title,news.news_img,category.CategoryName as category,category.id as cid,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate,news.postedBy from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.id='$pid'");
         else{
           $query=mysqli_query($con,"select * from breaking_news where news_id='$pid'");
           $flag=true;
@@ -100,14 +100,14 @@ if ($result->num_rows > 0) {
 
             <div class="card-body">
               <?php if(!$flag): ?>
-              <h2 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h2>
+              <h2 class="card-title"><?php echo htmlentities($row['news_title']); ?></h2>
              <?php else: ?>
               <h2 class="card-title"><?php echo htmlentities($row['news_title']); ?></h2>
             <?php endif; ?>
               <!--category-->
               <?php if(!$flag): ?>
               <a class="badge bg-secondary text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
-              <!--Subcategory--->
+              <!--subcategory--->
               <a class="badge bg-secondary text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
               <?php endif; ?>
 
@@ -119,9 +119,6 @@ if ($result->num_rows > 0) {
                 posted on </b><?php echo htmlentities($row['news_date']); ?> |
                 <?php endif; ?>
                 <?php if(!$flag): ?>
-                <?php if ($row['lastUpdatedBy'] != '') : ?>
-                  <b>Last Updated by </b> <?php echo htmlentities($row['lastUpdatedBy']); ?> on </b><?php echo htmlentities($row['UpdationDate']); ?>
-                <?php endif; ?>
               </p>
             <?php endif; ?>
            
@@ -129,7 +126,7 @@ if ($result->num_rows > 0) {
             </p>
             <hr />
           <?php if(!$flag): ?>
-            <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
+            <img class="img-fluid rounded" src="admin/postimages/<?php echo htmlentities($row['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']); ?>">
           <?php else: ?>
             <img class="img-fluid rounded" src="admin/breakingnews/<?php echo htmlentities($row['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']); ?>">
           <?php endif; ?>
@@ -137,7 +134,7 @@ if ($result->num_rows > 0) {
             <p class="card-text"><?php
                                 $pt="";
                                 if(!$flag)
-                                  $pt = $row['postdetails'];
+                                  $pt = $row['news_desc'];
                                 else 
                                   $pt=$row["news_title"];
                                   echo (substr($pt, 0)); ?></p>

@@ -4,3 +4,4 @@ advertise timing should start after payment
 advertise should be deleted after payment.
 
 about us page should be updated.
+author management have to add shit.

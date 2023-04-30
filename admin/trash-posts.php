@@ -8,7 +8,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     if ($_GET['action'] = 'restore') {
         $postid = intval($_GET['pid']);
-        $query = mysqli_query($con, "update tblposts set Is_Active=1 where id='$postid'");
+        $query = mysqli_query($con, "update news set Is_Active=1 where id='$postid'");
         if ($query) {
             $msg = "Post restored successfully ";
         } else {
@@ -20,7 +20,7 @@ if (strlen($_SESSION['login']) == 0) {
     // Code for Forever deletionparmdel
     if ($_GET['presid']) {
         $id = intval($_GET['presid']);
-        $query = mysqli_query($con, "delete from  tblposts  where id='$id'");
+        $query = mysqli_query($con, "delete from  news  where id='$id'");
         $delmsg = "Post deleted forever";
     }
 
@@ -138,14 +138,14 @@ if (strlen($_SESSION['login']) == 0) {
 
                                                         <th>Title</th>
                                                         <th>Category</th>
-                                                        <th>Subcategory</th>
+                                                        <th>subcategory</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
                                                     <?php
-                                                    $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=0");
+                                                    $query = mysqli_query($con, "select news.id as postid,news.news_title as title,category.CategoryName as category,subcategory.subcategory as subcategory from news left join category on category.id=news.CategoryId left join subcategory on subcategory.subcategoryId=news.subcategoryId where news.Is_Active=0");
                                                     $rowcount = mysqli_num_rows($query);
                                                     if ($rowcount == 0) {
                                                     ?>

@@ -120,7 +120,7 @@ if (($_SESSION['type']) != "Advertiser") {
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Approved Advertises</p>
-                                            <?php $query = mysqli_query($con, "select * from tblsubcategory where Is_Active=1");
+                                            <?php $query = mysqli_query($con, "select * from subcategory where Is_Active=1");
                                             $countsubcat = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>

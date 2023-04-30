@@ -134,7 +134,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $query = mysqli_query($con, "Select tblcomments.id,  tblcomments.name,tblcomments.email,tblcomments.postingDate,tblcomments.comment,tblposts.id as postid,tblposts.PostTitle from  tblcomments join tblposts on tblposts.id=tblcomments.postId where tblcomments.status=0");
+                                                    $query = mysqli_query($con, "Select tblcomments.id,  tblcomments.name,tblcomments.email,tblcomments.postingDate,tblcomments.comment,news.id as postid,news.news_title from  tblcomments join news on news.id=tblcomments.postId where tblcomments.status=0");
                                                     $cnt = 1;
                                                     while ($row = mysqli_fetch_array($query)) {
                                                     ?>
@@ -153,7 +153,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                                 ?></td>
 
 
-                                                            <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><?php echo htmlentities($row['PostTitle']); ?></a> </td>
+                                                            <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><?php echo htmlentities($row['news_title']); ?></a> </td>
                                                             <td><?php echo htmlentities($row['postingDate']); ?></td>
                                                             <td>
                                                                 <?php if ($st == '0') : ?>

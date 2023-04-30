@@ -8,14 +8,14 @@ if (strlen($_SESSION['login']) == 0) {
 
     // For adding post  
     if (isset($_POST['submit'])) {
-        $posttitle = $_POST['posttitle'];
+        $news_title = $_POST['news_title'];
       
-        $postdetails = $_POST['postdescription'];
+        $news_desc = $_POST['postdescription'];
         $postedby = $_SESSION['login'];
         $post_state = $_POST["state"];
-        $arr = explode(" ", $posttitle);
+        $arr = explode(" ", $news_title);
         $url = implode("-", $arr);
-        $imgfile = $_FILES["postimage"]["name"];
+        $imgfile = $_FILES["news_img"]["name"];
         // get the image extension
         $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
         // allowed extensions
@@ -27,12 +27,12 @@ if (strlen($_SESSION['login']) == 0) {
             //rename the image file
             $imgnewfile = md5($imgfile) . $extension;
             // Code for move image into directory
-            move_uploaded_file($_FILES["postimage"]["tmp_name"], "breakingnews/" . $imgnewfile);
+            move_uploaded_file($_FILES["news_img"]["tmp_name"], "breakingnews/" . $imgnewfile);
             // news_id 	news_title 	news_desc 	news_date 	status 	is_active 	author_mail 	
             $status = 0;
             if ($_SESSION["utype"] == "1")
                 $status = 1;
-            $query = mysqli_query($con, "insert into breaking_news(news_title,news_desc,news_date,status ,author_mail ,news_img) values('$posttitle','$postdetails',now(),'$status','author@gmail.com','$imgnewfile')") or die(mysqli_error($con));
+            $query = mysqli_query($con, "insert into breaking_news(news_title,news_desc,news_date,status ,author_mail ,news_img) values('$news_title','$news_desc',now(),'$status','author@gmail.com','$imgnewfile')") or die(mysqli_error($con));
             if ($query) {
                 $msg= "Breaking successfully added ";
                 if ($_SESSION["utype"] == "1")
@@ -179,7 +179,7 @@ if (strlen($_SESSION['login']) == 0) {
                                         <form name="addpost" method="post" enctype="multipart/form-data">
                                             <div class="form-group m-b-20">
                                                 <label for="exampleInputEmail1">Post Title</label>
-                                                <input type="text" class="form-control" id="posttitle" name="posttitle" placeholder="Enter title" required value="<?php echo htmlentities($row['news_title'])  ?>">
+                                                <input type="text" class="form-control" id="news_title" name="news_title" placeholder="Enter title" required value="<?php echo htmlentities($row['news_title'])  ?>">
                                             </div>
 
 
@@ -204,7 +204,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="col-sm-12">
                                                     <div class="card-box">
                                                         <h4 class="m-b-30 m-t-0 header-title"><b>Feature Image</b></h4>
-                                                        <input type="file" class="form-control" id="postimage" name="postimage" required>
+                                                        <input type="file" class="form-control" id="news_img" name="news_img" required>
                                                     </div>
                                                 </div>
                                             </div>

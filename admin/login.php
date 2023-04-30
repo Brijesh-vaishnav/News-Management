@@ -14,16 +14,17 @@ if (isset($_POST['login'])) {
     if ($loginas == "Admin" or $loginas == "Operator") {
 
 
-        $password = md5($_POST['password']);
+      
 
         // Fetch data from database on the basis of username/email and password
-        $sql = mysqli_query($con, "SELECT AdminUserName,AdminPassword,userType FROM tbladmin WHERE (AdminUserName='$uname' && AdminPassword='$password')");
+        $sql = mysqli_query($con, "SELECT emp_mail,emp_password,emp_role_id 	 FROM employee WHERE (emp_mail='$uname' && emp_password='$password')");
         $num = mysqli_fetch_array($sql);
 
         if ($num > 0) {
 
             $_SESSION['login'] = $_POST['username'];
-            $_SESSION['utype'] = $num['userType'];
+            $_SESSION['utype'] = $num['emp_role_id'];
+        
             $_SESSION['type'] = $loginas;
 
             echo "<script type='text/javascript'> document.location = 'dashboard.php'; </script>";

@@ -7,20 +7,20 @@ if (strlen($_SESSION['login']) == 0) {
 } else {
     if ($_GET['disid']) {
         $id = intval($_GET['disid']);
-        $query = mysqli_query($con, "update tblposts set status='0' where id='$id'");
+        $query = mysqli_query($con, "update news set status='0' where id='$id'");
         $msg = "Post unapprove ";
     }
     // Code for restore
     if ($_GET['appid']) {
         $id = intval($_GET['appid']);
-        $query = mysqli_query($con, "update tblposts set status='1' where id='$id'");
+        $query = mysqli_query($con, "update news set status='1' where id='$id'");
         $msg = "Post approved";
     }
 
     // Code for deletion
     if ($_GET['action'] == 'del' && $_GET['rid']) {
         $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  tblposts  where id='$id'");
+        $query = mysqli_query($con, "delete from  news  where id='$id'");
         $delmsg = "Post deleted forever";
     }
 
@@ -125,14 +125,14 @@ if (strlen($_SESSION['login']) == 0) {
 
                                                         <th>Title</th>
                                                         <th>Category</th>
-                                                        <th>Subcategory</th>
+                                                        <th>subcategory</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
                                                     <?php
-                                                    $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 && tblposts.status=0 ");
+                                                    $query = mysqli_query($con, "select news.id as postid,news.news_title as title,category.CategoryName as category,subcategory.subcategory as subcategory from news left join category on category.id=news.CategoryId left join subcategory on subcategory.subcategoryId=news.subcategoryId where news.Is_Active=1 && news.status=0 ");
                                                     $rowcount = mysqli_num_rows($query);
                                                     if ($rowcount == 0) {
                                                     ?>

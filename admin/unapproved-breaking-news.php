@@ -7,20 +7,20 @@ if (strlen($_SESSION['login']) == 0) {
 } else {
     if ($_GET['disid']) {
         $id = intval($_GET['disid']);
-        $query = mysqli_query($con, "update tblposts set status='0' where id='$id'");
+        $query = mysqli_query($con, "update news set status='0' where id='$id'");
         $msg = "Post unapprove ";
     }
     // Code for restore
     if ($_GET['appid']) {
         $id = intval($_GET['appid']);
-        $query = mysqli_query($con, "update tblposts set status='1' where id='$id'");
+        $query = mysqli_query($con, "update news set status='1' where id='$id'");
         $msg = "Post approved";
     }
 
     // Code for deletion
     if ($_GET['action'] == 'del' && $_GET['rid']) {
         $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  tblposts  where id='$id'");
+        $query = mysqli_query($con, "delete from  news  where id='$id'");
         $delmsg = "Post deleted forever";
     }
 

@@ -8,15 +8,15 @@ if (strlen($_SESSION['login']) == 0) {
 
     // For adding post  
     if (isset($_POST['submit'])) {
-        $posttitle = $_POST['posttitle'];
+        $news_title = $_POST['news_title'];
         $catid = $_POST['category'];
         $subcatid = $_POST['subcategory'];
-        $postdetails = $_POST['postdescription'];
+        $news_desc = $_POST['postdescription'];
         $postedby = $_SESSION['login'];
         $post_state = $_POST["state"];
-        $arr = explode(" ", $posttitle);
+        $arr = explode(" ", $news_title);
         $url = implode("-", $arr);
-        $imgfile = $_FILES["postimage"]["name"];
+        $imgfile = $_FILES["news_img"]["name"];
         // get the image extension
         $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
         // allowed extensions
@@ -28,13 +28,13 @@ if (strlen($_SESSION['login']) == 0) {
             //rename the image file
             $imgnewfile = md5($imgfile) . $extension;
             // Code for move image into directory
-            move_uploaded_file($_FILES["postimage"]["tmp_name"], "postimages/" . $imgnewfile);
+            move_uploaded_file($_FILES["news_img"]["tmp_name"], "postimages/" . $imgnewfile);
 
             $is_active = 1;
             $status = 0;
             if ($_SESSION["login"] == "admin")
                 $status = 1;
-            $query = mysqli_query($con, "insert into tblposts(PostTitle,CategoryId,SubCategoryId,PostDetails,PostUrl,Is_Active,PostImage,postedBy,state,status) values('$posttitle','$catid','$subcatid','$postdetails','$url','$is_active','$imgnewfile','$postedby',' $post_state','$status')");
+            $query = mysqli_query($con, "insert into news(news_title,CategoryId,subcategoryId,news_desc,Is_Active,news_img,postedBy,state,status) values('$news_title','$catid','$subcatid','$news_desc','$url','$is_active','$imgnewfile','$postedby',' $post_state','$status')");
             if ($query) {
                 $msg = "Post successfully added ";
             } else {
@@ -163,7 +163,7 @@ if (strlen($_SESSION['login']) == 0) {
                                         <form name="addpost" method="post" enctype="multipart/form-data">
                                             <div class="form-group m-b-20">
                                                 <label for="exampleInputEmail1">Post Title</label>
-                                                <input type="text" class="form-control" id="posttitle" name="posttitle" placeholder="Enter title" required>
+                                                <input type="text" class="form-control" id="news_title" name="news_title" placeholder="Enter title" required>
                                             </div>
 
 
@@ -174,7 +174,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <option value="">Select Category </option>
                                                     <?php
                                                     // Feching active categories
-                                                    $ret = mysqli_query($con, "select id,CategoryName from  tblcategory where Is_Active=1");
+                                                    $ret = mysqli_query($con, "select id,CategoryName from  category where Is_Active=1");
                                                     while ($result = mysqli_fetch_array($ret)) {
                                                     ?>
                                                         <option value="<?php echo htmlentities($result['id']); ?>"><?php echo htmlentities($result['CategoryName']); ?></option>
@@ -205,7 +205,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="col-sm-12">
                                                     <div class="card-box">
                                                         <h4 class="m-b-30 m-t-0 header-title"><b>Feature Image</b></h4>
-                                                        <input type="file" class="form-control" id="postimage" name="postimage" required>
+                                                        <input type="file" class="form-control" id="news_img" name="news_img" required>
                                                     </div>
                                                 </div>
                                             </div>

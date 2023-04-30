@@ -13,7 +13,7 @@ $categoryid=$_POST['category'];
 $subcatname=$_POST['subcategory'];
 $subcatdescription=$_POST['sucatdescription'];
 $status=1;
-$query=mysqli_query($con,"insert into tblsubcategory(CategoryId,Subcategory,SubCatDescription,Is_Active) values('$categoryid','$subcatname','$subcatdescription','$status')");
+$query=mysqli_query($con,"insert into subcategory(CategoryId,subcategory,SubCatDescription,Is_Active) values('$categoryid','$subcatname','$subcatdescription','$status')");
 if($query)
 {
 $msg="Sub-Category created ";
@@ -130,7 +130,7 @@ $error="Something went wrong . Please try again.";
                                                    <option value="">Select Category </option>
 <?php
 // Feching active categories
-$ret=mysqli_query($con,"select id,CategoryName from  tblcategory where Is_Active=1");
+$ret=mysqli_query($con,"select id,CategoryName from  category where Is_Active=1");
 while($result=mysqli_fetch_array($ret))
 {    
 ?>

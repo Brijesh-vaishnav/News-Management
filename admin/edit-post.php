@@ -6,16 +6,16 @@ if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
     if (isset($_POST['update'])) {
-        $posttitle = $_POST['posttitle'];
+        $news_title = $_POST['news_title'];
         $catid = $_POST['category'];
         $subcatid = $_POST['subcategory'];
-        $postdetails = $_POST['postdescription'];
+        $news_desc = $_POST['postdescription'];
         $lastuptdby = $_SESSION['login'];
-        $arr = explode(" ", $posttitle);
+        $arr = explode(" ", $news_title);
         $url = implode("-", $arr);
         $status = 1;
         $postid = intval($_GET['pid']);
-        $query = mysqli_query($con, "update tblposts set PostTitle='$posttitle',CategoryId='$catid',SubCategoryId='$subcatid',PostDetails='$postdetails',PostUrl='$url',Is_Active='$status',lastUpdatedBy='$lastuptdby' where id='$postid'");
+        $query = mysqli_query($con, "update news set news_title='$news_title',CategoryId='$catid',subcategoryId='$subcatid',news_desc='$news_desc',Pos,Is_Active='$status', where id='$postid'");
         if ($query) {
             $msg = "Post updated ";
         } else {
@@ -137,7 +137,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                         <?php
                         $postid = intval($_GET['pid']);
-                        $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostImage,tblposts.PostTitle as title,tblposts.PostDetails,tblcategory.CategoryName as category,tblcategory.id as catid,tblsubcategory.SubCategoryId as subcatid,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.id='$postid' and tblposts.Is_Active=1 ");
+                        $query = mysqli_query($con, "select news.id as postid,news.news_img,news.news_title as title,news.news_desc,category.CategoryName as category,category.id as catid,subcategory.subcategoryId as subcatid,subcategory.subcategory as subcategory from news left join category on category.id=news.CategoryId left join subcategory on subcategory.subcategoryId=news.subcategoryId where news.id='$postid' and news.Is_Active=1 ");
                         while ($row = mysqli_fetch_array($query)) {
                         ?>
                             <div class="row">
@@ -147,7 +147,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             <form name="addpost" method="post">
                                                 <div class="form-group m-b-20">
                                                     <label for="exampleInputEmail1">Post Title</label>
-                                                    <input type="text" class="form-control" id="posttitle" value="<?php echo htmlentities($row['title']); ?>" name="posttitle" placeholder="Enter title" required>
+                                                    <input type="text" class="form-control" id="news_title" value="<?php echo htmlentities($row['title']); ?>" name="news_title" placeholder="Enter title" required>
                                                 </div>
 
 
@@ -158,7 +158,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <option value="<?php echo htmlentities($row['catid']); ?>"><?php echo htmlentities($row['category']); ?></option>
                                                         <?php
                                                         // Feching active categories
-                                                        $ret = mysqli_query($con, "select id,CategoryName from  tblcategory where Is_Active=1");
+                                                        $ret = mysqli_query($con, "select id,CategoryName from  category where Is_Active=1");
                                                         while ($result = mysqli_fetch_array($ret)) {
                                                         ?>
                                                             <option value="<?php echo htmlentities($result['id']); ?>"><?php echo htmlentities($result['CategoryName']); ?></option>
@@ -179,7 +179,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <div class="col-sm-12">
                                                         <div class="card-box">
                                                             <h4 class="m-b-30 m-t-0 header-title"><b>Post Details</b></h4>
-                                                            <textarea class="summernote" name="postdescription" required><?php echo htmlentities($row['PostDetails']); ?></textarea>
+                                                            <textarea class="summernote" name="postdescription" required><?php echo htmlentities($row['news_desc']); ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,7 +188,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <div class="col-sm-12">
                                                         <div class="card-box">
                                                             <h4 class="m-b-30 m-t-0 header-title"><b>Post Image</b></h4>
-                                                            <img src="postimages/<?php echo htmlentities($row['PostImage']); ?>" width="300" />
+                                                            <img src="postimages/<?php echo htmlentities($row['news_img']); ?>" width="300" />
                                                             <br />
                                                             <a href="change-image.php?pid=<?php echo htmlentities($row['postid']); ?>">Update Image</a>
                                                         </div>

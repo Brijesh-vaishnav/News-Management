@@ -17,14 +17,14 @@ if (strlen($_SESSION['login']) == 0) {
 
         date_default_timezone_set('Asia/Kolkata'); // change according timezone
         $currentTime = date('d-m-Y h:i:s A', time());
-        $sql = mysqli_query($con, "SELECT AdminPassword FROM  tbladmin where AdminUserName='$adminid' || AdminEmailId='$adminid'");
+        $sql = mysqli_query($con, "SELECT emp_password FROM  employee where emp_mail='$adminid' || AdminEmailId='$adminid'");
         $num = mysqli_fetch_array($sql);
         if ($num > 0) {
-            $dbpassword = $num['AdminPassword'];
+            $dbpassword = $num['emp_password'];
 
             if (password_verify($password, $dbpassword)) {
 
-                $con = mysqli_query($con, "update tbladmin set AdminPassword='$newhashedpass', updationDate='$currentTime' where AdminUserName='$adminid'");
+                $con = mysqli_query($con, "update employee set emp_password='$newhashedpass' where emp_mail='$adminid'");
                 $msg = "Password Changed Successfully !!";
             }
         } else {

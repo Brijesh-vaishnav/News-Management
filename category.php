@@ -61,13 +61,13 @@ $_SESSION['catid']=intval($_GET['catid']);
         $offset = ($pageno-1) * $no_of_records_per_page;
 
 
-        $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
+        $total_pages_sql = "SELECT COUNT(*) FROM news";
         $result = mysqli_query($con,$total_pages_sql);
         $total_rows = mysqli_fetch_array($result)[0];
         $total_pages = ceil($total_rows / $no_of_records_per_page);
 
 
-$query=mysqli_query($con,"select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.CategoryId='".$_SESSION['catid']."' and tblposts.Is_Active=1 order by tblposts.id desc LIMIT $offset, $no_of_records_per_page");
+$query=mysqli_query($con,"select news.id as pid,news.news_title as news_title,news.news_img,category.CategoryName as category,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.CategoryId='".$_SESSION['catid']."' and news.Is_Active=1 order by news.id desc LIMIT $offset, $no_of_records_per_page");
 
 $rowcount=mysqli_num_rows($query);
 if($rowcount==0)
@@ -81,9 +81,9 @@ while ($row=mysqli_fetch_array($query)) {
 ?>
 <h1><?php echo htmlentities($row['category']);?> News</h1>
           <div class="card mb-4">
-       <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']);?>" alt="<?php echo htmlentities($row['posttitle']);?>">
+       <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['news_img']);?>" alt="<?php echo htmlentities($row['news_title']);?>">
             <div class="card-body">
-              <h2 class="card-title"><?php echo htmlentities($row['posttitle']);?></h2>
+              <h2 class="card-title"><?php echo htmlentities($row['news_title']);?></h2>
            
               <a href="news-details.php?nid=<?php echo htmlentities($row['pid'])?>" class="btn btn-primary">Read More &rarr;</a>
             </div>

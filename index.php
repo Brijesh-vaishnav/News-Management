@@ -63,7 +63,7 @@ include('includes/config.php');
         $offset = ($pageno - 1) * $no_of_records_per_page;
 
 
-        $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
+        $total_pages_sql = "SELECT COUNT(*) FROM news";
         $result = mysqli_query($con, $total_pages_sql);
         $total_rows = mysqli_fetch_array($result)[0];
         $total_pages = ceil($total_rows / $no_of_records_per_page);
@@ -95,15 +95,20 @@ include('includes/config.php');
         <div class="flex" style="display:flex;flex-wrap:wrap;gap:10px">
           <?php
           if ($state_id == "")
-            $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1  order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
+            $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title,news.news_img as news_img,category.CategoryName as category,category.id as cid,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate  from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.Is_Active=1  order by news.id desc  LIMIT $offset, $no_of_records_per_page");
           else
-            $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 AND state='$state_id' order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
+            $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title,news.news_img,category.CategoryName as category,category.id as cid,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.Is_Active=1 AND state='$state_id' order by news.id desc  LIMIT $offset, $no_of_records_per_page");
             $row = mysqli_fetch_array($query);
-          while ($row = mysqli_fetch_array($query)) { ?>
+            
+          while ($row = mysqli_fetch_array($query)) {
+              $img=$row['news_img'];
+              // echo "<script>alert('$img');</script>"
+            ?>
+            
             <div class="card mb-4" style="width:48%;display:flex;align-content:space-between ;position:relative">
-              <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
+              <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']); ?>">
               <div class="card-body" style="display:flex;flex-direction:column;justify-content:space-between ;">
-                <h2 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h2>
+                <h2 class="card-title"><?php echo htmlentities($row['news_title']); ?></h2>
 
                 <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="btn btn-primary">Read More &rarr;</a>
               </div>

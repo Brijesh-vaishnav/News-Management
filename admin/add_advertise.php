@@ -82,7 +82,7 @@ if (strlen($_SESSION['login']) == "") {
                 $("#loaderIcon").show();
                 jQuery.ajax({
                     url: "check_availability.php",
-                    data: 'username=' + $("#sadminusername").val(),
+                    data: 'username=' + $("#semp_mail").val(),
                     type: "POST",
                     success: function(data) {
                         $("#user-availability-status").html(data);
@@ -155,7 +155,7 @@ if (strlen($_SESSION['login']) == "") {
                                             <form name="add_advertise" method="post" enctype="multipart/form-data" action="">
                                                 <div class="form-group">
                                                     <label for="exampleInputusername">Email</label>
-                                                    <input type="text" placeholder="Enter  Email" name="email" id="sadminusername" class="form-control" required autocomplete="off" disabled value=<?php echo $whoIsLoggedIn; ?>>
+                                                    <input type="text" placeholder="Enter  Email" name="email" id="semp_mail" class="form-control" required autocomplete="off" disabled value=<?php echo $whoIsLoggedIn; ?>>
                                                     <span id="user-availability-status" style="font-size:14px;"></span>
                                                 </div>
 
@@ -163,7 +163,7 @@ if (strlen($_SESSION['login']) == "") {
                                                     <div class="col-sm-12" style="margin-bottom:5px">
 
                                                         <h4 class="m-b-30 m-t-0 header-title"><b>Advertise Image</b></h4>
-                                                        <input type="file" class="form-control" id="postimage" name="advertise_image" required>
+                                                        <input type="file" class="form-control" id="news_img" name="advertise_image" required>
 
                                                     </div>
                                                 </div>

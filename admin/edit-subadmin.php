@@ -10,7 +10,7 @@ if (strlen($_SESSION['login']) == 0) {
         $email = $_POST['adminusernmae'];
         $fname=$_POST['fname'];
         $lname=$_POST['lname'];
-        $query = mysqli_query($con, "Update  tbladmin set AdminUserName='$email', fname='$fname',lname='$lname'  where userType=0 && id='$aid'");
+        $query = mysqli_query($con, "Update  employee set emp_mail='$email', fname='$fname',lname='$lname'  where emp_role_id 	=0 && id='$aid'");
         if ($query) {
             echo "<script>alert('Operator details updated.');</script>";
         } else {
@@ -115,7 +115,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                     <?php
                                     $aid = intval($_GET['said']);
-                                    $query = mysqli_query($con, "Select * from  tbladmin where userType=0 && id='$aid'");
+                                    $query = mysqli_query($con, "Select * from  employee where emp_role_id 	=0 && id='$aid'");
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_array($query)) {
                                     ?>
@@ -129,7 +129,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">Email</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" class="form-control" value="<?php echo htmlentities($row['AdminUserName']); ?>" name="adminusernmae" >
+                                                            <input type="text" class="form-control" value="<?php echo htmlentities($row['emp_mail']); ?>" name="adminusernmae" >
                                                         </div>
                                                     </div>
 

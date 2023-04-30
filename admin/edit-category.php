@@ -12,7 +12,7 @@ if(isset($_POST['submit']))
 $catid=intval($_GET['cid']);
 $category=$_POST['category'];
 $description=$_POST['description'];
-$query=mysqli_query($con,"Update  tblcategory set CategoryName='$category',Description='$description' where id='$catid'");
+$query=mysqli_query($con,"Update  category set CategoryName='$category',Description='$description' where id='$catid'");
 if($query)
 {
 $msg="Category Updated successfully ";
@@ -117,7 +117,7 @@ $error="Something went wrong . Please try again.";
 
 <?php 
 $catid=intval($_GET['cid']);
-$query=mysqli_query($con,"Select id,CategoryName,Description,PostingDate,UpdationDate from  tblcategory where Is_Active=1 and id='$catid'");
+$query=mysqli_query($con,"Select id,CategoryName,Description,PostingDate from  category where Is_Active=1 and id='$catid'");
 $cnt=1;
 while($row=mysqli_fetch_array($query))
 {

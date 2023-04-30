@@ -8,11 +8,11 @@ if(isset($_POST['submit']))
     $username=$_POST['username'];
     $email=$_POST['email'];
 $password=md5($_POST['newpassword']);
-        $query=mysqli_query($con,"select id from tbladmin where  AdminEmailId='$email' and AdminUserName='$username' ");
+        $query=mysqli_query($con,"select id from employee where  AdminEmailId='$email' and emp_mail='$username' ");
         
     $ret=mysqli_num_rows($query);
     if($ret>0){
-      $query1=mysqli_query($con,"update tbladmin set AdminPassword='$password'  where  AdminEmailId='$email' && AdminUserName='$username' ");
+      $query1=mysqli_query($con,"update employee set emp_password='$password'  where  AdminEmailId='$email' && emp_mail='$username' ");
        if($query1)
    {
 echo "<script>alert('Password successfully changed');</script>";

@@ -86,7 +86,7 @@ include('includes/config.php');
                                         <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Categories Listed</p>
-                                            <?php $query = mysqli_query($con, "select * from tblcategory where Is_Active=1");
+                                            <?php $query = mysqli_query($con, "select * from category where Is_Active=1");
                                             $countcat = mysqli_num_rows($query);
                                             ?>
 
@@ -102,7 +102,7 @@ include('includes/config.php');
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Sub category</p>
-                                            <?php $query = mysqli_query($con, "select * from tblsubcategory where Is_Active=1");
+                                            <?php $query = mysqli_query($con, "select * from subcategory where Is_Active=1");
                                             $countsubcat = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>
@@ -141,7 +141,7 @@ include('includes/config.php');
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Trash News</p>
-                                            <?php $query = mysqli_query($con, "select * from tblposts where Is_Active=0");
+                                            <?php $query = mysqli_query($con, "select * from news where Is_Active=0");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
@@ -156,7 +156,7 @@ include('includes/config.php');
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> News</p>
-                                            <?php $query = mysqli_query($con, "select * from tblposts where Is_Active=1");
+                                            <?php $query = mysqli_query($con, "select * from news where Is_Active=1");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countposts); ?> <small></small></h2>

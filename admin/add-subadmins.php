@@ -8,13 +8,13 @@ if (strlen($_SESSION['login']) == 0) {
 
     // Code for Add New Sub Admi
     if (isset($_POST['submit'])) {
-        $username = $_POST['sadminusername'];
+        $username = $_POST['semp_mail'];
    
         $password = md5($_POST['pwd']);
-        $usertype = '0';
+        $emp_role_id 	 = '0';
         $fname=$_POST['fname'];
         $lname=$_POST['lname'];
-        $query = mysqli_query($con, "insert into tbladmin(AdminUserName,AdminPassword,userType,fname,lname ) values('$username','$password','$usertype','$fname','$lname')") ;
+        $query = mysqli_query($con, "insert into employee(emp_mail,emp_password,emp_role_id 	,fname,lname ) values('$username','$password','$emp_role_id 	','$fname','$lname')") ;
         if ($query) {
             echo "<script>alert('Operator details added successfully.');</script>";
             echo "<script type='text/javascript'> document.location = 'add-subadmins; </script>";
@@ -48,7 +48,7 @@ if (strlen($_SESSION['login']) == 0) {
                 $("#loaderIcon").show();
                 jQuery.ajax({
                     url: "check_availability.php",
-                    data: 'username=' + $("#sadminusername").val(),
+                    data: 'username=' + $("#semp_mail").val(),
                     type: "POST",
                     success: function(data) {
                         $("#user-availability-status").html(data);
@@ -114,7 +114,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             <form class="form-horizontal" name="addsuadmin" method="post">
                                                 <div class="form-group">
                                                     <label for="exampleInputusername">Email (used for login)</label>
-                                                    <input type="text" placeholder="Enter  Email" name="sadminusername" id="sadminusername" class="form-control"  onBlur="checkAvailability()" required autocomplete="off">
+                                                    <input type="text" placeholder="Enter  Email" name="semp_mail" id="semp_mail" class="form-control"  onBlur="checkAvailability()" required autocomplete="off">
                                                     <span id="user-availability-status" style="font-size:14px;"></span>
                                                 </div>
 

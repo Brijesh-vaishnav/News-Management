@@ -10,7 +10,7 @@ else{
 if(isset($_POST['update']))
 {
 
-$imgfile=$_FILES["postimage"]["name"];
+$imgfile=$_FILES["news_img"]["name"];
 // get the image extension
 $extension = substr($imgfile,strlen($imgfile)-4,strlen($imgfile));
 // allowed extensions
@@ -25,12 +25,12 @@ else
 //rename the image file
 $imgnewfile=md5($imgfile).$extension;
 // Code for move image into directory
-move_uploaded_file($_FILES["postimage"]["tmp_name"],"postimages/".$imgnewfile);
+move_uploaded_file($_FILES["news_img"]["tmp_name"],"postimages/".$imgnewfile);
 
 
 
 $postid=intval($_GET['pid']);
-$query=mysqli_query($con,"update tblposts set PostImage='$imgnewfile' where id='$postid'");
+$query=mysqli_query($con,"update news set news_img='$imgnewfile' where id='$postid'");
 if($query)
 {
 $msg="Post Feature Image updated ";
@@ -156,7 +156,7 @@ function getSubCat(val) {
 <form name="addpost" method="post" enctype="multipart/form-data">
 <?php
 $postid=intval($_GET['pid']);
-$query=mysqli_query($con,"select PostImage,PostTitle from tblposts where id='$postid' and Is_Active=1 ");
+$query=mysqli_query($con,"select news_img,news_title from news where id='$postid' and Is_Active=1 ");
 while($row=mysqli_fetch_array($query))
 {
 ?>
@@ -167,7 +167,7 @@ while($row=mysqli_fetch_array($query))
                                         <form name="addpost" method="post">
  <div class="form-group m-b-20">
 <label for="exampleInputEmail1">Post Title</label>
-<input type="text" class="form-control" id="posttitle" value="<?php echo htmlentities($row['PostTitle']);?>" name="posttitle"  readonly>
+<input type="text" class="form-control" id="news_title" value="<?php echo htmlentities($row['news_title']);?>" name="news_title"  readonly>
 </div>
 
 
@@ -176,7 +176,7 @@ while($row=mysqli_fetch_array($query))
 <div class="col-sm-12">
  <div class="card-box">
 <h4 class="m-b-30 m-t-0 header-title"><b>Current Post Image</b></h4>
-<img src="postimages/<?php echo htmlentities($row['PostImage']);?>" width="300"/>
+<img src="postimages/<?php echo htmlentities($row['news_img']);?>" width="300"/>
 <br />
 
 </div>
@@ -188,7 +188,7 @@ while($row=mysqli_fetch_array($query))
 <div class="col-sm-12">
  <div class="card-box">
 <h4 class="m-b-30 m-t-0 header-title"><b>New Feature Image</b></h4>
-<input type="file" class="form-control" id="postimage" name="postimage"  required>
+<input type="file" class="form-control" id="news_img" name="news_img"  required>
 </div>
 </div>
 </div>

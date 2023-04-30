@@ -13,7 +13,7 @@ $subcatid=intval($_GET['scid']);
 $categoryid=$_POST['category'];
 $subcatname=$_POST['subcategory'];
 $subcatdescription=$_POST['sucatdescription'];
-$query=mysqli_query($con,"update tblsubcategory set CategoryId='$categoryid',Subcategory='$subcatname',SubCatDescription='$subcatdescription' where SubCategoryId='$subcatid'");
+$query=mysqli_query($con,"update subcategory set CategoryId='$categoryid',subcategory='$subcatname',SubCatDescription='$subcatdescription' where subcategoryId='$subcatid'");
 if($query)
 {
 $msg="Sub-Category created ";
@@ -119,7 +119,7 @@ $error="Something went wrong . Please try again.";
 <?php 
 //fetching Category details
 $subcatid=intval($_GET['scid']);
-$query=mysqli_query($con,"Select tblcategory.CategoryName as catname,tblcategory.id as catid,tblsubcategory.Subcategory as subcatname,tblsubcategory.SubCatDescription as SubCatDescription,tblsubcategory.PostingDate as subcatpostingdate,tblsubcategory.UpdationDate as subcatupdationdate,tblsubcategory.SubCategoryId as subcatid from tblsubcategory join tblcategory on tblsubcategory.CategoryId=tblcategory.id where tblsubcategory.Is_Active=1 and  SubCategoryId='$subcatid'");
+$query=mysqli_query($con,"Select category.CategoryName as catname,category.id as catid,subcategory.subcategory as subcatname,subcategory.SubCatDescription as SubCatDescription,subcategory.PostingDate as subcatpostingdate,subcategory.subcategoryId as subcatid from subcategory join category on subcategory.CategoryId=category.id where subcategory.Is_Active=1 and  subcategoryId='$subcatid'");
 $cnt=1;
 while($row=mysqli_fetch_array($query))
 {
@@ -138,7 +138,7 @@ while($row=mysqli_fetch_array($query))
                                                    <option value="<?php echo htmlentities($row['catid']);?>"><?php echo htmlentities($row['catname']);?></option>
 <?php
 // Feching active categories
-$ret=mysqli_query($con,"select id,CategoryName from  tblcategory where Is_Active=1");
+$ret=mysqli_query($con,"select id,CategoryName from  category where Is_Active=1");
 while($result=mysqli_fetch_array($ret))
 {    
 ?>
