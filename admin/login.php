@@ -2,6 +2,8 @@
 session_start();
 //Database Configuration File
 include('includes/config.php');
+include("includes/sendmail.php");
+
 //error_reporting(0);
 if (isset($_POST['login'])) {
 
@@ -36,19 +38,35 @@ if (isset($_POST['login'])) {
             echo "<script>alert('Invalid Details');</script>";
         }
     } else if ($loginas == "Advertiser") {
+
+
         $sql = mysqli_query($con, "SELECT * FROM advertiser WHERE (mail='$uname' && password='$password')") or die(mysqli_error($con));
         //  echo "<script>alert('$loginas');</script>";
         
         $num = mysqli_fetch_array($sql);
-        echo print_r($num);  
+        
+        // echo print_r($num);  
+
     
         if (($num) > 0) {
 
-            $_SESSION['login'] = $_POST['username'];
-         
-            $_SESSION['type'] = $loginas;
-            
-            echo "<script type='text/javascript'> document.location = 'advertiser_dashboard.php'; </script>";
+          
+            $is_verified=$num["is_verified"];
+           //  echo "<script>alert('$is_verified');</scrip
+
+            if($is_verified=="1")
+            {
+                $_SESSION['login'] = $_POST['username'];
+             
+                $_SESSION['type'] = $loginas;
+                echo "<script type='text/javascript'> document.location = 'advertiser_dashboard.php'; </script>";
+            }
+            else{
+                $vcode=rand(1000,9999);
+               echo "<script>alert('Your registration is pending');</script>";
+               sendmail($_POST['username'],$vcode,$loginas);
+        
+            }
         } else {
             echo "<script>alert('Invalid Details');</script>";
         }
@@ -59,12 +77,23 @@ if (isset($_POST['login'])) {
         
         $num = mysqli_fetch_array($sql);
         if ($num > 0) {
+   
+            $is_verified=$num["is_verified"];
+            if($is_verified=="1")
+            {
+                $_SESSION['login'] = $_POST['username'];
+            
+                $_SESSION['type'] = $loginas;
+                echo "<script type='text/javascript'> document.location = '../index.php'; </script>";
+            }
+            else{ 
+                $vcode=rand(1000,9999);
 
-            $_SESSION['login'] = $_POST['username'];
+               echo "<script>alert('Your registration is pending');</script>";
+               sendmail($_POST['username'],$vcode,$loginas);
         
-            $_SESSION['type'] = $loginas;
+            }
                   
-            echo "<script type='text/javascript'> document.location = '../index.php'; </script>";
         } else {
             echo "<script>alert('Invalid Details');</script>";
         }
