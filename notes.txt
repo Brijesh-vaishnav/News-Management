@@ -1,7 +1,6 @@
 
 advertise delete not working.
 advertise timing should start after payment
-advertise should be deleted after payment.
-
-about us page should be updated.
-author management have to add shit.
+advertise should be deleted after validity.
+author management have to add.
+manage advertises is still left at advertiser side/dashboard.

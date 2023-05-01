@@ -1,10 +1,16 @@
 <?php
 include('includes/config.php');
-session_start()
+
 ?>
 <html>
   <head>
     <title>User Subscription Details</title>
+      <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/modern-business.css" rel="stylesheet">
+
     <style>
       body {
         margin: 0;
@@ -70,6 +76,8 @@ session_start()
     </style>
   </head>
   <body>
+      <!-- Navigation -->
+  <?php include('includes/header.php'); ?>
     <div class="details">
       <div class="user-details">
         <div>

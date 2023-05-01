@@ -2,10 +2,7 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if($_SESSION["type"]!="Admin")
-{
-    echo "<script>document.location='./login.php'</script>";
-} else {
+ {
 
     // Code for Forever deletionparmdel
     if ($_GET['action'] == 'del' && $_GET['rid']) {
@@ -21,7 +18,7 @@ if($_SESSION["type"]!="Admin")
 
     <head>
 
-        <title> | Manage Normal Users</title>
+        <title> | Manage All Users</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/components.css" rel="stylesheet" type="text/css" />

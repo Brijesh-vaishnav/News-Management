@@ -1,10 +1,10 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
+
+$msg=null;
+$error=null;
+{
 
     // For adding post  
     if (isset($_POST['submit'])) {
@@ -20,7 +20,7 @@ if (strlen($_SESSION['login']) == 0) {
         // get the image extension
         $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
         // allowed extensions
-        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif");
+        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif",'.JPG','.JPEG','.PNG','.GIF');
         // Validation for allowed extensions .in_array() function searches an array for a specific value.
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
@@ -32,14 +32,20 @@ if (strlen($_SESSION['login']) == 0) {
 
             $is_active = 1;
             $status = 0;
-            if ($_SESSION["login"] == "admin")
+            if ($_SESSION["utype"] == "1")
                 $status = 1;
-            $query = mysqli_query($con, "insert into news(news_title,CategoryId,subcategoryId,news_desc,Is_Active,news_img,postedBy,state,status) values('$news_title','$catid','$subcatid','$news_desc','$url','$is_active','$imgnewfile','$postedby',' $post_state','$status')");
-            if ($query) {
-                $msg = "Post successfully added ";
-            } else {
-                $error = "Something went wrong . Please try again.";
-            }
+                $stmt = $con->prepare("INSERT INTO news(news_title, CategoryId, subcategoryId, news_desc, Is_Active, news_img, postedBy, state, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                $stmt->bind_param("siissssss", $news_title, $catid, $subcatid, $news_desc, $is_active, $imgnewfile, $postedby, $post_state, $status);
+                
+                if ($stmt->execute()) {
+                    $msg = "Post successfully added";
+                } else {
+                    $error = "Something went wrong. Please try again.";
+                }
+                
+                $stmt->close();
+                
         }
     }
 ?>

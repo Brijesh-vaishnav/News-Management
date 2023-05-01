@@ -18,7 +18,7 @@
         $today = date("Y-m-d");
        
         if ($today > $enddate) {
-          echo "<script>alert('subscription deleted')</script>";
+          // echo "<script>alert('subscription deleted')</script>";
           mysqli_query($con, "delete from subscriber where subscribed_user_email='$whoIsLoggedIn' ");
         }
       }
@@ -109,7 +109,7 @@
            <?php if ($_SESSION["type"] == "Advertiser") : ?>
              <li><a href="admin/advertiser_dashboard.php"> Dashboard</a></li>
            <?php endif; ?>
-           <?php if ($_SESSION["type"] == "Admin" || $_SESSION["type"] ==  "Operator") : ?>
+           <?php if ($_SESSION["type"] == "Employee") : ?>
              <li><a href="admin/dashboard.php"> Dashboard</a></li>
            <?php endif; ?>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
+
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
@@ -14,13 +14,33 @@ if (strlen($_SESSION['login']) == 0) {
         $arr = explode(" ", $news_title);
         $url = implode("-", $arr);
         $status = 1;
+        $isActive=1;
         $postid = intval($_GET['pid']);
-        $query = mysqli_query($con, "update news set news_title='$news_title',CategoryId='$catid',subcategoryId='$subcatid',news_desc='$news_desc',Pos,Is_Active='$status', where id='$postid'");
-        if ($query) {
-            $msg = "Post updated ";
+        $stmt = mysqli_prepare($con, "UPDATE news SET news_title=?, CategoryId=?, subcategoryId=?, news_desc=?, Is_Active=? WHERE id=?");
+
+        mysqli_stmt_bind_param($stmt, "siisii", $news_title, $catid, $subcatid, $news_desc, $isActive, $postid);
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $msg = "Post updated";
         } else {
-            $error = "Something went wrong . Please try again.";
+            $error = "Something went wrong. Please try again.";
         }
+   
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $msg = "Post updated";
+        } else {
+            $error = "Something went wrong. Please try again.";
+        }
+
+        mysqli_stmt_close($stmt);
+
+        // $query = mysqli_query($con, "update news set news_title='$news_title',CategoryId='$catid',subcategoryId='$subcatid',news_desc='$news_desc',Pos,Is_Active='$status', where id='$postid'");
+        // if ($query) {
+        //     $msg = "Post updated ";
+        // } else {
+        //     $error = "Something went wrong . Please try again.";
+        // }
     }
 ?>
     <!DOCTYPE html>
@@ -203,35 +223,35 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <h4 class="m-b-30 m-t-0 header-title"><b>Update State</b></h4>
                                                         <select name="state">
                                                             <option value="">Select state</option>
-                                                            
-                                                            <option value="0" <?php if($_row["state"]==0) echo "selected" ?>>Andhra Pradesh</option>
-                                                            <option value="1" <?php if($_row["state"]==1) echo "selected" ?>>Arunachal Pradesh</option>
-                                                            <option value="2" <?php if($_row["state"]==2) echo "selected" ?>>Assam</option>
-                                                            <option value="3" <?php if($_row["state"]==3) echo "selected" ?> >Bihar</option>
-                                                            <option value="4" <?php if($_row["state"]==4) echo "selected" ?>>Chhattisgarh</option>
-                                                            <option value="5" <?php if($_row["state"]==5) echo "selected" ?>>Goa</option>
-                                                            <option value="6" <?php if($_row["state"]=='6') echo "selected" ?>>Gujarat</option>
-                                                            <option value="7" <?php if($_row["state"]==7) echo "selected" ?>>Haryana</option>
-                                                            <option value="8" <?php if($_row["state"]==8) echo "selected" ?>>Himachal Pradesh</option>
-                                                            <option value="9" <?php if($_row["state"]==9) echo "selected" ?>>Jharkhand</option>
-                                                            <option value="10" <?php if($_row["state"]==10) echo "selected" ?>>Karnataka</option>
-                                                            <option value="11" <?php if($_row["state"]==0) echo "selected" ?>>Kerala</option>
-                                                            <option value="12" <?php if($_row["state"]==0) echo "selected" ?>>Madhya Pradesh</option>
-                                                            <option value="13" <?php if($_row["state"]==0) echo "selected" ?>>Maharashtra</option>
-                                                            <option value="14" <?php if($_row["state"]==0) echo "selected" ?>>Manipur</option>
-                                                            <option value="15" <?php if($_row["state"]==0) echo "selected" ?>>Meghalaya</option>
-                                                            <option value="16" <?php if($_row["state"]==0) echo "selected" ?>>Mizoram</option>
-                                                            <option value="17" <?php if($_row["state"]==0) echo "selected" ?>>Nagaland</option>
-                                                            <option value="18" <?php if($_row["state"]==0) echo "selected" ?>>Odisha</option>
-                                                            <option value="19" <?php if($_row["state"]==0) echo "selected" ?>>Punjab</option>
-                                                            <option value="20" <?php if($_row["state"]==0) echo "selected" ?>>Rajasthan</option>
-                                                            <option value="21" <?php if($_row["state"]==0) echo "selected" ?>>Sikkim</option>
-                                                            <option value="22" <?php if($_row["state"]==0) echo "selected" ?>>Tamil Nadu</option>
-                                                            <option value="23" <?php if($_row["state"]==0) echo "selected" ?>>Telangana</option>
-                                                            <option value="24" <?php if($_row["state"]==0) echo "selected" ?>>Tripura</option>
-                                                            <option value="25" <?php if($_row["state"]==0) echo "selected" ?>>Uttar Pradesh</option>
-                                                            <option value="26" <?php if($_row["state"]==0) echo "selected" ?>>Uttarakhand</option>
-                                                            <option value="27" <?php if($_row["state"]==0) echo "selected" ?>>West Bengal</option>
+
+                                                            <option value="0" <?php if ($_row["state"] == 0) echo "selected" ?>>Andhra Pradesh</option>
+                                                            <option value="1" <?php if ($_row["state"] == 1) echo "selected" ?>>Arunachal Pradesh</option>
+                                                            <option value="2" <?php if ($_row["state"] == 2) echo "selected" ?>>Assam</option>
+                                                            <option value="3" <?php if ($_row["state"] == 3) echo "selected" ?>>Bihar</option>
+                                                            <option value="4" <?php if ($_row["state"] == 4) echo "selected" ?>>Chhattisgarh</option>
+                                                            <option value="5" <?php if ($_row["state"] == 5) echo "selected" ?>>Goa</option>
+                                                            <option value="6" <?php if ($_row["state"] == '6') echo "selected" ?>>Gujarat</option>
+                                                            <option value="7" <?php if ($_row["state"] == 7) echo "selected" ?>>Haryana</option>
+                                                            <option value="8" <?php if ($_row["state"] == 8) echo "selected" ?>>Himachal Pradesh</option>
+                                                            <option value="9" <?php if ($_row["state"] == 9) echo "selected" ?>>Jharkhand</option>
+                                                            <option value="10" <?php if ($_row["state"] == 10) echo "selected" ?>>Karnataka</option>
+                                                            <option value="11" <?php if ($_row["state"] == 0) echo "selected" ?>>Kerala</option>
+                                                            <option value="12" <?php if ($_row["state"] == 0) echo "selected" ?>>Madhya Pradesh</option>
+                                                            <option value="13" <?php if ($_row["state"] == 0) echo "selected" ?>>Maharashtra</option>
+                                                            <option value="14" <?php if ($_row["state"] == 0) echo "selected" ?>>Manipur</option>
+                                                            <option value="15" <?php if ($_row["state"] == 0) echo "selected" ?>>Meghalaya</option>
+                                                            <option value="16" <?php if ($_row["state"] == 0) echo "selected" ?>>Mizoram</option>
+                                                            <option value="17" <?php if ($_row["state"] == 0) echo "selected" ?>>Nagaland</option>
+                                                            <option value="18" <?php if ($_row["state"] == 0) echo "selected" ?>>Odisha</option>
+                                                            <option value="19" <?php if ($_row["state"] == 0) echo "selected" ?>>Punjab</option>
+                                                            <option value="20" <?php if ($_row["state"] == 0) echo "selected" ?>>Rajasthan</option>
+                                                            <option value="21" <?php if ($_row["state"] == 0) echo "selected" ?>>Sikkim</option>
+                                                            <option value="22" <?php if ($_row["state"] == 0) echo "selected" ?>>Tamil Nadu</option>
+                                                            <option value="23" <?php if ($_row["state"] == 0) echo "selected" ?>>Telangana</option>
+                                                            <option value="24" <?php if ($_row["state"] == 0) echo "selected" ?>>Tripura</option>
+                                                            <option value="25" <?php if ($_row["state"] == 0) echo "selected" ?>>Uttar Pradesh</option>
+                                                            <option value="26" <?php if ($_row["state"] == 0) echo "selected" ?>>Uttarakhand</option>
+                                                            <option value="27" <?php if ($_row["state"] == 0) echo "selected" ?>>West Bengal</option>
                                                         </select>
 
                                                     </div>

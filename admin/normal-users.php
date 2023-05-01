@@ -2,10 +2,7 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if($_SESSION["type"]!="Admin")
-{
-    echo "<script>document.location='./login.php'</script>";
-} else {
+ {
 
     // Code for Forever deletionparmdel
     if ($_GET['action'] == 'del' && $_GET['rid']) {
@@ -21,7 +18,7 @@ if($_SESSION["type"]!="Admin")
 
     <head>
 
-        <title> | Manage Normal Users</title>
+        <title> | Manage All Users</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -61,13 +58,13 @@ if($_SESSION["type"]!="Admin")
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Manage Normal Users</h4>
+                                    <h4 class="page-title">Manage All Users</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
-                                            <a href="#">Normal Users </a>
+                                            <a href="#">All Users </a>
                                         </li>
                                         <li class="active">
-                                            Manage Normal Users
+                                            Manage All Users
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -106,7 +103,7 @@ if($_SESSION["type"]!="Admin")
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $query = mysqli_query($con, "Select count(*) from user");
+                                                $query = mysqli_query($con, "Select * from user");
                                                 $cnt = 1;
                                                 while ($row = mysqli_fetch_array($query)) {
                                                 ?>

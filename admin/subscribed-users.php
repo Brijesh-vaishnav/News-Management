@@ -1,17 +1,19 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
+// error_reporting(0);
+{
 
     // Code for Forever deletionparmdel
-    if ( $_GET['rid']) {
-        $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  subscriber  where subscription_id='$id'");
-        echo "<script>alert('User  deleted.');</script>";
-        echo "<script type='text/javascript'> document.location = 'subscribed-users.php'; </script>";
+    if(isset($_GET["rid"]))
+    {
+
+        if ( $_GET['rid']) {
+            $id = intval($_GET['rid']);
+            $query = mysqli_query($con, "delete from  subscriber  where subscription_id='$id'");
+            echo "<script>alert('User  deleted.');</script>";
+            echo "<script type='text/javascript'> document.location = 'subscribed-users.php'; </script>";
+        }
     }
 
 ?>

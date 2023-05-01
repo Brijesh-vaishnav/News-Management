@@ -80,7 +80,7 @@ include('includes/config.php');
             $breaking_news=mysqli_fetch_assoc($query);
             // echo print_r($breaking_news) ;
           ?>
-          <img class="card-img-top" src="admin/breakingnews/<?php echo htmlentities($breaking_news['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']);  ?>">
+          <img class="card-img-top" src="admin/breakingnews/<?php echo htmlentities($breaking_news['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']);  ?>" style="width: 100%;height:300px;">
           <div class="card-body">
             <h2 class="card-title"><?php echo htmlentities($breaking_news['news_title']); ?></h2>
 
@@ -98,17 +98,17 @@ include('includes/config.php');
             $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title,news.news_img as news_img,category.CategoryName as category,category.id as cid,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate  from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.Is_Active=1  order by news.id desc  LIMIT $offset, $no_of_records_per_page");
           else
             $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title,news.news_img,category.CategoryName as category,category.id as cid,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.Is_Active=1 AND state='$state_id' order by news.id desc  LIMIT $offset, $no_of_records_per_page");
-            $row = mysqli_fetch_array($query);
+            // $row = mysqli_fetch_array($query);
             
           while ($row = mysqli_fetch_array($query)) {
               $img=$row['news_img'];
               // echo "<script>alert('$img');</script>"
             ?>
             
-            <div class="card mb-4" style="width:48%;display:flex;align-content:space-between ;position:relative">
+            <div class="card mb-4" style="width:48%;display:flex;align-content:space-between ;position:relative;text-align: left;">
               <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']); ?>">
               <div class="card-body" style="display:flex;flex-direction:column;justify-content:space-between ;">
-                <h2 class="card-title"><?php echo htmlentities($row['news_title']); ?></h2>
+                <h4 class="card-title" ><?php echo substr(htmlentities($row['news_title']),0,60)."..."; ?></h4>
 
                 <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="btn btn-primary">Read More &rarr;</a>
               </div>

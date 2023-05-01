@@ -1,27 +1,41 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
+
+$msg=null;
+$delmsg=null;
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
-    if ($_GET['disid']) {
-        $id = intval($_GET['disid']);
-        $query = mysqli_query($con, "update commentset status='0' where id='$id'");
-        $msg = "Comment unapprove ";
+    if(isset($_GET["disid"]))
+    {
+
+        if ($_GET['disid']) {
+            $id = intval($_GET['disid']);
+            $query = mysqli_query($con, "update commentset status='0' where id='$id'");
+            $msg = "Comment unapprove ";
+        }
     }
-    // Code for restore
-    if ($_GET['appid']) {
-        $id = intval($_GET['appid']);
-        $query = mysqli_query($con, "update commentset status='1' where id='$id'");
-        $msg = "Comment approved";
+    if(isset($_GET["appid"]))
+    {
+
+        // Code for restore
+        if ($_GET['appid']) {
+            $id = intval($_GET['appid']);
+            $query = mysqli_query($con, "update commentset status='1' where id='$id'");
+            $msg = "Comment approved";
+        }
     }
 
-    // Code for deletion
-    if ($_GET['action'] == 'del' && $_GET['rid']) {
-        $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  comment where id='$id'");
-        $delmsg = "Comment deleted forever";
+    if(isset($_GET["action"]))
+    {
+
+        // Code for deletion
+        if ($_GET['action'] == 'del' && $_GET['rid']) {
+            $id = intval($_GET['rid']);
+            $query = mysqli_query($con, "delete from  comment where id='$id'");
+            $delmsg = "Comment deleted forever";
+        }
     }
 
 ?>
@@ -134,7 +148,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $query = mysqli_query($con, "Select tblcomments.id,  tblcomments.name,tblcomments.email,tblcomments.postingDate,tblcomments.comment,news.id as postid,news.news_title from  commentjoin news on news.id=tblcomments.postId where tblcomments.status=1");
+                                                    $query = mysqli_query($con, "Select comment.id,  comment.name,comment.email,comment.postingDate,comment.comment,news.id as postid,news.news_title,comment.status from  comment join news on news.id=comment.postId where comment.status=1");
                                                     $cnt = 1;
                                                     while ($row = mysqli_fetch_array($query)) {
                                                     ?>

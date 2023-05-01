@@ -2,9 +2,7 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
+ {
 
     // Code for Add New Sub Admi
     if (isset($_POST['submit'])) {
@@ -14,7 +12,7 @@ if (strlen($_SESSION['login']) == 0) {
         $emp_role_id 	 = '0';
         $fname=$_POST['fname'];
         $lname=$_POST['lname'];
-        $query = mysqli_query($con, "insert into employee(emp_mail,emp_password,emp_role_id 	,fname,lname ) values('$username','$password','$emp_role_id 	','$fname','$lname')") ;
+        $query = mysqli_query($con, "insert into employee(emp_mail,emp_password,emp_role_id,emp_fname,emp_lname ) values('$username','$password','$emp_role_id 	','$fname','$lname')") ;
         if ($query) {
             echo "<script>alert('Operator details added successfully.');</script>";
             echo "<script type='text/javascript'> document.location = 'add-subadmins; </script>";

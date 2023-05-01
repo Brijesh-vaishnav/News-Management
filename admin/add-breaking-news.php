@@ -1,15 +1,13 @@
 <?php
 session_start();
-include('includes/config.php');
-error_reporting(0);
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
+$msg=null;
+$error=null;
+include('includes/config.php'); {
 
     // For adding post  
     if (isset($_POST['submit'])) {
         $news_title = $_POST['news_title'];
-      
+
         $news_desc = $_POST['postdescription'];
         $postedby = $_SESSION['login'];
         $post_state = $_POST["state"];
@@ -32,20 +30,22 @@ if (strlen($_SESSION['login']) == 0) {
             $status = 0;
             if ($_SESSION["utype"] == "1")
                 $status = 1;
-            $query = mysqli_query($con, "insert into breaking_news(news_title,news_desc,news_date,status ,author_mail ,news_img) values('$news_title','$news_desc',now(),'$status','author@gmail.com','$imgnewfile')") or die(mysqli_error($con));
-            if ($query) {
-                $msg= "Breaking successfully added ";
-                if ($_SESSION["utype"] == "1")
-                {
-                    echo "<script>alert('$adminMsg');</script>";
-                }
-                else
-                {
+            // Prepare the SQL statement with placeholders
+            $query = $con->prepare("INSERT INTO breaking_news (news_title, news_desc, news_date, status, author_mail, news_img) VALUES (?, ?, now(), ?, 'author@gmail.com', ?)");
 
-                    $msg="Breaking news submitted for approvement";
+            // Bind the values to the placeholders
+            $query->bind_param("ssis", $news_title, $news_desc, $status, $imgnewfile);
+
+            // Execute the query
+            if ($query->execute()) {
+                $msg = "Breaking successfully added";
+                if ($_SESSION["utype"] == "1") {
+                    echo "<script>alert('$adminMsg');</script>";
+                } else {
+                    $msg = "Breaking news submitted for approval";
                 }
             } else {
-                $error = "Something went wrong . Please try again.";
+                $error = "Something went wrong. Please try again.";
             }
         }
     }
@@ -175,7 +175,7 @@ if (strlen($_SESSION['login']) == 0) {
 
 
 
-                                      
+
 
                                             <div class="row">
                                                 <div class="col-sm-12">

@@ -46,7 +46,7 @@
     <div class="card-body">
       <ul class="mb-0">
         <?php
-        $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId limit 8");
+        $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.Is_Active=1 limit 8");
         while ($row = mysqli_fetch_array($query)) {
 
         ?>

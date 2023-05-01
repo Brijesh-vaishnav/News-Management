@@ -1,3 +1,8 @@
+<style>
+    *{
+        text-transform: capitalize;
+    }
+</style>
 <div class="topbar">
 
     <!-- LOGO -->

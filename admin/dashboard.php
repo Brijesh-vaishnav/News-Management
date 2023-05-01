@@ -3,7 +3,7 @@ session_start();
 include('includes/config.php');
 
 // echo ($_SESSION["type"]!="Admin" && $_SESSION["type"]!="Operator");die();
-    if($_SESSION["type"]!="Admin" && $_SESSION["type"]!="Operator")
+    if($_SESSION["type"]!="Employee")
     {
         echo "<script>document.location='./login.php'</script>";
     }

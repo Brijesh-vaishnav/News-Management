@@ -8,23 +8,19 @@ if (empty($_SESSION['token'])) {
 
 if (isset($_POST['submit'])) {
   //Verifying CSRF Token
-  if (!empty($_POST['csrftoken'])) {
-    if (hash_equals($_SESSION['token'], $_POST['csrftoken'])) {
+
       $name = $_POST['name'];
       $email = $_POST['email'];
       $comment = $_POST['comment'];
       $postid = intval($_GET['nid']);
       $st1 = '0';
-      $query = mysqli_query($con, "insert into tblcomments(postId,name,email,comment,status) values('$postid','$name','$email','$comment','$st1')");
+      $query = mysqli_query($con, "insert into comment(postId,name,email,comment,status) values('$postid','$name','$email','$comment','$st1')");
       if ($query) :
         echo "<script>alert('comment successfully submit. Comment will be display after admin review ');</script>";
         unset($_SESSION['token']);
       else :
         echo "<script>alert('Something went wrong. Please try again.');</script>";
-
       endif;
-    }
-  }
 }
 $postid = intval($_GET['nid']);
 
@@ -165,7 +161,7 @@ if ($result->num_rows > 0) {
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
             <form name="Comment" method="post">
-              <input type="hidden" name="csrftoken" value="<?php echo htmlentities($_SESSION['token']); ?>" />
+              <!-- <input type="hidden" name="csrftoken" value="" /> -->
               <div class="form-group">
                 <input type="text" name="name" class="form-control" placeholder="Enter your fullname" required>
               </div>
@@ -187,7 +183,7 @@ if ($result->num_rows > 0) {
 
         <?php
         $sts = 1;
-        $query = mysqli_query($con, "select name,comment,postingDate from  commentwhere postId='$pid' and status='$sts'");
+        $query = mysqli_query($con, "select name,comment,postingDate from  comment where postId='$pid' and status='$sts'");
         while ($row = mysqli_fetch_array($query)) {
         ?>
           <div class="media mb-4">

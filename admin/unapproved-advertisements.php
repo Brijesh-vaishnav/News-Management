@@ -2,9 +2,7 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if ($_SESSION["type"] != "Admin") {
-    echo "<script>document.location='./login.php'</script>";
-} else {
+ {
 
     if (isset($_GET["appid"])) {
         $appid = $_GET["appid"];

@@ -140,7 +140,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                                 <?php
                                                 $whoIsLoggedIn=$_SESSION["login"];
-                                                echo "<script>alert('$whoIsLoggedIn')</script>";
+                                                // echo "<script>alert('$whoIsLoggedIn')</script>";
                                                 $query = mysqli_query($con, "select * from advertisement where advertiser_mail='$whoIsLoggedIn'");
                                                 $rowcount = mysqli_num_rows($query);
                                                 if ($rowcount == 0) {

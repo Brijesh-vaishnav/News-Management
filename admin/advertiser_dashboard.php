@@ -114,13 +114,15 @@ if (($_SESSION['type']) != "Advertiser") {
                                     </div>
                                 </div>
                             </a><!-- end col -->
-                            <a href="manage-subcategories.php">
+                            <a href="manage_advertises.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Approved Advertises</p>
-                                            <?php $query = mysqli_query($con, "select * from subcategory where Is_Active=1");
+                                            <?php
+                                            $login=$_SESSION["login"];
+                                             $query = mysqli_query($con, "select * from advertisement where status=1 AND advertiser_mail='$login'");
                                             $countsubcat = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>

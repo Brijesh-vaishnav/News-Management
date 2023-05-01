@@ -1,6 +1,6 @@
 <?php
 
-if ($_SESSION["type"] != "Admin" && $_SESSION["type"] != "Operator") {
+if ($_SESSION["type"] != "Employee") {
 
     echo "<script>document.location='./login.php'</script>";
 }
@@ -41,8 +41,8 @@ if ($_SESSION["type"] != "Admin" && $_SESSION["type"] != "Operator") {
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Opeators </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="add-subadmins.php">Add Operators</a></li>
-                            <li><a href="manage-subadmins.php">Manage Operators</a></li>
+                            <li><a href="add-operator.php">Add Operators</a></li>
+                            <li><a href="manage-operators.php">Manage Operators</a></li>
                         </ul>
                     </li>
                 <?php endif; ?>
@@ -50,7 +50,7 @@ if ($_SESSION["type"] != "Admin" && $_SESSION["type"] != "Operator") {
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Users </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="normal-users.php">Normal Users</a></li>
+                            <li><a href="normal-users.php">All Users</a></li>
                             <li><a href="subscribed-users.php">Subscribed Users</a></li>
 
                         </ul>

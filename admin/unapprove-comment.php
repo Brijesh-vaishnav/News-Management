@@ -1,28 +1,40 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
+$msg=null;
+$delmsg=null;
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
-    if ($_GET['disid']) {
-        $id = intval($_GET['disid']);
-        $query = mysqli_query($con, "update commentset status='0' where id='$id'");
-        $msg = "Comment unapprove ";
-    }
-    // Code for restore
-    if ($_GET['appid']) {
-        $id = intval($_GET['appid']);
-        $query = mysqli_query($con, "update commentset status='1' where id='$id'");
-        $msg = "Comment approved";
-    }
+    if(isset($_GET["disid"]))
+    {
 
-    // Code for deletion
-    if ($_GET['action'] == 'del' && $_GET['rid']) {
-        $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  comment where id='$id'");
-        $delmsg = "Comment deleted forever";
+        if ($_GET['disid']) {
+            $id = intval($_GET['disid']);
+            $query = mysqli_query($con, "update comment set status='0' where id='$id'");
+            $msg = "Comment unapprove ";
+        }
     }
+    if(isset($_GET["appid"]))
+    {
+
+        // Code for restore
+        if ($_GET['appid']) {
+            $id = intval($_GET['appid']);
+            $query = mysqli_query($con, "update comment set status='1' where id='$id'");
+            $msg = "Comment approved";
+        }
+    }
+  if(isset($_GET['action']))
+  {
+
+      // Code for deletion
+      if ($_GET['action'] == 'del' && $_GET['rid']) {
+          $id = intval($_GET['rid']);
+          $query = mysqli_query($con, "delete from  comment where id='$id'");
+          $delmsg = "Comment deleted forever";
+      }
+  }
 
 ?>
     <!DOCTYPE html>
@@ -134,7 +146,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $query = mysqli_query($con, "Select tblcomments.id,  tblcomments.name,tblcomments.email,tblcomments.postingDate,tblcomments.comment,news.id as postid,news.news_title from  commentjoin news on news.id=tblcomments.postId where tblcomments.status=0");
+                                                    $query = mysqli_query($con, "Select comment.id,  comment.name,comment.email,comment.postingDate,comment.comment,news.id as postid,news.news_title,comment.status from  comment join news on news.id=comment.postId where comment.status=0");
                                                     $cnt = 1;
                                                     while ($row = mysqli_fetch_array($query)) {
                                                     ?>
@@ -156,7 +168,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                             <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><?php echo htmlentities($row['news_title']); ?></a> </td>
                                                             <td><?php echo htmlentities($row['postingDate']); ?></td>
                                                             <td>
-                                                                <?php if ($st == '0') : ?>
+                                                                <?php if ($st != '0') : ?>
                                                                     <a href="unapprove-comment.php?disid=<?php echo htmlentities($row['id']); ?>" title="Disapprove this comment"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
                                                                 <?php else : ?>
                                                                     <a href="unapprove-comment.php?appid=<?php echo htmlentities($row['id']); ?>" title="Approve this comment"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>

@@ -11,16 +11,20 @@ if (isset($_POST['login'])) {
     // echo "<script>alert('$loginas');</script>";
     $uname = $_POST['username'];
     $password = ($_POST['password']);
-    if ($loginas == "Admin" or $loginas == "Operator") {
+    if ($loginas == "Employee") {
 
 
       
+        // echo "<script>alert('$loginas');</script>";
 
         // Fetch data from database on the basis of username/email and password
-        $sql = mysqli_query($con, "SELECT emp_mail,emp_password,emp_role_id 	 FROM employee WHERE (emp_mail='$uname' && emp_password='$password')");
+        $sql = mysqli_query($con, "SELECT emp_mail,emp_password,emp_role_id FROM employee WHERE (emp_mail='$uname' && emp_password='$password')");
         $num = mysqli_fetch_array($sql);
 
         if ($num > 0) {
+
+        //  echo "<script>alert('employee found');</script>";
+          
 
             $_SESSION['login'] = $_POST['username'];
             $_SESSION['utype'] = $num['emp_role_id'];
@@ -139,8 +143,8 @@ if (isset($_POST['login'])) {
                                             <select name="loginas" style="height:50px;width:100%;background:transparent">
                                                 <option value="user">User</option>
                                                 <option value="Advertiser">Advertiser</option>
-                                                <option value="Operator">Operator</option>
-                                                <option value="Admin">Admin</option>
+                                                <option value="Employee">Employee</option>
+                                             
                                             </select>
                                         </div>
                                     </div>

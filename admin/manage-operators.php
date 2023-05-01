@@ -11,7 +11,7 @@ if (strlen($_SESSION['login']) == 0) {
         $id = intval($_GET['rid']);
         $query = mysqli_query($con, "delete from  employee  where id='$id' && emp_role_id 	=0");
         echo "<script>alert('Operator details deleted.');</script>";
-        echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'; </script>";
+        echo "<script type='text/javascript'> document.location = 'manage-operators.php.php'; </script>";
     }
 
 ?>
@@ -89,7 +89,7 @@ if (strlen($_SESSION['login']) == 0) {
                             <div class="col-md-12">
                                 <div class="demo-box m-t-20">
                                     <div class="m-b-30">
-                                        <a href="add-subadmins.php">
+                                        <a href="add-operator.php">
                                             <button id="addToTable" class="btn btn-success waves-effect waves-light">Add <i class="mdi mdi-plus-circle-outline"></i></button>
                                         </a>
                                     </div>
@@ -116,11 +116,11 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <tr>
                                                         <th scope="row"><?php echo htmlentities($cnt); ?></th>
                                                         <td><?php echo htmlentities($row['emp_mail']); ?></td>
-                                                        <td><?php echo htmlentities($row['fname']); ?></td>
-                                                        <td><?php echo htmlentities($row['lname']); ?></td>
+                                                        <td><?php echo htmlentities($row['emp_fname']); ?></td>
+                                                        <td><?php echo htmlentities($row['emp_lname']); ?></td>
 
                                                         <td><a href="edit-subadmin.php?said=<?php echo htmlentities($row['id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
-                                                            &nbsp;<a href="manage-subadmins.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
+                                                            &nbsp;<a href="manage-operators.php.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
                                                     </tr>
                                                 <?php
                                                     $cnt++;

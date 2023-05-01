@@ -1,7 +1,9 @@
 <?php
 session_start();
+
 include('includes/config.php');
-error_reporting(0);
+$msg=null;
+$error=null;
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
@@ -9,13 +11,18 @@ if (strlen($_SESSION['login']) == 0) {
         $pagetype = 'aboutus';
         $pagetitle = $_POST['pagetitle'];
         $pagedetails = $_POST['pagedescription'];
-
-        $query = mysqli_query($con, "update pages set PageTitle='$pagetitle',Description='$pagedetails' where PageName='$pagetype' ");
-        if ($query) {
-            $msg = "About us  page successfully updated ";
+        $stmt = mysqli_prepare($con, "UPDATE pages SET PageTitle=?, Description=? WHERE PageName=?");
+        mysqli_stmt_bind_param($stmt, "sss", $pagetitle, $pagedetails, $pagetype);
+        $result = mysqli_stmt_execute($stmt);
+        
+        if ($result) {
+            $msg = "About us page successfully updated";
         } else {
-            $error = "Something went wrong . Please try again.";
+            $error = "Something went wrong. Please try again.";
         }
+        
+        mysqli_stmt_close($stmt);
+        
     }
 ?>
     <!DOCTYPE html>

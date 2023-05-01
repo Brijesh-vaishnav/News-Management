@@ -4,9 +4,7 @@
 session_start();
 include('includes/config.php');
 
-if (strlen($_SESSION['login']) == "") {
-    header('location:index.php');
-} else {
+ {
    
    $whoIsLoggedIn=$_SESSION["login"];
 //    echo "<script>alert('$whoIsLoggedIn')</script>";
