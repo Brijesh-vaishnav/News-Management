@@ -1,25 +1,30 @@
 <?php
 include('includes/config.php');
+
+include("includes/sendmail.php");
 if (isset($_POST["signup"])) {
     $username = $_POST["email"];
     $password = $_POST["password"];
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];
+    $v_code=rand(1000,9999);
+    $is_verified=0;
 
     if ($_POST["register-as"] == "advertiser") {
-        $query = mysqli_query($con, "insert into advertiser(mail,password,fname,lname) values('$username','$password','$fname','$lname')");
-    }
-    else{
-        $query = mysqli_query($con, "insert into user(email,password,fname,lname) values('$username','$password','$fname','$lname')");
-    }
-
-    if ($query) {
-        echo "<script>alert('Registration completed')</script>";
-        echo "<script>document.location='./login.php'</script>";
+        $query = mysqli_query($con, "insert into advertiser(mail,password,fname,lname,verification_code) values('$username','$password','$fname','$lname','$v_code')");
     } else {
-        echo "Registration failed";
-
+        $query = mysqli_query($con, "insert into user(email,password,fname,lname,verification_code) values('$username','$password','$fname','$lname','$v_code')");
+      
+    
     }
+    sendmail($username,$v_code,$_POST["register-as"]);
+
+    // if ($query) {
+    //     echo "<script>alert('Registration completed')</script>";
+    //     echo "<script>document.location='./login.php'</script>";
+    // } else {
+    //     echo "Registration failed";
+    // }
 }
 ?>
 

@@ -13,15 +13,17 @@ error_reporting(0);
         $fname=$_POST['fname'];
         $lname=$_POST['lname'];
         $query = mysqli_query($con, "insert into employee(emp_mail,emp_password,emp_role_id,emp_fname,emp_lname ) values('$username','$password','$emp_role_id 	','$fname','$lname')") ;
+
         if ($query) {
             echo "<script>alert('Operator details added successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'add-subadmins; </script>";
+            echo "<script type='text/javascript'> document.location = 'add-operator.php; </script>";
         } else {
             echo "<script>alert('Something went wrong. Please try again.');</script>";
         }
     }
 
 ?>
+
 
 
     <!DOCTYPE html>
