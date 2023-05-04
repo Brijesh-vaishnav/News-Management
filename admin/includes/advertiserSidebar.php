@@ -19,7 +19,7 @@
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertisements </span> <span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="add_advertise.php">Add Advertise </a></li>
-                                    <li><a href="manage_advertises.php">Manage Advertises</a></li>
+                                    <li><a href="manage-advertises.php">Manage Advertises</a></li>
                                 </ul>
                             </li>
 

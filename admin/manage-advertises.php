@@ -1,11 +1,12 @@
 <?php
 session_start();
-include('includes/config.php');
-error_reporting(0); {
+$delmsg = null;
+$error = null;
+include('includes/config.php'); {
 
     if ($_GET['action'] == 'del') {
-        $advertise_id = intval($_GET['aid']);
-        $query = mysqli_query($con, "delete from advertisement  where advertise_id='$advertise_id'");
+        $postid = intval($_GET['pid']);
+        $query = mysqli_query($con, "delete from advertisement  where advertise_id='$postid'");
         if ($query) {
             $delmsg = "Advertise deleted ";
         } else {
@@ -82,7 +83,7 @@ error_reporting(0); {
             <?php include('includes/topheader.php'); ?>
 
             <!-- ========== Left Sidebar Start ========== -->
-            <?php include('includes/leftsidebar.php'); ?>
+            <?php include('includes/advertiserSidebar.php'); ?>
 
 
             <!-- ============================================================== -->
@@ -130,8 +131,8 @@ error_reporting(0); {
 
 
                                         <?php
-
-                                        $query = mysqli_query($con, "select * from advertisement where status=1");
+                                        $whoIsLoggedIn = $_SESSION["login"];
+                                        $query = mysqli_query($con, "select * from advertisement where advertiser_mail='$whoIsLoggedIn'");
                                         $rowcount = mysqli_num_rows($query);
                                         if ($rowcount == 0) {
                                         ?>
@@ -147,7 +148,7 @@ error_reporting(0); {
                                             ?>
 
                                                 <div style="display:flex;gap:10px;position:relative">
-                                                    <a href="manage-advertises-admin.php?aid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
+                                                    <a href="manage-advertises.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
                                                     <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
                                                     <div style="display:flex;flex-direction: column;justify-content: space-around;">
                                                         <div>
@@ -161,31 +162,62 @@ error_reporting(0); {
 
                                                             <b>Advertiser Name: </b> <?php echo $advertiser["fname"] . " " . $advertiser["lname"] ?>
                                                         </div>
-                                                        <div>
-
-                                                            <b>Advertise Requested On : </b> <span> <?php echo $row["requested_on"]   ?></span>
-                                                        </div>
-                                                        <?php if ($row["paymentstatus"] == 0) :  ?>
-
-                                                        <div>
-
-                                                            <b>Advertise Approved On : </b> <span> <?php echo $row["approved_on"]   ?></span>
-                                                        </div>
-                                                        <?php endif; ?>
 
                                                         <div>
 
                                                             <b>Advertise Hours : </b> <span> <?php echo $row["advertise_hours"]   ?></span>
                                                         </div>
+                                                        <div>
+                                                            <b>Advertise Total Price : </b> <span><?php echo $total_price = $row["total_price"]; ?> <span> Rs. </span>
+                                                        </span>
+                                                    </div>
+                                                    <div>
 
+                                                            <b>Advertise Requested On : </b> <span> <?php echo $row["requested_on"]   ?></span>
+                                                        </div>
+                                                    <div>
+
+                                                        <b>Approvement Status: </b> <?php if ($row["status"] == 0) :  ?>
+                                                            <span style="color:red"> Pending </span>
+                                                        <?php else :    ?>
+                                                            <span style="color:green"> Approved </span>
+                                                        <?php endif; ?>
+                                                    </div>
                                                         <div>
 
                                                             <b>Payment: </b>
                                                             <?php if ($row["paymentstatus"] == 0) :  ?>
                                                                 <span style="color:red"> Pending </span>
+
                                                             <?php else :    ?>
-                                                                <span style="color:green"> Approved </span>
+                                                                <span style="color:green"> Paid </span>
                                                             <?php endif; ?>
+                                                        </div>
+
+
+                                                        <?php if ($row["paymentstatus"] == 1) :  ?>
+                                                            <div>
+                                                                
+                                                                <b>Payment Done on: </b>
+                                                                <span> <?php echo $row["payment_done_on"] ?> </span>
+                                                            </div>
+                                                            <div>
+
+                                                                <b>Valid Till: </b>
+                                                                <span> <?php echo $row["validity"] ?> </span>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <div>
+
+                                                            <?php if ($row["status"] == 0) :  ?>
+                                                                <span style="color:orangered">Payment Option Will Be Available After Approvement !!!</span>
+                                                            <?php endif; ?>
+                                                            <?php if ($row["status"] == 1) :  ?>
+                                                                <?php if ($row["paymentstatus"] == 0) :  ?>
+                                                                    <a href="../advertiser_payment_page.php?price=<?php echo $total_price ?>&period=<?php echo $row["advertise_hours"] ?>" style="background-color:green;border-radius:10px;padding:10px 40px;color:white;">Pay</a>
+                                                                <?php endif; ?>
+                                                            <?php endif; ?>
+
                                                         </div>
                                                     </div>
                                                 </div>

@@ -5,9 +5,8 @@ include('includes/config.php');
 
 if (($_SESSION['type']) != "Advertiser") {
     echo "document.location='./login.php';</script>";
-    
 } else {
- 
+
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -98,13 +97,16 @@ if (($_SESSION['type']) != "Advertiser") {
                         <!-- end row -->
 
                         <div class="row">
-                            <a href="manage-categories.php">
+                            <a href="manage-advertises.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Pending For Approvements </p>
-                                            <?php $query = mysqli_query($con, "select * from advertisement");
+                                            <?php
+                                            $whoIsLoggedIn = $_SESSION["login"];
+
+                                            $query = mysqli_query($con, "select * from advertisement where advertiser_mail='$whoIsLoggedIn' & status=0");
                                             $countcat = mysqli_num_rows($query);
                                             ?>
 
@@ -114,15 +116,15 @@ if (($_SESSION['type']) != "Advertiser") {
                                     </div>
                                 </div>
                             </a><!-- end col -->
-                            <a href="manage_advertises.php">
+                            <a href="manage-advertises.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Approved Advertises</p>
                                             <?php
-                                            $login=$_SESSION["login"];
-                                             $query = mysqli_query($con, "select * from advertisement where status=1 AND advertiser_mail='$login'");
+                                            $login = $_SESSION["login"];
+                                            $query = mysqli_query($con, "select * from advertisement where status=1 AND advertiser_mail='$login'");
                                             $countsubcat = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>

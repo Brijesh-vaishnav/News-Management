@@ -1,12 +1,11 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
- {
+error_reporting(0); {
 
     if (isset($_GET["appid"])) {
         $appid = $_GET["appid"];
-        $query = mysqli_query($con, "update  advertisement set status=1 where advertise_id='$appid'");
+        $query = mysqli_query($con, "update  advertisement set status=1,approved_on=now() where advertise_id='$appid'");
         if ($query) {
             $msg = "Advertise Approved ";
         } else {
@@ -165,46 +164,50 @@ error_reporting(0);
 
                                                 <?php
                                             } else {
-                                                while ($row = mysqli_fetch_array($query)) {
+                                                ?>
+                                                <div style="display:flex;gap:40px;flex-direction: column;">
+                                               
+                                               <?php while ($row = mysqli_fetch_array($query)) {
                                                     $image = $row['advertise_img'];
                                                     $mail = $row["advertiser_mail"];
                                                 ?>
 
-                                                    <div style="display:flex;gap:10px;position:relative">
-                                                        <a href="manage-advertises.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
-                                                        <a href="unapproved-advertisements.php?appid=<?php echo htmlentities($row['advertise_id']); ?>" title="Approve this Advertise"><i class="ion-arrow-return-right" style="color: #29b6f6;position:absolute;right:0;top:20px"></i></a>
 
-                                                        <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
-                                                        <div style="display:flex;flex-direction: column;justify-content: space-around;">
-                                                            <div>
-                                                                <?php
-                                                                $findAdvertiserQuery = mysqli_query($con, "select * from advertiser where mail='$mail' ");
-                                                                $advertiser = mysqli_fetch_assoc($findAdvertiserQuery);
-                                                                ?>
-                                                                <b>Advertiser Email : </b> <?php echo $mail; ?>
-                                                            </div>
-                                                            <div>
+                                                        <div style="display:flex;gap:10px;position:relative">
+                                                            <a href="manage-advertises-admin.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
+                                                            <a href="unapproved-advertisements.php?appid=<?php echo htmlentities($row['advertise_id']); ?>" title="Approve this Advertise"><i class="ion-arrow-return-right" style="color: #29b6f6;position:absolute;right:0;top:20px"></i></a>
 
-                                                                <b>Advertiser Name: </b> <?php echo $advertiser["fname"] . " " . $advertiser["lname"] ?>
-                                                            </div>
-                                                            <div>
+                                                            <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
+                                                            <div style="display:flex;flex-direction: column;justify-content: space-around;">
+                                                                <div>
+                                                                    <?php
+                                                                    $findAdvertiserQuery = mysqli_query($con, "select * from advertiser where mail='$mail' ");
+                                                                    $advertiser = mysqli_fetch_assoc($findAdvertiserQuery);
+                                                                    ?>
+                                                                    <b>Advertiser Email : </b> <?php echo $mail; ?>
+                                                                </div>
+                                                                <div>
 
-                                                                <b>Advertise valid till: </b> 5:32
-                                                            </div>
-                                                            <div>
+                                                                    <b>Advertiser Name: </b> <?php echo $advertiser["fname"] . " " . $advertiser["lname"] ?>
+                                                                </div>
+                                                                <div>
 
-                                                                <b>Payment: </b>
-                                                                <?php if ($row["paymentstatus"] == 0) :  ?>
-                                                                    <span style="color:red"> Pending </span>
-                                                                <?php else :    ?>
-                                                                    <span style="color:green"> Approved </span>
-                                                                <?php endif; ?>
+                                                                    <b>Advertise Requested On : </b> <span> <?php echo $row["requested_on"]   ?></span>
+                                                                </div>
+                                                                <div>
+
+                                                                    <b>Advertise Requsted For : </b> <span> <?php echo $row["advertise_hours"]   ?> Hours</span>
+                                                                </div>
+                                                                <div>
+                                                                    <b>Advertise Total Price : </b> <span><?php echo $total_price = $row["total_price"]; ?> <span> Rs. </span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                            <?php }
+                                                        
+                                                        <?php }
                                             } ?>
+                                            </div>
 
 
                                         </div>

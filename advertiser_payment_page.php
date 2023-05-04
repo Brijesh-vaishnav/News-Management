@@ -1,7 +1,17 @@
 
 <?php 
-    if (!isset($_SESSION["login"])) {
+    session_start();
+    $email=$_SESSION["login"];
+    // echo "<script>alert('$email'); </script>";
+
+    if (isset($_SESSION["login"])) {
+        if($_SESSION["type"]!="Advertiser")
+             echo "<script>document.location='./admin/login.php' </script>";
+    }
+    else{
+        // echo "<script>alert('bye'); </script>";
         echo "<script>document.location='./admin/login.php' </script>";
+
     }
 ?>
 

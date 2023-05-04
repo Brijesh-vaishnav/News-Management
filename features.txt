@@ -1,0 +1,3 @@
+advertisement payment option only visible after Approvement of admin
+At the home page of  news portal The subscription details option will only available if there is subscription taken by user 
+If user or advertiser gets login into system then he will have 'dashboard" option available at index(home page) page.

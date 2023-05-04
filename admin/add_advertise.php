@@ -11,7 +11,7 @@ include('includes/config.php');
     
     // Code for Add New Sub Admi
     if (isset($_POST['submit'])) {
-        $email = $_POST['email'];
+    
 
         // $postedby = $_SESSION['login'];
         $postedby=$whoIsLoggedIn ;
@@ -38,12 +38,11 @@ include('includes/config.php');
 
 
             $total_price = $_POST["total_price"];
-            $hours=$_POST["validity"];
-            $currentDateTime = date('Y-m-d H:i:s');
-            $validity = date('Y-m-d H:i:s', strtotime($currentDateTime .  "+$hours hours"));
+        
+        
             // echo "<script>alert('$validity')</script>";
 
-            $query = mysqli_query($con, "insert into advertisement(advertiser_mail ,advertise_img,status,validity,paymentstatus,total_price) values('$postedby','$imgnewfile','$status','$validity','$paymentstatus','$total_price')") or die("Query failed: " . mysqli_error($conn)); ;
+            $query = mysqli_query($con, "insert into advertisement(advertiser_mail ,advertise_img,status,paymentstatus,total_price) values('$postedby','$imgnewfile','$status','$paymentstatus','$total_price')") or die("Query failed: " . mysqli_error($conn)); ;
             if ($query) {
                 $msg = "Advertise submitted for Approvement ";
                  echo "<script>alert('$msg')</script>";
