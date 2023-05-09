@@ -105,8 +105,8 @@ if (($_SESSION['type']) != "Advertiser") {
                                             <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Pending For Approvements </p>
                                             <?php
                                             $whoIsLoggedIn = $_SESSION["login"];
-
-                                            $query = mysqli_query($con, "select * from advertisement where advertiser_mail='$whoIsLoggedIn' & status=0");
+                                            
+                                            $query = mysqli_query($con, "select * from advertisement where advertiser_mail='$whoIsLoggedIn' && status=0");
                                             $countcat = mysqli_num_rows($query);
                                             ?>
 

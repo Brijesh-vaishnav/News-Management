@@ -9,4 +9,19 @@ if (mysqli_connect_errno())
 {
  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
+
+
+// error_reporting(0);
+session_start();
+//clear user subscription if he has taken any(even advertiser can take subscription)
+if (isset($_SESSION["login"])) {
+    mysqli_query($con, "delete from subscriber where now()>subscription_end_date ");
+}
+//delete advertise if it is expired
+if (isset($_SESSION["login"])) {
+    if ($_SESSION["type"] == "Advertiser") {
+        mysqli_query($con, "DELETE FROM advertisement WHERE  validity < NOW()");
+    }
+}
+
 ?>

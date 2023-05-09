@@ -166,8 +166,8 @@ include('includes/config.php');
                                                 </div>
 
                                                 <div class="form-group" style="margin-top:20px">
-                                                    <label for="validity">Validity In Hour</label> <br>
-                                                    <select name="validaty" id="validity" onchange="dropDownChanged(this)">
+                                                    <label for="validity" >Validity In Hour</label> <br>
+                                                    <select name="validaty" id="validity" onchange="dropDownChanged(this)" >
                                                         <option value="" selected disabled>Select Validity</option>
                                                         <?php
                                                         for ($i = 1; $i <= 12; $i++) {

@@ -2,28 +2,7 @@
   session_start();
   if (isset($_GET["state_id"]))
     $state_id = $_GET["state_id"];
-  if (isset($_SESSION["login"])) {
-    if ($_SESSION["type"] == 'user') {
-      $whoIsLoggedIn = $_SESSION["login"];
-      $queryForCheckWhetherIsSubscriber = mysqli_query($con, "select * from subscriber where subscribed_user_email='$whoIsLoggedIn'");
-
-      // $count=$isSubscriber["count"];
-      $num = mysqli_fetch_array($queryForCheckWhetherIsSubscriber);
-
-      if ($num > 0) {
-
-        $query = mysqli_query($con, "select * from subscriber where subscribed_user_email='$whoIsLoggedIn'");
-        $row = mysqli_fetch_assoc($query);
-        $enddate = $row["subscription_end_date"];
-        $today = date("Y-m-d");
-       
-        if ($today > $enddate) {
-          // echo "<script>alert('subscription deleted')</script>";
-          mysqli_query($con, "delete from subscriber where subscribed_user_email='$whoIsLoggedIn' ");
-        }
-      }
-    }
-  }
+  
   ?>
 
 
