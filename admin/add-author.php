@@ -1,21 +1,19 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0); {
+ {
 
     // Code for Add New Sub Admi
     if (isset($_POST['submit'])) {
         $username = $_POST['semp_mail'];
-
-        $password = md5($_POST['pwd']);
-        $emp_role_id      = '0';
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $query = mysqli_query($con, "insert into employee(emp_mail,emp_password,emp_role_id,emp_fname,emp_lname ) values('$username','$password','$emp_role_id 	','$fname','$lname')");
+   
+        $fname=$_POST['fname'];
+        $lname=$_POST['lname'];
+        $query = mysqli_query($con, "insert into author(mail,fname,lname ) values('$username','$fname','$lname')") ;
 
         if ($query) {
-            echo "<script>alert('Operator details added successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'add-operator.php; </script>";
+            echo "<script>alert('Author details added successfully.');</script>";
+            echo "<script type='text/javascript'> document.location = 'add-author.php; </script>";
         } else {
             echo "<script>alert('Something went wrong. Please try again.');</script>";
         }
@@ -105,37 +103,32 @@ error_reporting(0); {
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Add Operator </b></h4>
+                                    <h4 class="m-t-0 header-title"><b>Add Author </b></h4>
                                     <hr />
 
                                     <div class="row">
                                         <div class="col-md-6">
                                             <form class="form-horizontal" name="addsuadmin" method="post">
                                                 <div class="form-group">
-                                                    <label for="exampleInputusername">Email (used for login)<span style="color: red;"> *</span></label>
-                                                    <input type="text" placeholder="Enter  Email" name="semp_mail" id="semp_mail" class="form-control" onBlur="checkAvailability()" required autocomplete="off">
+                                                    <label for="exampleInputusername">Email<span style="color: red;"> *</span></label>
+                                                    <input type="text" placeholder="Enter  Email" name="semp_mail" id="semp_mail" class="form-control"  onBlur="checkAvailability()" required autocomplete="off">
                                                     <span id="user-availability-status" style="font-size:14px;"></span>
                                                 </div>
 
 
                                                 <div class="form-group">
-                                                    <label for="fname"> First Name <span style="color: red;"> *</span></label>
+                                                    <label for="fname"> First Name<span style="color: red;"> *</span></label>
                                                     <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name" required>
                                                 </div>
 
-
+                                                
                                                 <div class="form-group">
-                                                    <label for="lname"> Last Name <span style="color: red;"> *</span></label>
+                                                    <label for="lname"> Last Name<span style="color: red;"> *</span></label>
                                                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name" required>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="password">Password<span style="color: red;"> *</span></label>
-                                                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter password" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                 
+                                                   
                                                     <div class="col-md-10">
                                                         <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" id="submit" name="submit">
                                                             Submit</button>

@@ -389,7 +389,7 @@ if( Tablesaw.mustard ) {
 			if( priority && priority !== "persist" ) {
 				$cells.addClass( self.classes.priorityPrefix + priority );
 
-				$("<label><input type='checkbox' checked>" + $this.text() + "</label>" )
+				$("<label><input type='checkbox' checked>" + $this.text() + "<span style="color: red;"> *</span></label>" )
 					.appendTo( $menu )
 					.children( 0 )
 					.data( "tablesaw-header", this );
@@ -399,7 +399,7 @@ if( Tablesaw.mustard ) {
 		});
 
 		if( !hasNonPersistentHeaders ) {
-			$menu.append( '<label>' + Tablesaw.i18n.columnsDialogError + '</label>' );
+			$menu.append( '<label>' + Tablesaw.i18n.columnsDialogError + '<span style="color: red;"> *</span></label>' );
 		}
 
 		$menu.appendTo( $popup );
@@ -966,7 +966,7 @@ if( Tablesaw.mustard ) {
 								html.push( '<option' + ( isDefaultCol && !isDescending ? ' selected' : '' ) + ' value="' + j + '_asc">' + $t.text() + ' ' + ( isNumeric ? '&#x2191;' : '(A-Z)' ) + '</option>' );
 								html.push( '<option' + ( isDefaultCol && isDescending ? ' selected' : '' ) + ' value="' + j + '_desc">' + $t.text() + ' ' + ( isNumeric ? '&#x2193;' : '(Z-A)' ) + '</option>' );
 							});
-							html.push( '</select></span></label>' );
+							html.push( '</select></span><span style="color: red;"> *</span></label>' );
 
 							return html.join('');
 						});
@@ -1228,7 +1228,7 @@ if( Tablesaw.mustard ) {
 							( isSelected ? ' selected' : '' ) +
 							' value="' + S.modes[ j ] + '">' + Tablesaw.i18n.modes[ j ] + '</option>' );
 					}
-					html.push( '</select></span></label>' );
+					html.push( '</select></span><span style="color: red;"> *</span></label>' );
 
 					return html.join('');
 				});

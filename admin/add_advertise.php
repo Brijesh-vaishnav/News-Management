@@ -1,22 +1,18 @@
-
-
 <?php
 session_start();
-include('includes/config.php');
+include('includes/config.php'); {
 
- {
-   
-   $whoIsLoggedIn=$_SESSION["login"];
-//    echo "<script>alert('$whoIsLoggedIn')</script>";
-    
+    $whoIsLoggedIn = $_SESSION["login"];
+    //    echo "<script>alert('$whoIsLoggedIn')</script>";
+
     // Code for Add New Sub Admi
     if (isset($_POST['submit'])) {
-    
+
 
         // $postedby = $_SESSION['login'];
-        $postedby=$whoIsLoggedIn ;
-        
-    
+        $postedby = $whoIsLoggedIn;
+
+
         $imgfile = $_FILES["advertise_image"]["name"];
         // echo "<script>alert('$imgfile')</script>";
         // get the image extension
@@ -38,18 +34,20 @@ include('includes/config.php');
 
 
             $total_price = $_POST["total_price"];
-        
-        
+           $q= mysqli_query($con,"select * from advertise_plans where plan_price='$total_price'");
+           $r=mysqli_fetch_assoc($q);
+           $duration=$r["plan_duration"];
+
+
             // echo "<script>alert('$validity')</script>";
 
-            $query = mysqli_query($con, "insert into advertisement(advertiser_mail ,advertise_img,status,paymentstatus,total_price) values('$postedby','$imgnewfile','$status','$paymentstatus','$total_price')") or die("Query failed: " . mysqli_error($conn)); ;
+            $query = mysqli_query($con, "insert into advertisement(advertiser_mail ,advertise_img,status,paymentstatus,total_price,advertise_hours) values('$postedby','$imgnewfile','$status','$paymentstatus','$total_price','$duration')") or die("Query failed: " . mysqli_error($conn));;
             if ($query) {
                 $msg = "Advertise submitted for Approvement ";
-                 echo "<script>alert('$msg')</script>";
+                echo "<script>alert('$msg')</script>";
             } else {
                 $error = "Something went wrong . Please try again.";
                 echo "<script>alert('$error')</script>";
-
             }
         }
     }
@@ -62,7 +60,7 @@ include('includes/config.php');
 
     <head>
 
-        <title>Newsportal | Add Operator</title>
+        <title>Newsportal | Add Advertise</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -74,7 +72,7 @@ include('includes/config.php');
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
-        <script>
+        <!-- <script>
             function checkAvailability() {
                 $("#loaderIcon").show();
                 jQuery.ajax({
@@ -88,7 +86,7 @@ include('includes/config.php');
                     error: function() {}
                 });
             }
-        </script>
+        </script> -->
     </head>
 
 
@@ -111,14 +109,12 @@ include('includes/config.php');
                 <div class="content">
                     <div class="container">
                         <?php
-                        $query = "select price from advertise_price";
+                        $query = "select * from advertise_plans";
                         $result = mysqli_query($con, $query);
                         $row = mysqli_fetch_assoc($result)
                         ?>
 
-                        <script>
-                            let price = <?php echo $row['price'] ?>
-                        </script>
+
 
 
                         <div class="row">
@@ -142,7 +138,7 @@ include('includes/config.php');
 
 
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="card-box">
                                     <h4 class="m-t-0 header-title"><b>Add Advertise </b></h4>
                                     <hr />
@@ -151,7 +147,7 @@ include('includes/config.php');
                                         <div class="col-md-6">
                                             <form name="add_advertise" method="post" enctype="multipart/form-data" action="">
                                                 <div class="form-group">
-                                                    <label for="exampleInputusername">Email</label>
+                                                    <label for="exampleInputusername">Email<span style="color: red;"> *</span></label>
                                                     <input type="text" placeholder="Enter  Email" name="email" id="semp_mail" class="form-control" required autocomplete="off" disabled value=<?php echo $whoIsLoggedIn; ?>>
                                                     <span id="user-availability-status" style="font-size:14px;"></span>
                                                 </div>
@@ -159,32 +155,37 @@ include('includes/config.php');
                                                 <div class="row">
                                                     <div class="col-sm-12" style="margin-bottom:5px">
 
-                                                        <h4 class="m-b-30 m-t-0 header-title"><b>Advertise Image</b></h4>
+                                                        <h4 class="m-b-30 m-t-0 header-title"><b>Advertise Image</b><span style="color: red;"> *</span></h4>
                                                         <input type="file" class="form-control" id="news_img" name="advertise_image" required>
 
                                                     </div>
                                                 </div>
-
+                                                <script>
+                                                    let price = <?php echo $row['plan_price'] ?>
+                                                </script>
                                                 <div class="form-group" style="margin-top:20px">
-                                                    <label for="validity" >Validity In Hour</label> <br>
-                                                    <select name="validaty" id="validity" onchange="dropDownChanged(this)" >
+                                                    <label for="validity">Validity In Hour<span style="color: red;"> *</span></label> <br>
+                                                    <select name="validaty" id="validity" onchange="dropDownChanged(this)" required>
                                                         <option value="" selected disabled>Select Validity</option>
                                                         <?php
-                                                        for ($i = 1; $i <= 12; $i++) {
-                                                            echo "<option value=" . $i . ">" . $i . "</option>";
+                                                        $query2 = mysqli_query($con, "Select * from  advertise_plans");
+                                             
+                                                        while ($row = mysqli_fetch_array($query2)) {
+
+                                                            echo "<option value=" . $row["plan_price"] . ">" . $row["plan_duration"] . " Hour </option>";
                                                         }
                                                         ?>
 
                                                     </select>
-                                                    <span>Price : <?php echo $row['price'] ?> rs/hour</span>
+
                                                     <span style="margin-left:20px" id="bill"> </span>
                                                 </div>
                                                 <input type="text" name="total_price" id="total_price" hidden>
 
                                                 <div class="form-group" style="display:flex;margin-top:20px">
-                                                    <label class="col-md-2 control-label">&nbsp;</label>
+                                                   
                                                     <div class="col-md-10 flex justify-start">
-                                                        <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" id="submit" name="submit" style="transform:translateX(-120px)">
+                                                        <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" id="submit" name="submit" >
                                                             Submit</button>
                                                     </div>
                                                 </div>
@@ -198,6 +199,51 @@ include('includes/config.php');
 
                                 </div>
                             </div>
+                            <h5 style="display:flex;justify-content: center;">Advertisement Plans</h5>
+                            <div class="col-md-6">
+                                <div class="demo-box m-t-20">
+
+                                    <div class="table-responsive">
+                                        <table class="table m-0 table-colored-bordered table-bordered-primary">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th> Plan Price</th>
+                                                    <th>Plan Duratioin</th>
+
+
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $query = mysqli_query($con, "Select * from  advertise_plans");
+                                                $cnt = 1;
+                                                while ($row = mysqli_fetch_array($query)) {
+                                                ?>
+                                                    <tr>
+                                                        <th scope="row"><?php echo htmlentities($cnt); ?></th>
+                                                        <td><?php echo htmlentities($row['plan_price']); ?></td>
+                                                        <td><?php echo htmlentities($row['plan_duration']); ?> Hour</td>
+
+
+                                                    </tr>
+                                                <?php
+                                                    $cnt++;
+                                                } ?>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
                         </div>
                         <!-- end row -->
 
@@ -215,9 +261,9 @@ include('includes/config.php');
             var resizefunc = [];
 
             function dropDownChanged(e) {
-                let validity = e.value;
-                document.querySelector('#bill').innerHTML = 'Total Price: ' + validity * price + " Rs";
-                document.querySelector("#total_price").value = validity * price;
+                let price = e.value;
+                document.querySelector('#bill').innerHTML = 'Total Price: ' + price  + " Rs";
+                document.querySelector("#total_price").value = price ;
             }
         </script>
 

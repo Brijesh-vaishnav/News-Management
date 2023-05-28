@@ -157,7 +157,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             <form class="form-horizontal" name="chngpwd" method="post" onSubmit="return valid();">
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label">Current Password</label>
+                                                    <label class="col-md-4 control-label">Current Password<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control" value="" name="password" required>
                                                     </div>
@@ -165,7 +165,7 @@ if (strlen($_SESSION['login']) == 0) {
 
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label">New Password</label>
+                                                    <label class="col-md-4 control-label">New Password<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control" value="" name="newpassword" required>
                                                     </div>
@@ -173,14 +173,14 @@ if (strlen($_SESSION['login']) == 0) {
 
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label">Confirm Password</label>
+                                                    <label class="col-md-4 control-label">Confirm Password<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control" value="" name="confirmpassword" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label">&nbsp;</label>
+                                                    <label class="col-md-4 control-label">&nbsp;<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
 
                                                         <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">

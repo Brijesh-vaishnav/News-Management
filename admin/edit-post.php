@@ -166,14 +166,14 @@ if (strlen($_SESSION['login']) == 0) {
                                         <div class="">
                                             <form name="addpost" method="post">
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Post Title</label>
+                                                    <label for="exampleInputEmail1">Post Title<span style="color: red;"> *</span></label>
                                                     <input type="text" class="form-control" id="news_title" value="<?php echo htmlentities($row['title']); ?>" name="news_title" placeholder="Enter title" required>
                                                 </div>
 
 
 
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Category</label>
+                                                    <label for="exampleInputEmail1">Category<span style="color: red;"> *</span></label>
                                                     <select class="form-control" name="category" id="category" onChange="getSubCat(this.value);" required>
                                                         <option value="<?php echo htmlentities($row['catid']); ?>"><?php echo htmlentities($row['category']); ?></option>
                                                         <?php
@@ -188,7 +188,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </div>
 
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Sub Category</label>
+                                                    <label for="exampleInputEmail1">Sub Category<span style="color: red;"> *</span></label>
                                                     <select class="form-control" name="subcategory" id="subcategory" required>
                                                         <option value="<?php echo htmlentities($row['subcatid']); ?>"><?php echo htmlentities($row['subcategory']); ?></option>
                                                     </select>

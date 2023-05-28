@@ -235,7 +235,7 @@
 			(_self.options.size == 'nr' ? '' : 'btn-' + _self.options.size) + '" ' + 
 			(_self.options.disabled ? 'disabled="true"' : '') + '>' + 
 			_self.htmlIcon() + '<span class="buttonText">' + _self.options.buttonText + '</span>' + 
-			  '</label>' + 
+			  '<span style="color: red;"> *</span></label>' + 
 			  '</span>';
 			
 			html = _self.options.buttonBefore ? btn + _self.htmlInput() : _self.htmlInput() + btn;

@@ -135,7 +135,25 @@ if (($_SESSION['type']) != "Advertiser") {
                             </a>
 
 
+                            <a href="advertisement-plans.php">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <div class="card-box widget-box-one">
+                                        <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
+                                        <div class="wigdet-one-content">
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Advertisement Plans </p>
+                                            <?php
+                                            $whoIsLoggedIn = $_SESSION["login"];
+                                            
+                                            $query = mysqli_query($con, "select * from advertise_plans");
+                                            $countcat = mysqli_num_rows($query);
+                                            ?>
 
+                                            <h2><?php echo htmlentities($countcat); ?> <small></small></h2>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
 
 
                         </div>

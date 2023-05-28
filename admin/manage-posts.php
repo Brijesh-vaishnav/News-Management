@@ -146,9 +146,8 @@ if (strlen($_SESSION['login']) == 0) {
                                                     
                                                     </a>
                                                             &nbsp;
-                                                           <?php if($_SESSION["utype"]=='1') :?> 
+                                                          
                                                             <a href="manage-posts.php?pid=<?php echo htmlentities($row['postid']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
-                                                            <?php endif;?>
                                                     </tr>
                                             <?php }
                                                     } ?>

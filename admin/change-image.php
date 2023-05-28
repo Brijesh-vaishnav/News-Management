@@ -159,7 +159,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             <div class="">
                                                 <form name="addpost" method="post">
                                                     <div class="form-group m-b-20">
-                                                        <label for="exampleInputEmail1">Post Title</label>
+                                                        <label for="exampleInputEmail1">Post Title<span style="color: red;"> *</span></label>
                                                         <input type="text" class="form-control" id="news_title" value="<?php echo htmlentities($row['news_title']); ?>" name="news_title" readonly>
                                                     </div>
 

@@ -146,61 +146,67 @@ error_reporting(0); {
                                                 $mail = $row["advertiser_mail"];
                                             ?>
 
-                                                <div style="display:flex;position:relative">
+                                                <div style="display:flex;flex-direction:column;position:relative;gap:20px">
                                                     <a href="manage-advertises-admin.php?aid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
-                                                    <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
-                                                    <div style="display:flex;flex-direction: column;justify-content: space-around;">
-                                                        <div>
-                                                            <?php
-                                                            $findAdvertiserQuery = mysqli_query($con, "select * from advertiser where mail='$mail' ");
-                                                            $advertiser = mysqli_fetch_assoc($findAdvertiserQuery);
-                                                            ?>
-                                                            <b>Advertiser Email : </b> <?php echo $mail; ?>
+                                                    <div style="display:flex;gap:20px">
+                                                        <div class="image">
+                                                            <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
                                                         </div>
-                                                        <div>
+                                                        <div class="details"  style="display:flex;flex-direction: column;justify-content: space-around;">
+                                                            <div style="display:flex;flex-direction: column;justify-content: space-around;">
+                                                                <div>
+                                                                    <?php
+                                                                    $findAdvertiserQuery = mysqli_query($con, "select * from advertiser where mail='$mail' ");
+                                                                    $advertiser = mysqli_fetch_assoc($findAdvertiserQuery);
+                                                                    ?>
+                                                                    <b>Advertiser Email : </b> <?php echo $mail; ?>
+                                                                </div>
+                                                                <div>
 
-                                                            <b>Advertiser Name: </b> <?php echo $advertiser["fname"] . " " . $advertiser["lname"] ?>
-                                                        </div>
-                                                        <div>
+                                                                    <b>Advertiser Name: </b> <?php echo $advertiser["fname"] . " " . $advertiser["lname"] ?>
+                                                                </div>
+                                                                <div>
 
-                                                            <b>Advertise Requested On : </b> <span> <?php echo $row["requested_on"]   ?></span>
-                                                        </div>
-                                                        <?php if ($row["paymentstatus"] == 0) :  ?>
+                                                                    <b>Advertise Requested On : </b> <span> <?php echo $row["requested_on"]   ?></span>
+                                                                </div>
+                                                                <?php if ($row["paymentstatus"] == 0) :  ?>
 
-                                                            <div>
+                                                                    <div>
 
-                                                                <b>Advertise Approved On : </b> <span> <?php echo $row["approved_on"]   ?></span>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                                        <b>Advertise Approved On : </b> <span> <?php echo $row["approved_on"]   ?></span>
+                                                                    </div>
+                                                                <?php endif; ?>
 
-                                                        <div>
+                                                                <div>
 
-                                                            <b>Advertise Hours : </b> <span> <?php echo $row["advertise_hours"]   ?></span>
-                                                        </div>
+                                                                    <b>Advertise Hours : </b> <span> <?php echo $row["advertise_hours"]   ?></span>
+                                                                </div>
 
 
 
-                                                        <div>
-                                                            <b>Payment: </b>
-                                                            <?php if ($row["paymentstatus"] == 0) :  ?>
-                                                                <span style="color:red"> Pending </span>
-                                                            <?php else :    ?>
-                                                                <span style="color:green"> Done </span>
+                                                                <div>
+                                                                    <b>Payment: </b>
+                                                                    <?php if ($row["paymentstatus"] == 0) :  ?>
+                                                                        <span style="color:red"> Pending </span>
+                                                                    <?php else :    ?>
+                                                                        <span style="color:green"> Done </span>
+                                                                    <?php endif; ?>
+                                                                    <?php if ($row["paymentstatus"] == 1) :  ?>
+                                                                </div>
+                                                                <div>
+
+                                                                    <b>Payment Done on: </b>
+                                                                    <span> <?php echo $row["payment_done_on"] ?> </span>
+                                                                </div>
+                                                                <div>
+
+                                                                    <b>Valid Till: </b>
+                                                                    <span> <?php echo $row["validity"] ?> </span>
+                                                                </div>
                                                             <?php endif; ?>
-                                                            <?php if ($row["paymentstatus"] == 1) :  ?>
-                                                        </div>
-                                                        <div>
 
-                                                            <b>Payment Done on: </b>
-                                                            <span> <?php echo $row["payment_done_on"] ?> </span>
+                                                            </div>
                                                         </div>
-                                                        <div>
-
-                                                            <b>Valid Till: </b>
-                                                            <span> <?php echo $row["validity"] ?> </span>
-                                                        </div>
-                                                    <?php endif; ?>
-
                                                     </div>
                                                 </div>
 

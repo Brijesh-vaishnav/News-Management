@@ -5862,16 +5862,16 @@
       var $container = options.dialogsInBody ? $(document.body) : $editor;
 
       var body = '<div class="form-group">' +
-                   '<label>' + lang.link.textToDisplay + '</label>' +
+                   '<label>' + lang.link.textToDisplay + '<span style="color: red;"> *</span></label>' +
                    '<input class="note-link-text form-control" type="text" />' +
                  '</div>' +
                  '<div class="form-group">' +
-                   '<label>' + lang.link.url + '</label>' +
+                   '<label>' + lang.link.url + '<span style="color: red;"> *</span></label>' +
                    '<input class="note-link-url form-control" type="text" value="http://" />' +
                  '</div>' +
                  (!options.disableLinkTarget ?
                    '<div class="checkbox">' +
-                     '<label>' + '<input type="checkbox" checked> ' + lang.link.openInNewWindow + '</label>' +
+                     '<label>' + '<input type="checkbox" checked> ' + lang.link.openInNewWindow + '<span style="color: red;"> *</span></label>' +
                    '</div>' : ''
                  );
       var footer = '<button href="#" class="btn btn-primary note-link-btn disabled" disabled>' + lang.link.insert + '</button>';
@@ -6088,12 +6088,12 @@
       }
 
       var body = '<div class="form-group note-group-select-from-files">' +
-                   '<label>' + lang.image.selectFromFiles + '</label>' +
+                   '<label>' + lang.image.selectFromFiles + '<span style="color: red;"> *</span></label>' +
                    '<input class="note-image-input form-control" type="file" name="files" accept="image/*" multiple="multiple" />' +
                    imageLimitation +
                  '</div>' +
                  '<div class="form-group note-group-image-url" style="overflow:auto;">' +
-                   '<label>' + lang.image.url + '</label>' +
+                   '<label>' + lang.image.url + '<span style="color: red;"> *</span></label>' +
                    '<input class="note-image-url form-control col-md-12" type="text" />' +
                  '</div>';
       var footer = '<button href="#" class="btn btn-primary note-image-btn disabled" disabled>' + lang.image.insert + '</button>';
@@ -6239,7 +6239,7 @@
       var $container = options.dialogsInBody ? $(document.body) : $editor;
 
       var body = '<div class="form-group row-fluid">' +
-          '<label>' + lang.video.url + ' <small class="text-muted">' + lang.video.providers + '</small></label>' +
+          '<label>' + lang.video.url + ' <small class="text-muted">' + lang.video.providers + '</small><span style="color: red;"> *</span></label>' +
           '<input class="note-video-url form-control span12" type="text" />' +
           '</div>';
       var footer = '<button href="#" class="btn btn-primary note-video-btn disabled" disabled>' + lang.video.insert + '</button>';
@@ -6418,7 +6418,7 @@
       return Object.keys(keyMap).map(function (key) {
         var command = keyMap[key];
         var $row = $('<div><div class="help-list-item"/></div>');
-        $row.append($('<label><kbd>' + key + '</kdb></label>').css({
+        $row.append($('<label><kbd>' + key + '</kdb><span style="color: red;"> *</span></label>').css({
           'width': 180,
           'margin-right': 10
         })).append($('<span/>').html(context.memo('help.' + command) || command));

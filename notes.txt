@@ -1,10 +1,8 @@
 
-advertise delete not working.
-advertise timing should start after payment
-advertise should be deleted after validity.
-advertiser side-> pending for approvemnt remaining to do.
-author management have to add.
-manage advertises is still left at advertiser side/dashboard.
+
+ 
 post image and advertise images should be deleted from directory after deleting in manage post or manage  advertising
-in the advertiser dashboard Approved advertises section not working
-in the admin dashboard approved advertises remaining to add
+
+have to mark all fields as require(*)
+forgot password option is remaining to deal with and also have to loook at change password in header of admin/advertiser/employee
+Hardik sir told me to have record of previous subscribers.

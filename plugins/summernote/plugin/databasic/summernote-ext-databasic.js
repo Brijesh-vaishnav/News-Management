@@ -84,7 +84,7 @@
       var $container = options.dialogsInBody ? $(document.body) : context.layoutInfo.editor;
 
       var body = '<div class="form-group row-fluid">' +
-          '<label>' + lang.databasic.testLabel + '</label>' +
+          '<label>' + lang.databasic.testLabel + '<span style="color: red;"> *</span></label>' +
           '<input class="ext-databasic-test form-control" type="text" />' +
           '</div>';
       var footer = '<button href="#" class="btn btn-primary ext-databasic-save">' + lang.databasic.insert + '</button>';

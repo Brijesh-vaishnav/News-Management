@@ -3,11 +3,9 @@ session_start();
 include('includes/config.php');
 
 // echo ($_SESSION["type"]!="Admin" && $_SESSION["type"]!="Operator");die();
-    if($_SESSION["type"]!="Employee")
-    {
-        echo "<script>document.location='./login.php'</script>";
-    }
- else {
+if ($_SESSION["type"] != "Employee") {
+    echo "<script>document.location='./login.php'</script>";
+} else {
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -34,22 +32,22 @@ include('includes/config.php');
 
     </head>
 
-    
+
     <body class="fixed-left">
-        <?php include('includes/leftsidebar.php'); ?> 
+        <?php include('includes/leftsidebar.php'); ?>
 
         <!-- Begin page -->
         <div id="wrapper">
 
             <!-- Top Bar Start -->
-           <?php include('includes/topheader.php') ?>
+            <?php include('includes/topheader.php') ?>
             <!-- Top Bar End -->
 
 
             <!-- ========== Left Sidebar Start ========== -->
             <!-- Left Sidebar End -->
 
-    
+
 
             <!-- ============================================================== -->
             <!-- Start right Content here -->
@@ -80,29 +78,65 @@ include('includes/config.php');
                         <!-- end row -->
 
                         <div class="row">
-                            <a href="manage-categories.php">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="card-box widget-box-one">
-                                        <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
-                                        <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Categories Listed</p>
-                                            <?php $query = mysqli_query($con, "select * from category where Is_Active=1");
-                                            $countcat = mysqli_num_rows($query);
-                                            ?>
+                            <?php if ($_SESSION['utype'] == '1') : ?>
 
-                                            <h2><?php echo htmlentities($countcat); ?> <small></small></h2>
+                                <a href="manage-operators.php">
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
+                                        <div class="card-box widget-box-one">
+                                            <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
+                                            <div class="wigdet-one-content">
+                                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Operators</p>
+                                                <?php $query = mysqli_query($con, "select * from employee where emp_role_id=0");
+                                                $countcat = mysqli_num_rows($query);
+                                                ?>
 
+                                                <h2><?php echo htmlentities($countcat); ?> <small></small></h2>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a><!-- end col -->
-                            <a href="manage-subcategories.php">
+                                </a><!-- end col -->
+                                <a href="manage-categories.php">
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
+                                        <div class="card-box widget-box-one">
+                                            <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
+                                            <div class="wigdet-one-content">
+                                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Categories Listed</p>
+                                                <?php $query = mysqli_query($con, "select * from category where Is_Active=1");
+                                                $countcat = mysqli_num_rows($query);
+                                                ?>
+
+                                                <h2><?php echo htmlentities($countcat); ?> <small></small></h2>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a><!-- end col -->
+                                <a href="manage-subcategories.php">
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
+                                        <div class="card-box widget-box-one">
+                                            <i class="mdi mdi-layers widget-one-icon"></i>
+                                            <div class="wigdet-one-content">
+                                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Sub category</p>
+                                                <?php $query = mysqli_query($con, "select * from subcategory where Is_Active=1");
+                                                $countsubcat = mysqli_num_rows($query);
+                                                ?>
+                                                <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>
+
+                                            </div>
+                                        </div>
+                                    </div><!-- end col -->
+
+                                </a>
+                        </div>
+                        <div class="row">
+                            <a href="manage_subscription_plans.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Sub category</p>
-                                            <?php $query = mysqli_query($con, "select * from subcategory where Is_Active=1");
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Subscription Plans</p>
+                                            <?php $query = mysqli_query($con, "select * from subscription_plans");
                                             $countsubcat = mysqli_num_rows($query);
                                             ?>
                                             <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>
@@ -111,45 +145,45 @@ include('includes/config.php');
                                     </div>
                                 </div><!-- end col -->
                             </a>
+                        <?php endif; ?>
 
-                            <a href="manage-breaking-news.php">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="card-box widget-box-one">
-                                        <i class="mdi mdi-layers widget-one-icon"></i>
-                                        <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Breaking News</p>
-                                            <?php $query = mysqli_query($con, "select * from breaking_news");
-                                            $countposts = mysqli_num_rows($query);
-                                            ?>
-                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+                        <a href="manage-breaking-news.php">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="card-box widget-box-one">
+                                    <i class="mdi mdi-layers widget-one-icon"></i>
+                                    <div class="wigdet-one-content">
+                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Breaking News</p>
+                                        <?php $query = mysqli_query($con, "select * from breaking_news");
+                                        $countposts = mysqli_num_rows($query);
+                                        ?>
+                                        <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
 
-                                        </div>
                                     </div>
-                                </div><!-- end col -->
-                            </a>
-                            
-                            
+                                </div>
+                            </div><!-- end col -->
+                        </a>
+
+
+                        <a href="trash-posts.php">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="card-box widget-box-one">
+                                    <i class="mdi mdi-layers widget-one-icon"></i>
+                                    <div class="wigdet-one-content">
+                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Trash News</p>
+                                        <?php $query = mysqli_query($con, "select * from news where Is_Active=0");
+                                        $countposts = mysqli_num_rows($query);
+                                        ?>
+                                        <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
 
                         </div>
                         <!-- end row -->
 
                         <div class="row">
-
-                            <a href="trash-posts.php">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="card-box widget-box-one">
-                                        <i class="mdi mdi-layers widget-one-icon"></i>
-                                        <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Trash News</p>
-                                            <?php $query = mysqli_query($con, "select * from news where Is_Active=0");
-                                            $countposts = mysqli_num_rows($query);
-                                            ?>
-                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
                             <a href="manage-posts.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
@@ -165,30 +199,44 @@ include('includes/config.php');
                                     </div>
                                 </div>
                             </a>
+
+
                             <?php if ($_SESSION['utype'] == '1') : ?>
+                                <a href="manage-authors.php">
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
+                                        <div class="card-box widget-box-one">
+                                            <i class="mdi mdi-layers widget-one-icon"></i>
+                                            <div class="wigdet-one-content">
+                                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Authors</p>
+                                                <?php $query = mysqli_query($con, "select * from author");
+                                                $countsubcat = mysqli_num_rows($query);
+                                                ?>
+                                                <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>
 
-                            <a href="manage-advertisers.php">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="card-box widget-box-one">
-                                        <i class="mdi mdi-layers widget-one-icon"></i>
-                                        <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Advertisers</p>
-                                            <?php $query = mysqli_query($con, "select * from advertiser");
-                                            $countposts = mysqli_num_rows($query);
-                                            ?>
-                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+                                            </div>
+                                        </div>
+                                    </div><!-- end col -->
+                                </a>
 
+                                <a href="manage-advertisers.php">
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
+                                        <div class="card-box widget-box-one">
+                                            <i class="mdi mdi-layers widget-one-icon"></i>
+                                            <div class="wigdet-one-content">
+                                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Advertisers</p>
+                                                <?php $query = mysqli_query($con, "select * from advertiser");
+                                                $countposts = mysqli_num_rows($query);
+                                                ?>
+                                                <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                            <?php endif; ?>
-
+                                </a>
                         </div>
-                        <?php if ($_SESSION['utype'] == '1') : ?>
 
                         <div class="row">
-                        <a href="manage-advertises-admin.php">
+                            <a href="manage-advertises-admin.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
@@ -208,7 +256,7 @@ include('includes/config.php');
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Unsubscribed Users</p>
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> All Users</p>
                                             <?php $query = mysqli_query($con, "select count(*) from user");
                                             $countposts = mysqli_num_rows($query);
                                             ?>
@@ -218,106 +266,70 @@ include('includes/config.php');
                                     </div>
                                 </div>
                             </a>
-                            <a href="subscribed-users.php">
+                            <a href="manage_advertisement_plans.php">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
                                     <div class="card-box widget-box-one">
                                         <i class="mdi mdi-layers widget-one-icon"></i>
                                         <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Subscribed Users</p>
-                                            <?php $query = mysqli_query($con, "select count(*) from subscriber ");
-                                            $countposts = mysqli_num_rows($query);
+                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Advertisement Plans</p>
+                                            <?php $query = mysqli_query($con, "select * from advertise_plans");
+                                            $countsubcat = mysqli_num_rows($query);
                                             ?>
-                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                      
-
-
-                        <div class="row">
-                        <a href="manage-comments.php">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <div class="card-box widget-box-one">
-                                        <i class="mdi mdi-layers widget-one-icon"></i>
-                                        <div class="wigdet-one-content">
-                                            <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Comments </p>
-                                            <?php $query = mysqli_query($con, "select * from comment where status=1");
-                                            $countposts = mysqli_num_rows($query);
-                                            ?>
-                                            <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+                                            <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>
 
                                         </div>
                                     </div>
                                 </div><!-- end col -->
                             </a>
-                        </div>
-                        
-                        <?php endif; ?>
-                    </div> <!-- container -->
 
-                </div> <!-- content -->
-                <?php include('includes/footer.php'); ?>
-
-            </div>
-
-
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
-
-
-            <!-- Right Sidebar -->
-            <div class="side-bar right-bar">
-                <a href="javascript:void(0);" class="right-bar-toggle">
-                    <i class="mdi mdi-close-circle-outline"></i>
-                </a>
-                <h4 class="">Settings</h4>
-                <div class="setting-list nicescroll">
-                    <div class="row m-t-20">
-                        <div class="col-xs-8">
-                            <h5 class="m-0">Notifications</h5>
-                            <p class="text-muted m-b-0"><small>Do you need them?</small></p>
-                        </div>
-                        <div class="col-xs-4 text-right">
-                            <input type="checkbox" checked data-plugin="switchery" data-color="#7fc1fc" data-size="small" />
                         </div>
                     </div>
 
-                    <div class="row m-t-20">
-                        <div class="col-xs-8">
-                            <h5 class="m-0">API Access</h5>
-                            <p class="m-b-0 text-muted"><small>Enable/Disable access</small></p>
-                        </div>
-                        <div class="col-xs-4 text-right">
-                            <input type="checkbox" checked data-plugin="switchery" data-color="#7fc1fc" data-size="small" />
-                        </div>
+
+
+                    <div class="row">
+                        <a href="manage-comments.php">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="card-box widget-box-one">
+                                    <i class="mdi mdi-layers widget-one-icon"></i>
+                                    <div class="wigdet-one-content">
+                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Comments </p>
+                                        <?php $query = mysqli_query($con, "select * from comment where status=1");
+                                        $countposts = mysqli_num_rows($query);
+                                        ?>
+                                        <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+                        </a>
+                        <a href="subscribed-users.php">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="card-box widget-box-one">
+                                    <i class="mdi mdi-layers widget-one-icon"></i>
+                                    <div class="wigdet-one-content">
+                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month"> Subscribed Users</p>
+                                        <?php $query = mysqli_query($con, "select count(*) from subscriber ");
+                                        $countposts = mysqli_num_rows($query);
+                                        ?>
+                                        <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
 
-                    <div class="row m-t-20">
-                        <div class="col-xs-8">
-                            <h5 class="m-0">Auto Updates</h5>
-                            <p class="m-b-0 text-muted"><small>Keep up to date</small></p>
-                        </div>
-                        <div class="col-xs-4 text-right">
-                            <input type="checkbox" checked data-plugin="switchery" data-color="#7fc1fc" data-size="small" />
-                        </div>
-                    </div>
+                <?php endif; ?>
+                </div> <!-- container -->
 
-                    <div class="row m-t-20">
-                        <div class="col-xs-8">
-                            <h5 class="m-0">Online Status</h5>
-                            <p class="m-b-0 text-muted"><small>Show your status to all</small></p>
-                        </div>
-                        <div class="col-xs-4 text-right">
-                            <input type="checkbox" checked data-plugin="switchery" data-color="#7fc1fc" data-size="small" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Right-bar -->
+            </div> <!-- content -->
+            <?php include('includes/footer.php'); ?>
+
+        </div>
+
+
+
 
         </div>
         <!-- END wrapper -->

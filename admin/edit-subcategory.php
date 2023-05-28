@@ -132,7 +132,7 @@ while($row=mysqli_fetch_array($query))
                         				<div class="col-md-6">
                         					<form class="form-horizontal" name="category" method="post">
 	                                            <div class="form-group">
-	                                                <label class="col-md-2 control-label">Category</label>
+	                                                <label class="col-md-2 control-label">Category<span style="color: red;"> *</span></label>
 	                                                <div class="col-md-10">
 	                                                  <select class="form-control" name="category" required>
                                                    <option value="<?php echo htmlentities($row['catid']);?>"><?php echo htmlentities($row['catname']);?></option>
@@ -153,7 +153,7 @@ while($result=mysqli_fetch_array($ret))
 
 
     <div class="form-group">
-                                                    <label class="col-md-2 control-label">Sub-Category</label>
+                                                    <label class="col-md-2 control-label">Sub-Category<span style="color: red;"> *</span></label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" value="<?php echo htmlentities($row['subcatname']);?>" name="subcategory" required>
                                                     </div>
@@ -165,7 +165,7 @@ while($result=mysqli_fetch_array($ret))
 
 
 	                                            <div class="form-group">
-	                                                <label class="col-md-2 control-label">Sub-Category Description</label>
+	                                                <label class="col-md-2 control-label">Sub-Category Description<span style="color: red;"> *</span></label>
 	                                                <div class="col-md-10">
 	                                   <textarea class="form-control" rows="5" name="sucatdescription" required><?php echo htmlentities($row['SubCatDescription']);?></textarea>
 	                                                </div>
@@ -174,7 +174,7 @@ while($result=mysqli_fetch_array($ret))
 <?php } ?>                                                
 
         <div class="form-group">
-                                                    <label class="col-md-2 control-label">&nbsp;</label>
+                                                   
                                                     <div class="col-md-10">
                                                   
                                                 <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submitsubcat">

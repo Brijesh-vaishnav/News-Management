@@ -136,7 +136,7 @@ if (strlen($_SESSION['login']) == 0) {
                                         <div class="">
                                             <form name="aboutus" method="post">
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Page Title</label>
+                                                    <label for="exampleInputEmail1">Page Title<span style="color: red;"> *</span></label>
                                                     <input type="text" class="form-control" id="pagetitle" name="pagetitle" value="<?php echo htmlentities($row['PageTitle']) ?>" required>
                                                 </div>
 

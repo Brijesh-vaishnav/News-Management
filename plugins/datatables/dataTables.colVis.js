@@ -559,7 +559,7 @@ ColVis.prototype = {
 					'<label>'+
 						'<input type="checkbox" />'+
 						'<span>'+oGroup.sTitle+'</span>'+
-					'</label>'+
+					'<span style="color: red;"> *</span></label>'+
 				'</li>'
 			)
 			.click( function (e) {
@@ -600,7 +600,7 @@ ColVis.prototype = {
 					'<label>'+
 						'<input type="checkbox" />'+
 						'<span>'+title+'</span>'+
-					'</label>'+
+					'<span style="color: red;"> *</span></label>'+
 				'</li>'
 			)
 			.click( function (e) {

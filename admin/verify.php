@@ -48,7 +48,7 @@
     <body>
         <h1>Registration Form</h1>
         <form action="validate.php" method="post">
-            <label>Thank you for registering for News Portal. Please enter the 4-digit OTP sent to your email:</label>
+            <label>Thank you for registering for News Portal. Please enter the 4-digit OTP sent to your email:<span style="color: red;"> *</span></label>
             <input type="hidden" name="email" value="<?php echo $_GET['email']?>">
             <input type="hidden" name="usertype" value="<?php echo $_GET['usertype']?>">
             <input type="number" name="otp" id="">

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/config.php');
-
+error_reporting(0)
 
 
 ?>
@@ -160,6 +160,24 @@ include('includes/config.php');
 
   </div>
   <!-- /.container -->
+   <div class="advertisements" style="margin-bottom:20px;display:flex;gap:20px;margin-top:100px;flex-wrap:wrap">
+   <?php if ($isSubscriber == null or empty($isSubscriber)) : 
+    while(  $row = mysqli_fetch_assoc($queryForAdv))
+    {
+    ?>
+    
+    <div class="advertisement" style="height:300px;width:300px">
+      <?php
+        $image = $row['advertise_img'];
+      // echo "<script> alert('$image')</script>";
+      ?>
+      <img class="card-img-top" src="admin/advertiseImages/<?php echo $image ?>" alt="advertise image"  style="width:100%;height:100%" />;
+    </div>
+
+    <?php }  ?>
+  <?php  endif; ?>
+   </div>
+
 
   <!-- Footer -->
   <?php include('includes/footer.php'); ?>

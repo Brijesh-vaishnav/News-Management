@@ -168,14 +168,14 @@ $error=null;
                                     <div class="">
                                         <form name="addpost" method="post" enctype="multipart/form-data">
                                             <div class="form-group m-b-20">
-                                                <label for="exampleInputEmail1">Post Title</label>
+                                                <label for="exampleInputEmail1">Post Title<span style="color: red;"> *</span></label>
                                                 <input type="text" class="form-control" id="news_title" name="news_title" placeholder="Enter title" required>
                                             </div>
 
 
 
                                             <div class="form-group m-b-20">
-                                                <label for="exampleInputEmail1">Category</label>
+                                                <label for="exampleInputEmail1">Category<span style="color: red;"> *</span></label>
                                                 <select class="form-control" name="category" id="category" onChange="getSubCat(this.value);" required>
                                                     <option value="">Select Category </option>
                                                     <?php
@@ -190,7 +190,7 @@ $error=null;
                                             </div>
 
                                             <div class="form-group m-b-20">
-                                                <label for="exampleInputEmail1">Sub Category</label>
+                                                <label for="exampleInputEmail1">Sub Category<span style="color: red;"> *</span></label>
                                                 <select class="form-control" name="subcategory" id="subcategory" required>
 
                                                 </select>

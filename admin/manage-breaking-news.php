@@ -142,9 +142,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                                         <td><a href="edit-breaking-news.php?news_id=<?php echo htmlentities($row['news_id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
                                                             &nbsp;
-                                                            <?php if ($_SESSION['utype'] == '1') : ?>
                                                             <a href="manage-breaking-news.php?pid=<?php echo htmlentities($row['news_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
-                                                            <?php endif; ?>
                                                     </tr>
                                             <?php }
                                                     } ?>

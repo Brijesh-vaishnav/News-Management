@@ -70,12 +70,40 @@
 
          <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list p-1">
            <li style="background-color:gray;color:white;padding:5px 10px;border-radius:10px">
-             <h5> <?php echo $_SESSION["login"] ?></h5>
+             <?php 
+               $whoIsLoggedIn = $_SESSION["login"];
+                $fname="";$lname="";
+                if($_SESSION["type"] == "user")
+                {
+                 $query= mysqli_query($con,"select * from user where email='$whoIsLoggedIn'");
+                 $row=mysqli_fetch_assoc($query);
+                 $fname=$row["fname"];
+                 $lname=$row["lname"];
+                  
+                }
+                if($_SESSION["type"] == "Employee")
+               {
+                $query=mysqli_query($con,"select * from employee where emp_mail='$whoIsLoggedIn'");
+                $row=mysqli_fetch_assoc($query);
+                $fname=$row["emp_fname"];
+                $lname=$row["emp_lname"];
+
+               }
+               if ($_SESSION["type"] == "Advertiser"){
+               $query= mysqli_query($con,"select * from advertiser where mail='$whoIsLoggedIn'");
+               $row=mysqli_fetch_assoc($query);
+               $fname=$row["fname"];
+               $lname=$row["lname"];
+
+               }
+              
+             ?>
+             <h5> <?php echo $fname." ".$lname ?></h5>
            </li>
            <?php $type = $_SESSION["type"] ?>
            <!-- <?php echo "<script>alert('$type')</script>" ?> -->
            <?php
-            $whoIsLoggedIn = $_SESSION["login"];
+          
 
             if ($_SESSION["type"] == "user") :
               $queryForCheckWhetherIsSubscriber = mysqli_query($con, "select * from subscriber where subscribed_user_email='$whoIsLoggedIn'");

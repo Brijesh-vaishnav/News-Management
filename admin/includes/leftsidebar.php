@@ -37,6 +37,7 @@ if ($_SESSION["type"] != "Employee") {
                     <a href="dashboard.php" class="waves-effect"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
 
                 </li>
+
                 <?php if ($_SESSION['utype'] == '1') : ?>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Opeators </span> <span class="menu-arrow"></span></a>
@@ -46,12 +47,32 @@ if ($_SESSION["type"] != "Employee") {
                         </ul>
                     </li>
                 <?php endif; ?>
+
+                <?php if ($_SESSION['utype'] == '1') : ?>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Authors </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="add-author.php">Add Author</a></li>
+                            <li><a href="manage-authors.php">Manage Authors</a></li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
                 <?php if ($_SESSION['utype'] == '1') : ?>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Users </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
                             <li><a href="normal-users.php">All Users</a></li>
                             <li><a href="subscribed-users.php">Subscribed Users</a></li>
+
+                        </ul>
+                    </li>
+                <?php endif; ?>
+                <?php if ($_SESSION['utype'] == '1') : ?>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Subscription Plans </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="add_subscription_plan.php">Add Subscription Plans</a></li>
+                            <li><a href="manage_subscription_plans.php">Manage Subscription Plans</a></li>
 
                         </ul>
                     </li>
@@ -70,29 +91,40 @@ if ($_SESSION["type"] != "Employee") {
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertisements </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
                             <li><a href="unapproved-advertisements.php">Waiting for Approval </a></li>
-                            <li><a href="manage-advertises-admin.php">Approved Advertises</a></li>
+                            <li><a href="manage-advertises-admin.php">Manage Advertises</a></li>
                             <!-- manage-advertises.php -->
                         </ul>
                     </li>
                 <?php endif; ?>
 
+                <?php if ($_SESSION['utype'] == '1') : ?>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Advertise plans </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="add_advertisement_plan.php">Add Advertise Plan</a></li>
+                            <li><a href="manage_advertisement_plans.php">Manage Advertise Plans</a></li>
+
+                        </ul>
+                    </li>
 
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Category </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="add-category.php">Add Category</a></li>
-                        <li><a href="manage-categories.php">Manage Category</a></li>
-                    </ul>
-                </li>
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span>Sub Category </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="add-subcategory.php">Add Sub Category</a></li>
-                        <li><a href="manage-subcategories.php">Manage Sub Category</a></li>
-                    </ul>
-                </li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Category </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="add-category.php">Add Category</a></li>
+                            <li><a href="manage-categories.php">Manage Category</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span>Sub Category </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="add-subcategory.php">Add Sub Category</a></li>
+                            <li><a href="manage-subcategories.php">Manage Sub Category</a></li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Posts (News) </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">

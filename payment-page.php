@@ -1,5 +1,6 @@
 
 <?php 
+    session_start();
     if (!isset($_SESSION["login"])) {
         echo "<script>document.location='./admin/login.php' </script>";
     }
@@ -26,9 +27,11 @@
     data-prefill.email="shrimaliparth@gmail.com"
     data-theme.color="#F37254"
 ></script>
- <!-- for user -->
+ <!-- for user and advertiser both -->
     <input type="hidden" custom="Hidden Element" name="period" value=<?php echo $_GET["period"] ?>  />
 
+<!-- for advertiser only -->
+     
 
 
 </form>

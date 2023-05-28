@@ -125,21 +125,21 @@ if (strlen($_SESSION['login']) == 0) {
                                             <div class="col-md-6">
                                                 <form class="form-horizontal" name="category" method="post">
                                                     <div class="form-group">
-                                                        <label class="col-md-2 control-label">Category</label>
+                                                        <label class="col-md-2 control-label">Category<span style="color: red;"> *</span></label>
                                                         <div class="col-md-10">
                                                             <input type="text" class="form-control" value="<?php echo htmlentities($row['CategoryName']); ?>" name="category" required>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-md-2 control-label">Category Description</label>
+                                                        <label class="col-md-2 control-label">Category Description<span style="color: red;"> *</span></label>
                                                         <div class="col-md-10">
                                                             <textarea class="form-control" rows="5" name="description" required><?php echo htmlentities($row['Description']); ?></textarea>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                                 <div class="form-group">
-                                                    <label class="col-md-2 control-label">&nbsp;</label>
+                                                   
                                                     <div class="col-md-10">
 
                                                         <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">

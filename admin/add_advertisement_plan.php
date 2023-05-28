@@ -1,23 +1,18 @@
 <?php
 session_start();
 include('includes/config.php');
-// error_reporting(0);
-$msg="";
-$error="";
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
+$msg="";$error="";
+ {
+
     if (isset($_POST['submit'])) {
-        $aid = $_GET['said'];
-        $email = $_POST['adminusernmae'];
-        $fname=$_POST['fname'];
-        $lname=$_POST['lname'];
-        $query = mysqli_query($con, "Update  employee set emp_mail='$email', emp_fname='$fname',emp_lname='$lname'  where emp_role_id 	=0 && emp_mail='$aid'");
+        $duration = $_POST['duration'];
+        $price = $_POST['price'];
+
+        $query = mysqli_query($con, "insert into advertise_plans(plan_duration,plan_price) values('$duration','$price')");
         if ($query) {
-            echo "<script>alert('Operator details updated.');</script>";
-            echo "<script>document.location='./manage-operators.php'</script>";
+            $msg = "Advertise plan created ";
         } else {
-            echo "<script>alert('Something went wrong . Please try again.');</script>";
+            $error = "Something went wrong . Please try again.";
         }
     }
 
@@ -30,7 +25,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title>Newsportal |Edit Operator</title>
+        <title>Newsportal | Add Advertise Plan</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -65,20 +60,19 @@ if (strlen($_SESSION['login']) == 0) {
                 <div class="content">
                     <div class="container">
 
-
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Edit Operator</h4>
+                                    <h4 class="page-title">Add Advertise Plan</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
                                             <a href="#">Admin</a>
                                         </li>
                                         <li>
-                                            <a href="#">Operator </a>
+                                            <a href="#">Add Advertise Plan </a>
                                         </li>
                                         <li class="active">
-                                            Edit Operator
+                                            Add Advertise Plan
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -86,16 +80,12 @@ if (strlen($_SESSION['login']) == 0) {
                             </div>
                         </div>
                         <!-- end row -->
-
-
                         <div class="row">
+                      
                             <div class="col-sm-12">
                                 <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Edit Operator </b></h4>
+                                    <h4 class="m-t-0 header-title"><b>Add Advertisement Plan </b></h4>
                                     <hr />
-
-
-
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <!---Success Message--->
@@ -115,68 +105,36 @@ if (strlen($_SESSION['login']) == 0) {
 
                                         </div>
                                     </div>
-
-                                    <?php
-                                    $aid = ($_GET['said']);
-                                    $query = mysqli_query($con, "Select * from  employee where emp_role_id 	=0 && emp_mail='$aid'");
-                                    $cnt = 1;
-                                    while ($row = mysqli_fetch_array($query)) {
-                                    ?>
-
-
-
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <form class="form-horizontal" name="suadmin" method="post">
-                                                    <div class="form-group">
-                                                        <label class="col-md-2 control-label">Email<span style="color: red;"> *</span></label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" class="form-control" value="<?php echo htmlentities($row['emp_mail']); ?>" name="adminusernmae" >
-                                                        </div>
+                                   <div class="row">
+                                        <div class="col-md-6">
+                                            <form class="form-horizontal" name="category" method="post">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label" style="">Plan Duration<span style="color: red;"> *</span></label>
+                                                    <div class="col-md-10">
+                                                        <input type="number" class="form-control" value="" name="duration" required>
                                                     </div>
+                                                </div>
 
-                                                   
-
-                                                    <div class="form-group">
-                                                        <label class="col-md-2 control-label">First Name<span style="color: red;"> *</span></label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" class="form-control" value="<?php echo htmlentities($row['emp_fname']); ?>" name="fname" >
-                                                        </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Plan price<span style="color: red;"> *</span></label>
+                                                    <div class="col-md-10">
+                                                        <input type="number" class="form-control" value="" name="price" required>
                                                     </div>
+                                                </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-md-2 control-label">Last Name<span style="color: red;"> *</span></label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" class="form-control" value="<?php echo htmlentities($row['emp_lname']); ?>" name="lname" >
-                                                        </div>
-                                                    </div>
-                                                <?php } ?>
                                                 <div class="form-group">
                                                    
                                                     <div class="col-md-10">
 
                                                         <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">
-                                                            Update
+                                                            Submit
                                                         </button>
                                                     </div>
                                                 </div>
 
-                                                </form>
-                                            </div>
-
-
+                                            </form>
                                         </div>
-
-
-
-
-
-
-
-
-
-
+                                    </div>
 
                                 </div>
                             </div>
@@ -191,12 +149,7 @@ if (strlen($_SESSION['login']) == 0) {
                 <?php include('includes/footer.php'); ?>
 
             </div>
-
-
         </div>
-        <!-- END wrapper -->
-
-
 
         <script>
             var resizefunc = [];

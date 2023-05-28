@@ -4,15 +4,15 @@ $delmsg = null;
 $error = null;
 include('includes/config.php'); {
 
-    if ($_GET['action'] == 'del') {
-        $postid = intval($_GET['pid']);
-        $query = mysqli_query($con, "delete from advertisement  where advertise_id='$postid'");
-        if ($query) {
-            $delmsg = "Advertise deleted ";
-        } else {
-            $error = "Something went wrong . Please try again.";
+        if (isset($_GET['action']) && $_GET['action'] == 'del') {
+            $postid = intval($_GET['pid']);
+            $query = mysqli_query($con, "delete from advertisement  where advertise_id='$postid'");
+            if ($query) {
+                $delmsg = "Advertise deleted ";
+            } else {
+                $error = "Something went wrong . Please try again.";
+            }
         }
-    }
 ?>
 
     <!DOCTYPE html>
@@ -74,10 +74,10 @@ include('includes/config.php'); {
     </head>
 
 
-    <body class="fixed-left">
+    <body class="fixed-left" style="overflow-y:auto ">
 
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper"  style="overflow-y:auto ">
 
             <!-- Top Bar Start -->
             <?php include('includes/topheader.php'); ?>
@@ -117,7 +117,7 @@ include('includes/config.php'); {
 
                         <?php if ($delmsg) { ?>
                             <div class="alert alert-danger" role="alert">
-                                <strong>Oh snap!</strong> <?php echo htmlentities($delmsg); ?>
+                                <strong>Oh snap!</strong> <?php echo htmlentities($delmsg) ?>
                             </div>
                         <?php } ?>
 
@@ -127,7 +127,7 @@ include('includes/config.php'); {
                                 <div class="card-box">
 
 
-                                    <div>
+                                    <div style="display:flex;flex-direction:column;gap:40px;position:relative" >
 
 
                                         <?php
@@ -147,9 +147,12 @@ include('includes/config.php'); {
                                                 $mail = $row["advertiser_mail"];
                                             ?>
 
-                                                <div style="display:flex;gap:10px;position:relative">
+                                                <div style="display:flex;flex-direction:column;gap:20px;position:relative">
+                                                 <div style="display:flex;gap:20px">
                                                     <a href="manage-advertises.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
-                                                    <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
+                                                  <div class="image">
+                                                      <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />
+                                                  </div>
                                                     <div style="display:flex;flex-direction: column;justify-content: space-around;">
                                                         <div>
                                                             <?php
@@ -207,21 +210,22 @@ include('includes/config.php'); {
                                                                 <span> <?php echo $row["validity"] ?> </span>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <div>
+                                                        <div style="margin-top:10px">
 
                                                             <?php if ($row["status"] == 0) :  ?>
                                                                 <span style="color:orangered">Payment Option Will Be Available After Approvement !!!</span>
                                                             <?php endif; ?>
                                                             <?php if ($row["status"] == 1) :  ?>
                                                                 <?php if ($row["paymentstatus"] == 0) :  ?>
-                                                                    <a href="../advertiser_payment_page.php?price=<?php echo $total_price ?>&period=<?php echo $row["advertise_hours"] ?>" style="background-color:green;border-radius:10px;padding:10px 40px;color:white;">Pay</a>
+                                                                    <a href="../advertiser_payment_page.php?price=<?php echo $total_price ?>&period=<?php echo $row["advertise_hours"] ?>&advertise_id=<?php echo $row["advertise_id"] ?>" style="background-color:green;border-radius:10px;padding:10px 40px;color:white;">Pay</a>
                                                                 <?php endif; ?>
                                                             <?php endif; ?>
 
                                                         </div>
                                                     </div>
+                                                    </div>
                                                 </div>
-
+                                             
                                         <?php }
                                         } ?>
 
@@ -229,6 +233,7 @@ include('includes/config.php'); {
                                     </div>
                                 </div>
                             </div>
+                        
                         </div>
 
 

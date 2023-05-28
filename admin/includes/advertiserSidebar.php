@@ -20,6 +20,7 @@
                                 <ul class="list-unstyled">
                                     <li><a href="add_advertise.php">Add Advertise </a></li>
                                     <li><a href="manage-advertises.php">Manage Advertises</a></li>
+                                    <li><a href="advertisement-plans.php">Advertisement Plans</a></li>
                                 </ul>
                             </li>
 
