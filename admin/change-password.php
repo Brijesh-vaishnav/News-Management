@@ -1,30 +1,32 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
+
+$error="";
+$msg="";
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
     if (isset($_POST['submit'])) {
         //Current Password hashing 
         $password = $_POST['password'];
-        $options = ['cost' => 12];
-        $hashedpass = password_hash($password, PASSWORD_BCRYPT, $options);
-        $adminid = $_SESSION['login'];
+
+        $whoIsLoggedIn = $_SESSION['login'];
         // new password hashing 
         $newpassword = $_POST['newpassword'];
-        $newhashedpass = password_hash($newpassword, PASSWORD_BCRYPT, $options);
+        $sql="" ;
+      {
 
-        date_default_timezone_set('Asia/Kolkata'); // change according timezone
-        $currentTime = date('d-m-Y h:i:s A', time());
-        $sql = mysqli_query($con, "SELECT emp_password FROM  employee where emp_mail='$adminid' || AdminEmailId='$adminid'");
+          $sql = mysqli_query($con, "SELECT emp_password FROM  employee where emp_mail='$whoIsLoggedIn'");
+      }
+    
         $num = mysqli_fetch_array($sql);
         if ($num > 0) {
             $dbpassword = $num['emp_password'];
 
-            if (password_verify($password, $dbpassword)) {
+            if ($dbpassword==$password) {
 
-                $con = mysqli_query($con, "update employee set emp_password='$newhashedpass' where emp_mail='$adminid'");
+                $con = mysqli_query($con, "update employee set emp_password='$newpassword' where emp_mail='$whoIsLoggedIn'");
                 $msg = "Password Changed Successfully !!";
             }
         } else {
@@ -159,7 +161,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">Current Password<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" value="" name="password" required>
+                                                        <input type="password" class="form-control" value="" name="password" required>
                                                     </div>
                                                 </div>
 
@@ -167,7 +169,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">New Password<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" value="" name="newpassword" required>
+                                                        <input type="password" class="form-control" value="" name="newpassword" required>
                                                     </div>
                                                 </div>
 
@@ -175,7 +177,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">Confirm Password<span style="color: red;"> *</span></label>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" value="" name="confirmpassword" required>
+                                                        <input type="password" class="form-control" value="" name="confirmpassword" required>
                                                     </div>
                                                 </div>
 

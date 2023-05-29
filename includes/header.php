@@ -69,7 +69,7 @@
          </a>
 
          <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list p-1">
-           <li style="background-color:gray;color:white;padding:5px 10px;border-radius:10px">
+           <li style="background-color:gray;color:white;padding:3px 10px;border-radius:10px;width:max-content">
              <?php 
                $whoIsLoggedIn = $_SESSION["login"];
                 $fname="";$lname="";

@@ -1,10 +1,10 @@
+
 <?php
 session_start();
 include('includes/config.php');
 
-$msg=null;
-$error=null;
-{
+$msg = null;
+$error = null; {
 
     // For adding post  
     if (isset($_POST['submit'])) {
@@ -14,13 +14,14 @@ $error=null;
         $news_desc = $_POST['postdescription'];
         $postedby = $_SESSION['login'];
         $post_state = $_POST["state"];
+        $author_mail=$_POST["author"];
         $arr = explode(" ", $news_title);
         $url = implode("-", $arr);
         $imgfile = $_FILES["news_img"]["name"];
         // get the image extension
         $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
         // allowed extensions
-        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif",'.JPG','.JPEG','.PNG','.GIF');
+        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif", '.JPG', '.JPEG', '.PNG', '.GIF');
         // Validation for allowed extensions .in_array() function searches an array for a specific value.
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
@@ -34,18 +35,17 @@ $error=null;
             $status = 0;
             if ($_SESSION["utype"] == "1")
                 $status = 1;
-                $stmt = $con->prepare("INSERT INTO news(news_title, CategoryId, subcategoryId, news_desc, Is_Active, news_img, postedBy, state, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $con->prepare("INSERT INTO news(news_title, CategoryId, subcategoryId, news_desc, Is_Active, news_img, postedBy, state, status,author_mail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
 
-                $stmt->bind_param("siissssss", $news_title, $catid, $subcatid, $news_desc, $is_active, $imgnewfile, $postedby, $post_state, $status);
-                
-                if ($stmt->execute()) {
-                    $msg = "Post successfully added";
-                } else {
-                    $error = "Something went wrong. Please try again.";
-                }
-                
-                $stmt->close();
-                
+            $stmt->bind_param("siisssssss", $news_title, $catid, $subcatid, $news_desc, $is_active, $imgnewfile, $postedby, $post_state, $status,$author_mail);
+
+            if ($stmt->execute()) {
+                $msg = "Post successfully added";
+            } else {
+                $error = "Something went wrong. Please try again.";
+            }
+
+            $stmt->close();
         }
     }
 ?>
@@ -252,9 +252,25 @@ $error=null;
 
                                                     </div>
                                                 </div>
+                                                
                                             </div>
 
+                                            <div class="card-box">
+                                                    <div class="form-group m-b-20">
+                                                        <label for="exampleInputEmail1">Author<span style="color: red;"> *</span></label>
+                                                        <select class="form-control" name="author" id="author" required>
+                                                            <option value="">Select Author </option>
+                                                            <?php
+                                                            // Feching active categories
+                                                            $ret = mysqli_query($con, "select * from  author");
+                                                            while ($result = mysqli_fetch_array($ret)) {
+                                                            ?>
+                                                                <option value="<?php echo htmlentities($result['mail']); ?>"><?php echo htmlentities($result['fname']) . " " . htmlentities($result['lname']); ?></option>
+                                                            <?php } ?>
 
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             <button type="submit" name="submit" class="btn btn-success waves-effect waves-light">Save and Post</button>
                                             <button type="button" class="btn btn-danger waves-effect waves-light">Discard</button>
                                         </form>
@@ -290,7 +306,8 @@ $error=null;
         </script>
 
         <!-- jQuery  -->
-        <script src="assets/js/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/detect.js"></script>
         <script src="assets/js/fastclick.js"></script>
@@ -299,9 +316,9 @@ $error=null;
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/jquery.scrollTo.min.js"></script>
         <script src="../plugins/switchery/switchery.min.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
         <!--Summernote js-->
-        <script src="../plugins/summernote/summernote.min.js"></script>
+        <!-- <script src="../plugins/summernote/summernote.min.js"></script> -->
         <!-- Select 2 -->
         <script src="../plugins/select2/js/select2.min.js"></script>
         <!-- Jquery filer js -->
