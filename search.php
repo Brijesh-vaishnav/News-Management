@@ -1,138 +1,150 @@
-<?php 
+<?php
 session_start();
 error_reporting(0);
 include('includes/config.php');
 
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>News Portal | Search  Page</title>
+  <title>News Portal | Search Page</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/modern-business.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/modern-business.css" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- Navigation -->
-   <?php include('includes/header.php');?>
+  <!-- Navigation -->
+  <?php include('includes/header.php'); ?>
 
-    <!-- Page Content -->
-    <div class="container">
-
-
-     
-      <div class="row" style="margin-top: 4%">
-
-        <!-- Blog Entries Column -->
-        <div class="col-md-8">
-
-          <!-- Blog Post -->
-<?php 
-        if($_POST['searchtitle']!=''){
-$st=$_SESSION['searchtitle']=$_POST['searchtitle'];
-}
-$st;
-             
+  <!-- Page Content -->
+  <div class="container">
 
 
 
+    <div class="row" style="margin-top: 4%">
 
-     if (isset($_GET['pageno'])) {
-            $pageno = $_GET['pageno'];
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <!-- Blog Post -->
+        <?php
+        if ($_POST['searchtitle'] != '') {
+          $st = $_SESSION['searchtitle'] = $_POST['searchtitle'];
+        }
+        $st;
+
+
+
+
+
+        if (isset($_GET['pageno'])) {
+          $pageno = $_GET['pageno'];
         } else {
-            $pageno = 1;
+          $pageno = 1;
         }
         $no_of_records_per_page = 8;
-        $offset = ($pageno-1) * $no_of_records_per_page;
+        $offset = ($pageno - 1) * $no_of_records_per_page;
 
 
         $total_pages_sql = "SELECT COUNT(*) FROM news";
-        $result = mysqli_query($con,$total_pages_sql);
+        $result = mysqli_query($con, $total_pages_sql);
         $total_rows = mysqli_fetch_array($result)[0];
         $total_pages = ceil($total_rows / $no_of_records_per_page);
 
 
-$query=mysqli_query($con,"select news.id as pid,news.news_title as news_title,category.CategoryName as category,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate,news.news_img from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.news_title like '%$st%' and news.Is_Active=1 LIMIT $offset, $no_of_records_per_page");
+        $query = mysqli_query($con, "select news.id as pid,news.news_title as news_title,category.CategoryName as category,subcategory.subcategory as subcategory,news.news_desc as news_desc,news.PostingDate as postingdate,news.news_img from news left join category on category.id=news.CategoryId left join  subcategory on  subcategory.subcategoryId=news.subcategoryId where news.news_title like '%$st%' and news.Is_Active=1 LIMIT $offset, $no_of_records_per_page");
 
-$rowcount=mysqli_num_rows($query);
-if($rowcount==0)
-{
-echo "No record found";
-}
-else {
-while ($row=mysqli_fetch_array($query)) {
+        $rowcount = mysqli_num_rows($query);
+        if ($rowcount == 0) {
+          echo "No record found";
+        } else {
+          while ($row = mysqli_fetch_array($query)) {
 
 
-?>
+        ?>
+         <div>
+         <h1> Search Result For "<?php echo "<b>$st</b>" ?>"</h1>
+         </div>
+            <div class="card mb-4">
+              <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['news_img']); ?>" alt="<?php echo htmlentities($row['news_title']); ?>">
+              <div class="card-body">
+                <h2 class="card-title"><?php echo htmlentities($row['news_title']); ?></h2>
 
-          <div class="card mb-4">
-      <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['news_img']);?>" alt="<?php echo htmlentities($row['news_title']);?>">
-            <div class="card-body">
-              <h2 class="card-title"><?php echo htmlentities($row['news_title']);?></h2>
-         
-              <a href="news-details.php?nid=<?php echo htmlentities($row['pid'])?>" class="btn btn-primary">Read More &rarr;</a>
+                <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="btn btn-primary">Read More &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                Posted on <?php echo htmlentities($row['postingdate']); ?>
+
+              </div>
             </div>
-            <div class="card-footer text-muted">
-              Posted on <?php echo htmlentities($row['postingdate']);?>
-           
-            </div>
-          </div>
-<?php } ?>
+          <?php } ?>
 
-    <ul class="pagination justify-content-center mb-4">
-        <li class="page-item"><a href="?pageno=1"  class="page-link">First</a></li>
-        <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?> page-item">
-            <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>" class="page-link">Prev</a>
-        </li>
-        <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?> page-item">
-            <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?> " class="page-link">Next</a>
-        </li>
-        <li class="page-item"><a href="?pageno=<?php echo $total_pages; ?>" class="page-link">Last</a></li>
-    </ul>
-<?php } ?>
-       
+          <ul class="pagination justify-content-center mb-4">
+            <li class="page-item"><a href="?pageno=1" class="page-link">First</a></li>
+            <li class="<?php if ($pageno <= 1) {
+                          echo 'disabled';
+                        } ?> page-item">
+              <a href="<?php if ($pageno <= 1) {
+                          echo '#';
+                        } else {
+                          echo "?pageno=" . ($pageno - 1);
+                        } ?>" class="page-link">Prev</a>
+            </li>
+            <li class="<?php if ($pageno >= $total_pages) {
+                          echo 'disabled';
+                        } ?> page-item">
+              <a href="<?php if ($pageno >= $total_pages) {
+                          echo '#';
+                        } else {
+                          echo "?pageno=" . ($pageno + 1);
+                        } ?> " class="page-link">Next</a>
+            </li>
+            <li class="page-item"><a href="?pageno=<?php echo $total_pages; ?>" class="page-link">Last</a></li>
+          </ul>
+        <?php } ?>
 
-      
-
-          <!-- Pagination -->
 
 
 
+        <!-- Pagination -->
 
-        </div>
 
-        <!-- Sidebar Widgets Column -->
-      <?php include('includes/sidebar.php');?>
+
+
       </div>
-      <!-- /.row -->
 
+      <!-- Sidebar Widgets Column -->
+      <?php include('includes/sidebar.php'); ?>
     </div>
-    <!-- /.container -->
+    <!-- /.row -->
 
-    <!-- Footer -->
-      <?php include('includes/footer.php');?>
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <?php include('includes/footer.php'); ?>
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
- 
-</head>
-  </body>
+
+  </head>
+</body>
 
 </html>

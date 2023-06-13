@@ -28,7 +28,7 @@ include('includes/config.php');
 
     <head>
 
-        <title>Newsportal | Add Operator</title>
+        <title>Newsportal | Add Author</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -81,16 +81,16 @@ include('includes/config.php');
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Add Operator</h4>
+                                    <h4 class="page-title">Add Author</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
                                             <a href="#">Admin</a>
                                         </li>
                                         <li>
-                                            <a href="#">Operator </a>
+                                            <a href="#">Author </a>
                                         </li>
                                         <li class="active">
-                                            Add Operator
+                                            Add Author
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>

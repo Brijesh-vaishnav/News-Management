@@ -200,6 +200,7 @@ if (strlen($_SESSION['login']) == 0) {
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/jquery.scrollTo.min.js"></script>
         <script src="../plugins/switchery/switchery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>  
 
         <!--Summernote js-->
         <script src="../plugins/summernote/summernote.min.js"></script>

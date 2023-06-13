@@ -73,6 +73,7 @@ if ($_SESSION["type"] != "Employee") {
                         <ul class="list-unstyled">
                             <li><a href="add_subscription_plan.php">Add Subscription Plans</a></li>
                             <li><a href="manage_subscription_plans.php">Manage Subscription Plans</a></li>
+                            <li><a href="subscription_history.php"> Subscription History</a></li>
 
                         </ul>
                     </li>
@@ -163,7 +164,16 @@ if ($_SESSION["type"] != "Employee") {
                             <li><a href="unapprove-comment.php">Waiting for Approval </a></li>
                             <li><a href="manage-comments.php">Approved Comments</a></li>
                         </ul>
+                    </li> 
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Feedback </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="manage-feeback.php">Manage Feedback</a></li>
+                        </ul>
                     </li>
+
+
+
                 <?php endif; ?>
 
             </ul>

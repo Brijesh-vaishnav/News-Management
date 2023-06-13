@@ -20,9 +20,7 @@
          <li class="nav-item">
            <a class="nav-link" href="about-us.php">About</a>
          </li>
-         <li class="nav-item">
-           <a class="nav-link" href="index.php">News</a>
-         </li>
+        
          <li class="nav-item">
            <a class="nav-link" href="contact-us.php">Contact us</a>
          </li>
@@ -69,7 +67,7 @@
          </a>
 
          <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list p-1">
-           <li style="background-color:gray;color:white;padding:3px 10px;border-radius:10px;width:max-content">
+           <li style="background-color:gray;color:white;padding:3px 10px;border-radius:10px;width:200px">
              <?php 
                $whoIsLoggedIn = $_SESSION["login"];
                 $fname="";$lname="";

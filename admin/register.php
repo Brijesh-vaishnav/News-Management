@@ -101,5 +101,10 @@ if (isset($_POST["signup"])) {
                 </button>
             </div>
         </div>
+
+        <div class="div">
+
+         <a href="./login.php" style="color:blue">Already Have an Account ?</a>
+        </div>
     </form>
 </div>

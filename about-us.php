@@ -36,10 +36,11 @@ while($row=mysqli_fetch_array($query))
 {
 
 ?>
-      <h1 class="mt-4 mb-3"><?php echo htmlentities($row['PageTitle'])?>
-  
-      </h1>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:40px;">
+     <h1 class="mt-4 mb-3"><?php echo htmlentities($row['PageTitle'])?> </h1>
+     <h3> <a href="feedback-page.php" style="padding:10px 20px;background-color:gray;color:white;border-radius:10px;"> Any Feedback ?</a></h3>
 
+     </div>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="index.php">Home</a>

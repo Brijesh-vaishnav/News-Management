@@ -2,8 +2,8 @@
 session_start();
 include('includes/config.php');
 
-$error="";
-$msg="";
+$error = "";
+$msg = "";
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
@@ -14,23 +14,52 @@ if (strlen($_SESSION['login']) == 0) {
         $whoIsLoggedIn = $_SESSION['login'];
         // new password hashing 
         $newpassword = $_POST['newpassword'];
-        $sql="" ;
-      {
-
-          $sql = mysqli_query($con, "SELECT emp_password FROM  employee where emp_mail='$whoIsLoggedIn'");
-      }
     
-        $num = mysqli_fetch_array($sql);
-        if ($num > 0) {
-            $dbpassword = $num['emp_password'];
+        if ($_SESSION["type"] == "Employee") {
+            $sql = mysqli_query($con, "SELECT emp_password FROM  employee where emp_mail='$whoIsLoggedIn'");
+            $num = mysqli_fetch_array($sql);
+            if ($num > 0) {
+                $dbpassword = $num['emp_password'];
+                
+                if ($dbpassword == $password) {
+                    echo "<script>alert('updating employee password');</script>";
 
-            if ($dbpassword==$password) {
-
-                $con = mysqli_query($con, "update employee set emp_password='$newpassword' where emp_mail='$whoIsLoggedIn'");
-                $msg = "Password Changed Successfully !!";
+                    $con = mysqli_query($con, "update employee set emp_password='$newpassword' where emp_mail='$whoIsLoggedIn'");
+                    $msg = "Password Changed Successfully !!";
+                }
+            } else {
+                $error = "Old Password not match !!";
             }
-        } else {
-            $error = "Old Password not match !!";
+        }
+        if ($_SESSION["type"] == "user") {
+            $sql = mysqli_query($con, "SELECT * FROM  employee where email='$whoIsLoggedIn'");
+            $num = mysqli_fetch_array($sql);
+            if ($num > 0) {
+                $dbpassword = $num['password'];
+
+                if ($dbpassword == $password) {
+
+                    $con = mysqli_query($con, "update user set password='$newpassword' where email='$whoIsLoggedIn'");
+                    $msg = "Password Changed Successfully !!";
+                }
+            } else {
+                $error = "Old Password not match !!";
+            }
+        }
+        if ($_SESSION["type"] == "advertiser") {
+            $sql = mysqli_query($con, "SELECT password FROM  advertiser where mail='$whoIsLoggedIn'");
+            $num = mysqli_fetch_array($sql);
+            if ($num > 0) {
+                $dbpassword = $num['password'];
+
+                if ($dbpassword == $password) {
+
+                    $con = mysqli_query($con, "update advertiser set password='$newpassword' where mail='$whoIsLoggedIn'");
+                    $msg = "Password Changed Successfully !!";
+                }
+            } else {
+                $error = "Old Password not match !!";
+            }
         }
     }
 
@@ -182,7 +211,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label">&nbsp;<span style="color: red;"> *</span></label>
+                                                    <label class="col-md-4 control-label">&nbsp;</label>
                                                     <div class="col-md-8">
 
                                                         <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">

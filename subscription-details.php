@@ -9,6 +9,7 @@ error_reporting(0);
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
+
 <link href="css/modern-business.css" rel="stylesheet">
 
     <style>
@@ -75,7 +76,8 @@ error_reporting(0);
       }
     </style>
   </head>
-  <body>
+  <body style="display:flex;flex-direction:column;gap:20px">
+    <h1>Subscription Details</h1>
       <!-- Navigation -->
   <?php include('includes/header.php'); ?>
     <div class="details">

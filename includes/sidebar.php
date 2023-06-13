@@ -77,10 +77,10 @@
     <div class="advertisement">
       <?php
 
-      $queryForAdv = mysqli_query($con, "select * from advertisement");
+      $queryForAdv = mysqli_query($con, "select * from advertisement where paymentstatus=1");
       $row = mysqli_fetch_assoc($queryForAdv);
       $image = $row['advertise_img'];
-      // echo "<script> alert('$image')</script>";
+      //echo "<script> alert('$image')</script>";
       ?>
       <img class="card-img-top" src="admin/advertiseImages/<?php echo $image ?>" alt="advertise image" />;
     </div>

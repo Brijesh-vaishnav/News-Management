@@ -5,4 +5,4 @@ post image and advertise images should be deleted from directory after deleting 
 
 have to mark all fields as require(*)
 forgot password option is remaining to deal with and also have to loook at change password in header of admin/advertiser/employee
-Hardik sir told me to have record of previous subscribers.
+

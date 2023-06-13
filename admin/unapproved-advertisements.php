@@ -25,6 +25,7 @@ error_reporting(0); {
     }
 ?>
 
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -174,7 +175,7 @@ error_reporting(0); {
 
 
                                                         <div style="display:flex;gap:10px;position:relative">
-                                                            <a href="manage-advertises-admin.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
+                                                            <a href="unapproved-advertisements.php?pid=<?php echo htmlentities($row['advertise_id']); ?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050;position:absolute;right:0;top:0"></i></a>
                                                             <a href="unapproved-advertisements.php?appid=<?php echo htmlentities($row['advertise_id']); ?>" title="Approve this Advertise"><i class="ion-arrow-return-right" style="color: #29b6f6;position:absolute;right:0;top:20px"></i></a>
 
                                                             <img class="card-img-top" src="advertiseImages/<?php echo $image ?>" alt="advertise image" style="width:200px;height:200px" />;
